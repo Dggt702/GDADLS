@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="h-100">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,13 +7,21 @@
     
     <title>Document</title>
 </head>
-<body>
+<body class="d-flex flex-column h-100">
     <?php include_once "VISTA/header.php" ?>
-    <main>
+    <main class="mt-5">
         <div class="container">
             <div class="row">
-                <button id="btnAdmin">Administrador</button>
-                <button id="btnArbitro">Árbitro</button>
+                <div class="col-6 d-flex justify-content-center">
+                    <button id="btnAdmin" class="btn">Administrador</button>
+                </div>
+                <div class="col-6 d-flex justify-content-center">
+                    <button id="btnArbitro" class="btn">Árbitro</button>
+                </div>
+                <div class="col-12">
+                    <?php include_once "VISTA/loginAdmin.php" ?>
+                    <?php include_once "VISTA/loginArbitro.php" ?>
+                </div>               
             </div>
         </div>
     </main>
