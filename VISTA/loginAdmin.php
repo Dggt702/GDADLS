@@ -7,4 +7,5 @@
         <label for="contraseniaAdmin" class="form-label">Contraseña</label>
         <input type="text" class="form-control" id="contraseniaAdmin" name="contraseniaAdmin">
     </div>
+    <button type="submit">Acceder</button>
 </form>
