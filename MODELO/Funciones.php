@@ -4,13 +4,12 @@ require_once("Clases.php");
 
 class Funciones{
 
-    public $conn = BBDD::conectar();
-
     public static function comprobarSesionAdministrador($admin){
-       
+        
+        $conn = BBDD::conectar();
         $ret = false;
         $sql = "SELECT contrasenia FROM administrador WHERE nombre_usuario =:nombre_usuario";
-        $stmt = self::$conn->prepare($sql);
+        $stmt = $conn->prepare($sql);
         $stmt->bindParam(":nombre_usuario",$admin);
 
         if($stmt->execute()){
@@ -23,9 +22,11 @@ class Funciones{
     }
 
     public static function comprobarSesionArbitro($dni){
+
+        $conn = BBDD::conectar();
         $ret = false;
         $sql = "SELECT contrasena FROM arbitro WHERE dni =:dni";
-        $stmt = self::$conn->prepare($sql);
+        $stmt = $conn->prepare($sql);
         $stmt->bindParam(":dni",$dni);
         
         if($stmt->execute()){
