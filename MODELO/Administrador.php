@@ -1,13 +1,13 @@
 <?php
 
-class Administrador {
-    private $id;
+class Administrador extends Usuario{
+    
     private $nombreUsuario;
-    private $contrasenia;
+    
 
     // Constructor
     public function __construct($id, $nombreUsuario, $contrasenia) {
-        parent::__construct($id,$contrasena);
+        parent::__construct($id,$contrasenia);
         $this->nombreUsuario = $nombreUsuario;
     }
 

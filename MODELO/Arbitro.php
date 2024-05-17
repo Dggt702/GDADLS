@@ -3,11 +3,9 @@
 require_once("Usuario.php");
 
 class Arbitro extends Usuario{
-    private $id;
     private $nombre;
     private $apellidos;
     private $dni;
-    private $contrasena;
     private $email;
     private $disponibilidad;
 
