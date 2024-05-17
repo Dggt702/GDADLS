@@ -6,37 +6,32 @@ class Funciones{
 
     public $conn = BBDD::conectar();
 
-    public static function iniciarSesionAdministrador($admin){
-        $usuario = $admin->getNombreUsuario();
-        $contrasenia = $admin->getContrasenia();
-        
+    public static function comprobarSesionAdministrador($admin){
+       
         $ret = false;
-        $sql = "SELECT * FROM administrador WHERE nombre_usuario =:nombre_usuario AND contrasenia =:contrasenia";
+        $sql = "SELECT contrasenia FROM administrador WHERE nombre_usuario =:nombre_usuario";
         $stmt = self::$conn->prepare($sql);
-        $stmt->bindParam(":nombre_usuario",$usuario);
-        $stmt->bindParam(":contrasenia",$contrasenia);
+        $stmt->bindParam(":nombre_usuario",$admin);
 
-        if($respuesta = $stmt->execute()){
-            if ($respuesta){
-                $ret = true;
+        if($stmt->execute()){
+            $respuesta = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (!empty($respuesta)){
+                $ret = $respuesta["contrasenia"];
             }
         }
         return $ret;
     }
 
-    public static function iniciarSesionArbitro($arbitro){
-        $dni = $admin->getDNI();
-        $contrasenia = $admin->getContrasenia();
-        
+    public static function comprobarSesionArbitro($dni){
         $ret = false;
-        $sql = "SELECT * FROM arbitro WHERE dni =:dni AND contrasena =:contrasena";
+        $sql = "SELECT contrasena FROM arbitro WHERE dni =:dni";
         $stmt = self::$conn->prepare($sql);
         $stmt->bindParam(":dni",$dni);
-        $stmt->bindParam(":contrasena",$contrasenia);
         
-        if($respuesta = $stmt->execute()){
-            if ($respuesta){
-                $ret = true;
+        if($stmt->execute()){
+            $respuesta = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (!empty($respuesta)){
+                $ret = $respuesta["contrasena"];
             }
         }
         return $ret;
