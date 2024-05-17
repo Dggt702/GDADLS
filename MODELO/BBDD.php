@@ -4,7 +4,7 @@ class BBDD {
 
     public static function conectar(){
        $server="localhost";
-       $dbname="Acreditaciones";
+       $dbname="arbitraje";
        $user="root";
        $password="";
        
