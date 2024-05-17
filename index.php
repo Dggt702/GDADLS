@@ -12,15 +12,32 @@
     <main>
         <div class="container">
             <div class="row">
-                <form action="comprobarUsuario.php" method="POST">
-                    <div class="col-12">
-                        <label for="nombreUsuario" class="form-label">Nombre de usuario</label>
-                        <input type="text" class="form-control" id="nombreUsuario">
-                    </div>
-                </form>
+                <button id="btnAdmin">Administrador</button>
+                <button id="btnArbitro">Árbitro</button>
             </div>
         </div>
     </main>
-    <?php include_once "VISTA/header.php" ?>
+    <?php include_once "VISTA/footer.php" ?>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const btnAdmin = document.getElementById("btnAdmin");
+            const btnArbitro = document.getElementById("btnArbitro");
+            const formAdmin = document.getElementById("formAdmin");
+            const formArbitro = document.getElementById("formArbitro");
+
+            // Mostrar el Formulario 1 y ocultar el Formulario 2
+            btnAdmin.addEventListener("click", function() {
+                formAdmin.style.display = "block";
+                formArbitro.style.display = "none";
+            });
+
+            // Mostrar el Formulario 2 y ocultar el Formulario 1
+            btnArbitro.addEventListener("click", function() {
+                formArbitro.style.display = "block";
+                formAdmin.style.display = "none";
+            });
+        }); 
+    </script>
 </body>
 </html>
