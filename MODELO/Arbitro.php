@@ -22,10 +22,6 @@ class Arbitro extends Usuario{
     }
 
     // Getters
-    public function getId() {
-        return $this->id;
-    }
-
     public function getNombre() {
         return $this->nombre;
     }
@@ -38,10 +34,6 @@ class Arbitro extends Usuario{
         return $this->dni;
     }
 
-    public function getContrasena() {
-        return $this->contrasena;
-    }
-
     public function getEmail() {
         return $this->email;
     }
@@ -51,10 +43,6 @@ class Arbitro extends Usuario{
     }
 
     // Setters
-    public function setId($id) {
-        $this->id = $id;
-    }
-
     public function setNombre($nombre) {
         $this->nombre = $nombre;
     }
@@ -65,10 +53,6 @@ class Arbitro extends Usuario{
 
     public function setDni($dni) {
         $this->dni = $dni;
-    }
-
-    public function setContrasena($contrasena) {
-        $this->contrasena = $contrasena;
     }
 
     public function setEmail($email) {

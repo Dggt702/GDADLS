@@ -13,7 +13,9 @@ class Funciones{
         $ret = false;
         $sql = "SELECT * FROM administrador WHERE nombre_usuario =:nombre_usuario AND contrasenia =:contrasenia";
         $stmt = self::$conn->prepare($sql);
-        
+        $stmt->bindParam(":nombre_usuario",$usuario);
+        $stmt->bindParam(":contrasenia",$contrasenia);
+
         if($respuesta = $stmt->execute()){
             if ($respuesta){
                 $ret = true;
@@ -23,11 +25,11 @@ class Funciones{
     }
 
     public static function iniciarSesionArbitro($arbitro){
-        $arbitro = $admin->getNombreUsuario();
+        $arbitro = $admin->getDNI();
         $contrasenia = $admin->getContrasenia();
         
         $ret = false;
-        $sql = "SELECT * FROM arbitro WHERE nombre_usuario =:nombre_usuario AND contrasenia =:contrasenia";
+        $sql = "SELECT * FROM arbitro WHERE dni =:dni AND contrasena =:contrasena";
         $stmt = self::$conn->prepare($sql);
         
         if($respuesta = $stmt->execute()){
