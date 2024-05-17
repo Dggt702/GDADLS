@@ -1,11 +1,16 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1); 
+error_reporting(E_ALL);
+
+require_once ("../MODELO/Funciones.php");
 
 if($_SERVER["REQUEST_METHOD"]=="POST"){
     if(isset($_POST["nombreUsuario"]) && isset($_POST["contraseniaAdmin"])){
         $nombreUsuario = $_POST["nombreUsuario"];
         $contraseniaAdmin = $_POST["contraseniaAdmin"];
 
-        $contraseniaEncontrada = Funciones::comprobarContraseñaAdministrador($nombreUsuario);
+        $contraseniaEncontrada = Funciones::comprobarSesionAdministrador($nombreUsuario);
         if(!$contraseniaEncontrada)
             header("Location: ../index.php");
         else {
@@ -18,7 +23,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         $identificador = $_POST["identificador"];
         $contraseniaArbitro = $_POST["contraseniaArbitro"];
         
-        $contraseniaEncontrada = Funciones::comprobarContraseñaArbitro($identificador);
+        $contraseniaEncontrada = Funciones::comprobarSesionArbitro($identificador);
         if(!$contraseniaEncontrada)
             header("Location: ../index.php");
         else {
@@ -27,4 +32,4 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
             else header("Location: ../index.php");
         }
     }
-}
+}else header("Location: ../index.php");
