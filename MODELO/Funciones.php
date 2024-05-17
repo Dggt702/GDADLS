@@ -25,12 +25,14 @@ class Funciones{
     }
 
     public static function iniciarSesionArbitro($arbitro){
-        $arbitro = $admin->getDNI();
+        $dni = $admin->getDNI();
         $contrasenia = $admin->getContrasenia();
         
         $ret = false;
         $sql = "SELECT * FROM arbitro WHERE dni =:dni AND contrasena =:contrasena";
         $stmt = self::$conn->prepare($sql);
+        $stmt->bindParam(":dni",$dni);
+        $stmt->bindParam(":contrasena",$contrasenia);
         
         if($respuesta = $stmt->execute()){
             if ($respuesta){
