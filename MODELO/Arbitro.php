@@ -1,6 +1,8 @@
 <?php
 
-class Arbitro {
+require_once("Usuario.php");
+
+class Arbitro extends Usuario{
     private $id;
     private $nombre;
     private $apellidos;
@@ -11,20 +13,15 @@ class Arbitro {
 
     // Constructor
     public function __construct($id, $nombre, $apellidos, $dni, $contrasena, $email, $disponibilidad) {
-        $this->id = $id;
+        parent::__construct($id,$contrasena);
         $this->nombre = $nombre;
         $this->apellidos = $apellidos;
         $this->dni = $dni;
-        $this->contrasena = $contrasena;
         $this->email = $email;
         $this->disponibilidad = $disponibilidad;
     }
 
     // Getters
-    public function getId() {
-        return $this->id;
-    }
-
     public function getNombre() {
         return $this->nombre;
     }
@@ -37,10 +34,6 @@ class Arbitro {
         return $this->dni;
     }
 
-    public function getContrasena() {
-        return $this->contrasena;
-    }
-
     public function getEmail() {
         return $this->email;
     }
@@ -50,10 +43,6 @@ class Arbitro {
     }
 
     // Setters
-    public function setId($id) {
-        $this->id = $id;
-    }
-
     public function setNombre($nombre) {
         $this->nombre = $nombre;
     }
@@ -64,10 +53,6 @@ class Arbitro {
 
     public function setDni($dni) {
         $this->dni = $dni;
-    }
-
-    public function setContrasena($contrasena) {
-        $this->contrasena = $contrasena;
     }
 
     public function setEmail($email) {
