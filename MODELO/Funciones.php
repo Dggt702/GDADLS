@@ -27,7 +27,7 @@ class Funciones{
         $contrasenia = $admin->getContrasenia();
         
         $ret = false;
-        $sql = "SELECT * FROM administrador WHERE nombre_usuario =:nombre_usuario AND contrasenia =:contrasenia";
+        $sql = "SELECT * FROM arbitro WHERE nombre_usuario =:nombre_usuario AND contrasenia =:contrasenia";
         $stmt = self::$conn->prepare($sql);
         
         if($respuesta = $stmt->execute()){

@@ -1,6 +1,8 @@
 <?php
 
-class Arbitro {
+require_once("Usuario.php");
+
+class Arbitro extends Usuario{
     private $id;
     private $nombre;
     private $apellidos;
@@ -11,11 +13,10 @@ class Arbitro {
 
     // Constructor
     public function __construct($id, $nombre, $apellidos, $dni, $contrasena, $email, $disponibilidad) {
-        $this->id = $id;
+        parent::__construct($id,$contrasena);
         $this->nombre = $nombre;
         $this->apellidos = $apellidos;
         $this->dni = $dni;
-        $this->contrasena = $contrasena;
         $this->email = $email;
         $this->disponibilidad = $disponibilidad;
     }

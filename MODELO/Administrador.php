@@ -7,9 +7,8 @@ class Administrador {
 
     // Constructor
     public function __construct($id, $nombreUsuario, $contrasenia) {
-        $this->id = $id;
+        parent::__construct($id,$contrasena);
         $this->nombreUsuario = $nombreUsuario;
-        $this->contrasenia = $contrasenia;
     }
 
     // Getters
