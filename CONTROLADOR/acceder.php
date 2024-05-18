@@ -5,6 +5,8 @@ error_reporting(E_ALL);
 
 require_once ("../MODELO/Funciones.php");
 
+session_start();
+
 if($_SERVER["REQUEST_METHOD"]=="POST"){
     if(isset($_POST["nombreUsuario"]) && isset($_POST["contraseniaAdmin"])){
         $nombreUsuario = $_POST["nombreUsuario"];
@@ -14,8 +16,10 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         if(!$contraseniaEncontrada)
             header("Location: ../index.php");
         else {
-            if(password_verify($contraseniaAdmin, $contraseniaEncontrada))
+            if(password_verify($contraseniaAdmin, $contraseniaEncontrada)){
+                $_SESSION["nombreUsuario"] = $nombreUsuario;
                 header("Location: ../VISTA/vistaAdmin.php");
+            }
             else header("Location: ../index.php");
         }
     }

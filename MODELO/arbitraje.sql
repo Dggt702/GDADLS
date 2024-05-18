@@ -51,7 +51,8 @@ CREATE TABLE `arbitro` (
   `nombre` varchar(20) NOT NULL,
   `apellidos` varchar(50) NOT NULL,
   `dni` varchar(10) NOT NULL,
-  `contrasena` varchar(20) NOT NULL,
+  `contrasenia` varchar(20) NOT NULL,
+  `telefono` int(12) NOT NULL,
   `email` varchar(50) NOT NULL,
   `disponibilidad` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
