@@ -16,7 +16,7 @@ session_start();
     <?php include_once "header.php" ?>
     <main class="d-flex my-5">
         <?php include_once "navAdmin.php" ?>
-        <div class="container">
+        <div class="container p-3">
             <h1 class="text-center">Gestión de Árbitros</h1>
             <hr>
             <div class="row d-flex justify-content-center mb-5">

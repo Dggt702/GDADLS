@@ -73,35 +73,90 @@ class Funciones{
         return $admin;
     }
 
+    public static function obtenerArbitro($dni){
+
+        $conn = BBDD::conectar();
+        $arbitro = false;
+        $sql = "SELECT * FROM administrador WHERE nombre_usuario =:nombreUsuario";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":nombreUsuario",$nombreUsuario);
+
+        if($stmt->execute()){
+            $datosArbitro = $stmt->fetch(PDO::FETCH_ASSOC);
+            if($datosArbitro)
+                $arbitro = new Arbitro($datosArbitro["id"],$datosArbitro["nombre"],$datosArbitro["apellidos"],$datosArbitro["dni"],$datosArbitro["contrasenia"],$datosArbitro["telefono"],$datosArbitro["email"],$datosArbitro["disponibilidad"]);
+        }
+
+        return $arbitro;
+    }
+
     public static function insertarArbitro($arbitro){
 
         $insertado = false;
         $conn = BBDD::conectar();
-        $sql = "INSERT INTO Arbitro(nombre,apellidos,dni,contrasenia,email,disponibilidad) VALUES(:nombre,:apellidos,:dni,:telefono,:email,:disponibilidad)";
+        $sql = "INSERT INTO Arbitro(nombre,apellidos,dni,contrasenia,telefono,email,disponibilidad) VALUES(:nombre,:apellidos,:dni,:contrasenia,:telefono,:email,:disponibilidad)";
         $stmt = $conn->prepare($sql);
 
-        $nombre = $arbitro->getName();
-        $apellido = $arbitro->getLastName();
+        $nombre = $arbitro->getNombre();
+        $apellidos = $arbitro->getApellidos();
         $dni = $arbitro->getDni();
-        $telefono = $arbitro->getTel();
-        $correo = $arbitro->getEmail();
-        $idEmpresa = $arbitro->getIdEmpresa();
-        $cargo = $arbitro->getCargo();
+        $contrasenia = $arbitro->getContrasenia();
+        $telefono = $arbitro->getTelefono();
+        $email = $arbitro->getEmail();
+        $disponibilidad = $arbitro->getDisponibilidad();
         
         $stmt->bindParam(":nombre", $nombre);
-        $stmt->bindParam(":apellidos",$apellido);
+        $stmt->bindParam(":apellidos",$apellidos);
         $stmt->bindParam(":dni",$dni);
+        $stmt->bindParam(":contrasenia",$contrasenia);
         $stmt->bindParam(":telefono",$telefono);
-        $stmt->bindParam(":correo",$correo);
-        $stmt->bindParam(":id_empresa",$idEmpresa);
-        $stmt->bindParam(":cargo",$cargo);
+        $stmt->bindParam(":email",$email);
+        $stmt->bindParam(":disponibilidad",$disponibilidad);
 
-        if(self::comprobarArbitro($dni)){
+        if(!self::comprobarArbitro($dni)){
             if($stmt->execute()){
                 $insertado = true;
             }     
         }
         return $insertado;
+    }
+
+    public static function generadorContraseña(){
+        $cadena = "";
+        $caracteres = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $max = strlen($caracteres)-1;
+        for($i = 0; $i < 8; $i++){
+            $cadena .= substr($caracteres, mt_rand(0,$max), 1);
+        }
+        return $cadena;
+    }
+
+    public static function verificarContraseña($stored_hashed_password,$password){
+        /**
+         * Funcion para verificar contraseña codifiada con hash
+         * Parámetros de entrada:
+         *      1. Contraseña guardada en la BBDD
+         *      2. Contraseña a verificar
+         * Posibles valores que devuelve:
+         *      1. True: si la contraseña es la misma
+         *      2. False: si la contraseña es diferente
+         *      3. $new_hashed_password: nuevo hash de la contraseña si el hash necesita ser actualizado
+         */
+
+        $correcta = false;
+
+        // Verificar la contraseña
+        if (password_verify($password, $stored_hashed_password)) {
+            $correcta = true;
+            
+            // Verificar si el hash necesita ser actualizado (rehash)
+            if (password_needs_rehash($stored_hashed_password, PASSWORD_DEFAULT)) {
+                // Rehash la contraseña y actualizar el hash en la base de datos
+                $new_hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                // Actualizar $new_hashed_password en la base de datos
+                $correcta = $new_hashed_password;
+            }
+        }
     }
 
 }

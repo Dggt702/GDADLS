@@ -6,15 +6,17 @@ class Arbitro extends Usuario{
     private $nombre;
     private $apellidos;
     private $dni;
+    private $telefono;
     private $email;
     private $disponibilidad;
 
     // Constructor
-    public function __construct($id, $nombre, $apellidos, $dni, $contrasena, $email, $disponibilidad) {
+    public function __construct($id, $nombre, $apellidos, $dni, $contrasena, $telefono, $email, $disponibilidad) {
         parent::__construct($id,$contrasena);
         $this->nombre = $nombre;
         $this->apellidos = $apellidos;
         $this->dni = $dni;
+        $this->telefono = $telefono;
         $this->email = $email;
         $this->disponibilidad = $disponibilidad;
     }
@@ -30,6 +32,10 @@ class Arbitro extends Usuario{
 
     public function getDni() {
         return $this->dni;
+    }
+
+    public function getTelefono() {
+        return $this->telefono;
     }
 
     public function getEmail() {
@@ -53,6 +59,10 @@ class Arbitro extends Usuario{
         $this->dni = $dni;
     }
 
+    public function setTelefono($telefono) {
+        $this->telefono = $telefono;
+    }
+
     public function setEmail($email) {
         $this->email = $email;
     }
@@ -61,5 +71,3 @@ class Arbitro extends Usuario{
         $this->disponibilidad = $disponibilidad;
     }
 }
-
-?>

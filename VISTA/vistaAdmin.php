@@ -17,7 +17,7 @@ session_start();
     
     <main class="d-flex my-5">
         <?php include_once "navAdmin.php" ?>
-        <div class="container">
+        <div class="container p-3">
             <div class="row">
                 
             </div>

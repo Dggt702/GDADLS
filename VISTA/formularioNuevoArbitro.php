@@ -1,5 +1,5 @@
-<form class="d-flex justify-content-center mt-0" method="POST" action="../CONTROLADOR/insertarPersona.php" enctype="multipart/form-data">
-    <div class="row g-3 w-75" id="insertarPersona">
+<form class="d-flex justify-content-center mt-0" method="POST" action="../CONTROLADOR/crearArbitro.php" enctype="multipart/form-data">
+    <div class="row g-3 w-75" id="insertarArbitro">
         <h3 class="text-center">Nuevo Árbitro</h3>
         <div class="col-6 mb-3">
             <label for="nombre" class="form-label">Nombre</label>
@@ -19,7 +19,7 @@
         </div>
         <div class="col-12 mb-3">
             <label class="form-label">Correo</label>
-            <input type="email" class="form-control" name="correo" placeholder="Ingrese el correo de contacto de la persona" autocomplete="off">
+            <input type="email" class="form-control" name="mail" placeholder="Ingrese el correo de contacto de la persona" autocomplete="off" required>
         </div>
         <?php
         if(isset($_GET["insert"]) && ($_GET["insert"] == "error")){?>
@@ -37,7 +37,7 @@
         <h1 class="text-center">Foto de Perfil</h1>
         <div class="col-12 align-items-center rounded-circle shadow" style="width:7cm; height:7cm; background-position:center; background-size:cover; background-color:gray;" id="imagen"></div>
         <div class="col-12 text-start d-flex align-items-center">
-            <input type="file" name="imageFile" id="imageFile" accept="image/*">
+            <input type="file" name="imageFile" id="imageFile" accept=".png, .jpg, .jpeg">
             <a class="btn btn-link" id="regresar">
                 Regresar
             </a>
@@ -52,7 +52,7 @@
 
         function cambiarPagina(event){
             cajaFoto = document.getElementById("insertarFoto");
-            cajaPersona = document.getElementById("insertarPersona");
+            cajaPersona = document.getElementById("insertarArbitro");
 
             let idTarget = event.target.id;
 
