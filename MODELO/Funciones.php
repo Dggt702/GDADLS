@@ -90,6 +90,21 @@ class Funciones{
         return $arbitro;
     }
 
+    public static function obtenerDeportes(){        
+        $conn = BBDD::conectar();
+        $arrayDeportes = array();
+        $sql = "SELECT * FROM deporte";
+        $stmt = $conn->prepare($sql);
+
+        if($stmt->execute()){
+            $deportes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                foreach($deportes as $elemento){
+                    array_push($arrayDeportes,new Deporte($elemento["id"],$elemento["nombre"]));
+                }
+        }
+        return $arrayDeportes;
+    }
+
     public static function insertarArbitro($arbitro){
 
         $insertado = false;
