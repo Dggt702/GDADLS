@@ -54,6 +54,24 @@ class Funciones{
         }
         return $encontrado;
     }
+    
+    public static function comprobarClub($nombre,$deporte){
+
+        $conn = BBDD::conectar();
+        $encontrado = false;
+        $sql = "SELECT * FROM club WHERE nombre =:nombre AND deporte = :deporte";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":nombre",$nombre);
+        $stmt->bindParam(":deporte",$deporte);
+        
+        if($stmt->execute()){
+            $respuesta = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (!empty($respuesta)){
+                $encontrado = true;
+            }
+        }
+        return $encontrado;
+    }
 
 
     public static function obtenerUsuario($nombreUsuario){
@@ -119,6 +137,50 @@ class Funciones{
         return $arrayArbitros;
     }
 
+    public static function obtenerPartidos(){        
+        $conn = BBDD::conectar();
+        $arrayPartidos = array();
+        $sql = "SELECT * FROM partido";
+        $stmt = $conn->prepare($sql);
+        /*
+        if($stmt->execute()){
+            $deportes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                foreach($deportes as $datosArbitro){
+                    array_push($arrayPartidos,new Arbitro($datosArbitro["id"],$datosArbitro["nombre"],$datosArbitro["apellidos"],$datosArbitro["dni"],$datosArbitro["contrasenia"],$datosArbitro["telefono"],$datosArbitro["email"],$datosArbitro["disponibilidad"]));
+                }
+        }
+        return $arrayPartidos;*/
+    }
+
+    public static function obtenerClubes(){        
+        $conn = BBDD::conectar();
+        $arrayClubes = array();
+        $sql = "SELECT * FROM club";
+        $stmt = $conn->prepare($sql);
+
+        if($stmt->execute()){
+            $clubes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                foreach($clubes as $datosClub){
+                    array_push($arrayClubes,new Club($datosClub["id"],$datosClub["nombre"],$datosClub["localizacion"],$datosClub["deporte"],$datosClub["persona_contacto"],$datosClub["telefono_contacto"],$datosClub["correo_contacto"]));
+                }
+        }
+        return $arrayClubes;
+    }
+
+    public static function obtenerPueblos(){        
+        $conn = BBDD::conectar();
+        $arrayPueblos = array();
+        $sql = "SELECT * FROM pueblo";
+        $stmt = $conn->prepare($sql);
+        if($stmt->execute()){
+            $pueblos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                foreach($pueblos as $datosPueblo){
+                    array_push($arrayPueblos,new Pueblo($datosPueblo["id"],$datosPueblo["nombre"],$datosPueblo["codigo_postal"]));
+                }
+        }
+        return $arrayPueblos;
+    }   
+
     public static function insertarArbitro($arbitro){
 
         $insertado = false;
@@ -143,6 +205,35 @@ class Funciones{
         $stmt->bindParam(":disponibilidad",$disponibilidad);
 
         if(!self::comprobarArbitro($dni)){
+            if($stmt->execute()){
+                $insertado = true;
+            }     
+        }
+        return $insertado;
+    }
+
+    public static function insertarClub($club){
+
+        $insertado = false;
+        $conn = BBDD::conectar();
+        $sql = "INSERT INTO club(nombre,localizacion,deporte,persona_contacto,telefono_contacto,correo_contacto) VALUES(:nombre,:localizacion,:deporte,:persona_contacto,:telefono_contacto,:correo_contacto)";
+        $stmt = $conn->prepare($sql);
+
+        $nombre = $club->getNombre();
+        $localizacion = $club->getLocalizacion();
+        $deporte = $club->getDeporte();
+        $personaContacto = $club->getPersonaContacto();
+        $telefono = $club->getTelefonoContacto();
+        $correo = $club->getCorreoContacto();
+        
+        $stmt->bindParam(":nombre", $nombre);
+        $stmt->bindParam(":localizacion",$localizacion);
+        $stmt->bindParam(":persona_contacto",$personaContacto);
+        $stmt->bindParam(":telefono_contacto",$telefono);
+        $stmt->bindParam(":correo_contacto",$correo);
+        $stmt->bindParam(":deporte",$deporte);
+
+        if(!self::comprobarClub($nombre,$deporte)){
             if($stmt->execute()){
                 $insertado = true;
             }     

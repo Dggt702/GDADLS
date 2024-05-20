@@ -1,18 +1,20 @@
-<form class="d-flex justify-content-center mt-0" method="POST" action="../CONTROLADOR/crearArbitro.php" enctype="multipart/form-data">
+<form class="d-flex justify-content-center mt-0" method="POST" action="../CONTROLADOR/crearClub.php" enctype="multipart/form-data">
     <div class="row g-3 w-75" id="insertarClub">
-        <h3 class="text-center">Nuevo Partido</h3>
+        <h3 class="text-center">Nuevo Club</h3>
         <div class="col-6 mb-3">
             <label for="nombre" class="form-label">Nombre</label>
             <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese el nombre del club" autocomplete="off" required>
         </div>
         <div class="col-6 mb-3">
             <label for="localizacion" class="form-label">Localizacion</label>
-            <input type="text" class="form-control" id="localizacion" name="localizacion" placeholder="Ingrese la localización del club" autocomplete="off" required>
+            <?php
+                echo FuncionesVista::imprimirSelectLocalizaciones("localizacion","localizacion");
+            ?>
         </div>
         <div class="col-6 mb-3">
             <label for="deporte" class="form-label">Deporte</label>
             <?php
-                echo FuncionesVista::imprimirSelectDeportes("deporte","deporte");""
+                echo FuncionesVista::imprimirSelectDeportes("deporte","deporte");
             ?>    
         </div>
         <div class="col-6 mb-3">

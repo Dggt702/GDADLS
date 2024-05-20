@@ -37,7 +37,7 @@ require_once("../VISTA/FuncionesVista.php");
             </div>
             <div id="tabla_clubes" class="row" style="display: none">
                 <?php 
-                    //include_once "tablaAcreditacionesVehiculos.php";
+                    echo FuncionesVista::imprimirTablaClubes();
                 ?>
             </div>
         </div>
