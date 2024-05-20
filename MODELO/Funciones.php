@@ -77,16 +77,15 @@ class Funciones{
 
         $conn = BBDD::conectar();
         $arbitro = false;
-        $sql = "SELECT * FROM administrador WHERE nombre_usuario =:nombreUsuario";
+        $sql = "SELECT * FROM arbitro WHERE dni =:dni";
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(":nombreUsuario",$nombreUsuario);
+        $stmt->bindParam(":dni",$dni);
 
         if($stmt->execute()){
             $datosArbitro = $stmt->fetch(PDO::FETCH_ASSOC);
             if($datosArbitro)
                 $arbitro = new Arbitro($datosArbitro["id"],$datosArbitro["nombre"],$datosArbitro["apellidos"],$datosArbitro["dni"],$datosArbitro["contrasenia"],$datosArbitro["telefono"],$datosArbitro["email"],$datosArbitro["disponibilidad"]);
         }
-
         return $arbitro;
     }
 
@@ -103,6 +102,21 @@ class Funciones{
                 }
         }
         return $arrayDeportes;
+    }
+
+    public static function obtenerArbitros(){        
+        $conn = BBDD::conectar();
+        $arrayArbitros = array();
+        $sql = "SELECT * FROM arbitro";
+        $stmt = $conn->prepare($sql);
+
+        if($stmt->execute()){
+            $deportes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                foreach($deportes as $datosArbitro){
+                    array_push($arrayArbitros,new Arbitro($datosArbitro["id"],$datosArbitro["nombre"],$datosArbitro["apellidos"],$datosArbitro["dni"],$datosArbitro["contrasenia"],$datosArbitro["telefono"],$datosArbitro["email"],$datosArbitro["disponibilidad"]));
+                }
+        }
+        return $arrayArbitros;
     }
 
     public static function insertarArbitro($arbitro){

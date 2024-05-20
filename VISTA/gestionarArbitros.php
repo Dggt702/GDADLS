@@ -1,5 +1,6 @@
 <?php
 include_once "../MODELO/Funciones.php";
+include_once "FuncionesVista.php";
 
 session_start();
 ?>
@@ -36,7 +37,7 @@ session_start();
             </div>
             <div id="tabla_arbitros" class="row" style="display: none">
                 <?php 
-                    //include_once "tablaAcreditacionesVehiculos.php";
+                    echo FuncionesVista::imprimirTablaArbitros();
                 ?>
             </div>
         </div>
