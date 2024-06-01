@@ -181,6 +181,35 @@ class Funciones{
         return $arrayPueblos;
     }   
 
+
+    /*
+    =================================
+           OBTENCIÓN INDIVIDUAL
+    =================================
+    */
+
+    public static function obtenerDeporte($id){        
+        $conn = BBDD::conectar();
+        $arrayDeportes = array();
+        $sql = "SELECT * FROM deporte WHERE id = :id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":id",$id);
+        
+        if($stmt->execute()){
+            $deportes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                foreach($deportes as $elemento){
+                    array_push($arrayDeportes,new Deporte($elemento["id"],$elemento["nombre"]));
+                }
+        }
+        return $arrayDeportes;
+    }
+
+    /*
+    =================================
+            INSERCIONES EN BBDD
+    =================================
+    */
+
     public static function insertarArbitro($arbitro){
 
         $insertado = false;

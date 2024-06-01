@@ -5,7 +5,10 @@
     </div>
     <div class="col-12">
         <label for="contraseniaArbitro" class="form-label">Contraseña</label>
-        <input type="text" class="form-control" id="contraseniaArbitro" name="contraseniaArbitro">
+        <input type="password" class="form-control" id="contraseniaArbitro" name="contraseniaArbitro">
     </div>
-    <button type="submit">Acceder</button>
+    <div class="col-12">
+        <button class="btn btn-primary" type="submit">Acceder</button>
+    </div>
+
 </form>
