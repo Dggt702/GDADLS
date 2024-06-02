@@ -57,7 +57,7 @@ class FuncionesVista{
                         }else{
                             $rend.='<td class="text-center text-white fw-bold bg-danger">'.$arbitro->getDisponibilidad().'</td>';
                         }
-                        $rend.='<td><a class="btn btn-secondary" href="perfilArbitro.php?id='.$arbitro->getId().'">Editar</td></a>'; 
+                        $rend.='<td><a class="btn btn-secondary" href="perfilArbitro.php?dni='.$arbitro->getDni().'">Editar</td></a>'; 
                         $rend.='</tr>';
                     }
                     $rend .='
@@ -127,6 +127,57 @@ class FuncionesVista{
             </table>';
         }
         return $rend;
+    }
+
+    public static function imprimirDatosArbitro($arbitro){
+        $rend=  '<form action="../CONTROLADOR/actualizarPersona.php" method="GET">
+                    <div class="row w-75">
+                        <h1 class="text-center">Datos del Árbitro</h1>
+                        <input type="text" name="id" class="form-control" value="'.$arbitro->getId().'" hidden>
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" name="nombre" class="form-control" value="'.$arbitro->getNombre().'" placeholder="'.$arbitro->getNombre().'">
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Apellidos</label>
+                            <input type="text" name="apellidos" class="form-control" value="'.$arbitro->getApellidos().'" placeholder="'.$arbitro->getApellidos().'">
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label class="form-label">DNI</label>
+                            <input type="text" name="dni" class="form-control" value="'.$arbitro->getDni().'" placeholder="'.$arbitro->getDni().'">
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Número de teléfono</label>
+                            <input type="text" name="tel" class="form-control" value="'.$arbitro->getTelefono().'" placeholder="'.$arbitro->getTelefono().'">
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Correo Electrónico</label>
+                            <input type="text" name="correo" class="form-control" value="'.$arbitro->getEmail().'" placeholder="'.$arbitro->getEmail().'">
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Disponibilidad</label>
+                            <input type="text" name="disponibilidad" class="form-control" value="'.$arbitro->getDisponibilidad().'" placeholder="'.$arbitro->getDisponibilidad().'">
+                        </div>
+                        <button type="submit" class="btn btn-success">Actualizar</button>
+                    </div>
+                </form>';
+        return $rend;
+    }
+
+    public static function mostraFotoArbitro($arbitro){
+        $rutaBase = "../fotosArbitros/{$arbitro->getDni()}-{$arbitro->getNombre()}{$arbitro->getApellidos()}";
+        $rend = "";
+
+        $extensiones = ['jpg', 'jpeg', 'png','gif'];
+        foreach ($extensiones as $extension) {
+            $rutaImagen = "{$rutaBase}.{$extension}";
+            if (file_exists($rutaImagen)) {
+                $rend = '<img style="width:10cm; height:10cm;" src="'.$rutaImagen.'" class="img-fluid rounded-circle border" id="fotoCarnet" alt="No hay foto">';
+                return $rend; // Si la imagen se encuentra, la mostramos y salimos del bucle
+            }
+        }   
+        if ($rend == "")
+            return '<img id="fotoCarnet" style="width:10cm; height:10cm;" src="../fotosArbitros/no-image-available.jpeg" class="img-fluid rounded-circle border" id="fotoCarnet" alt="No hay foto">';
     }
 
     public static function mostraRutaFotoArbitro($arbitro){
