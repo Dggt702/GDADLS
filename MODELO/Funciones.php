@@ -131,7 +131,7 @@ class Funciones{
 
     /*
     =================================
-           OBTENCIÓN PLURAL
+             OBTENCIÓN PLURAL
     =================================
     */
 
