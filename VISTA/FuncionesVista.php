@@ -94,6 +94,37 @@ class FuncionesVista{
         }
         return $rend;
     }
+
+    public static function imprimirTablaPartidos(){
+        $arrayPartidos = Funciones::obtenerPartidos();
+
+        if(empty($arrayPartidos)){
+            $rend = "<h1 class='text-center'>No hay clubes registrados</h1>";
+        }else{
+            $rend='<table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Deporte</th>
+                    </tr>
+                </thead>
+                <tbody class="align-middle">
+                    ';
+                    foreach($arrayPartidos as $club){
+                        $rend .='<tr>';
+                        $rend.='<td>'.$club->getId().'</td>';
+                        $rend.='<td>'.$club->getNombre().'</td>';
+                        $rend.='<td>'.$club->getDeporte().'</td>';
+                        $rend.='<td><a class="btn btn-secondary" href="perfilClub.php?id='.$club->getId().'">Editar</td></a>'; 
+                        $rend.='</tr>';
+                    }
+                    $rend .='
+                </tbody>
+            </table>';
+        }
+        return $rend;
+    }
     
 }
 ?>
