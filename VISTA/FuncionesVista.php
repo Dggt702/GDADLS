@@ -3,6 +3,36 @@ require_once("../MODELO/Clases.php");
 require_once("../MODELO/Funciones.php");
 class FuncionesVista{
 
+    public static function pantallaDeOperacion($mensaje,$bool){
+        $rend = '
+        <!DOCTYPE html>
+        <html lang="es">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+            <title>Confirmación</title>
+        </head>
+        <body class="position-absolute top-50 start-50 translate-middle">
+        ';
+        if($bool){
+            $rend .= "<div class='row border border-dark rounded border-opacity-10 shadow' style='padding:2cm;'>";
+            $rend .="<div><h1 class='text-center'>Operación Realizada Con Éxito</h1></div>";
+            $rend .="<div><p class='fw-light text-center'>".$mensaje."</p></div>";
+            $rend.='<div class="text-center"><a class="btn btn-success" href="javascript: history.go(-1)">Volver atrás</a></div>';
+            $rend .= "</div></body>";
+            return $rend;
+        }else{
+            $rend .= "<div class='row border border-dark rounded border-opacity-10 shadow bg-danger' style='padding:2cm;'>";
+            $rend .="<div ><h1 class='text-center'>Ha ocurrido un error :(</h1></div>";
+            $rend .="<div class='text-light'><p class='fw-light text-center'>".$mensaje."</p></div>";
+            $rend.='<div class="text-center"><a class="btn btn-dark " href="javascript: history.go(-1)">Volver atrás</a></div>';
+            $rend .= "</div></body>";
+            return $rend;
+        }   
+    }
+
     public static function imprimirSelectDeportes($id,$nombre){
         $rend = "<select class='form-select' name='".$nombre."' id='".$id."'>";
         $rend.= "<option disabled hidden selected>Elige un deporte</option>";
@@ -130,7 +160,7 @@ class FuncionesVista{
     }
 
     public static function imprimirDatosArbitro($arbitro){
-        $rend=  '<form action="../CONTROLADOR/actualizarPersona.php" method="GET">
+        $rend=  '<form action="../CONTROLADOR/actualizarArbitro.php" method="GET">
                     <div class="row w-75">
                         <h1 class="text-center">Datos del Árbitro</h1>
                         <input type="text" name="id" class="form-control" value="'.$arbitro->getId().'" hidden>
@@ -143,12 +173,11 @@ class FuncionesVista{
                             <input type="text" name="apellidos" class="form-control" value="'.$arbitro->getApellidos().'" placeholder="'.$arbitro->getApellidos().'">
                         </div>
                         <div class="col-12 mb-3">
-                            <label class="form-label">DNI</label>
-                            <input type="text" name="dni" class="form-control" value="'.$arbitro->getDni().'" placeholder="'.$arbitro->getDni().'">
-                        </div>
-                        <div class="col-12 mb-3">
                             <label class="form-label">Número de teléfono</label>
                             <input type="text" name="tel" class="form-control" value="'.$arbitro->getTelefono().'" placeholder="'.$arbitro->getTelefono().'">
+                        </div>
+                        <div class="col-12 mb-3 d-none">
+                            <input type="text" name="dni" class="form-control" value="'.$arbitro->getDni().'" placeholder="'.$arbitro->getDni().'">
                         </div>
                         <div class="col-12 mb-3">
                             <label class="form-label">Correo Electrónico</label>
@@ -156,8 +185,63 @@ class FuncionesVista{
                         </div>
                         <div class="col-12 mb-3">
                             <label class="form-label">Disponibilidad</label>
-                            <input type="text" name="disponibilidad" class="form-control" value="'.$arbitro->getDisponibilidad().'" placeholder="'.$arbitro->getDisponibilidad().'">
+                            <br>
+                        ';
+
+                        if($arbitro->getDisponibilidad()=="DISPONIBLE"){
+                            $rend.= '<div class="btn-group col-12" role="group" aria-label="Basic radio toggle button group">
+                            <input type="radio" class="btn-check" name="disponibilidad" id="btnradio1" value="DISPONIBLE" autocomplete="off" checked>
+                            <label class="btn btn-outline-warning" for="btnradio1">Disponible</label>
+
+                            <input type="radio" class="btn-check" name="disponibilidad" id="btnradio2" value="DE BAJA" autocomplete="off">
+                            <label class="btn btn-outline-danger" for="btnradio2">De Baja</label>
+                            </div>';
+                        }else{
+                            $rend.= '<div class="btn-group col-12" role="group" aria-label="Basic radio toggle button group">
+                            <input type="radio" class="btn-check" name="disponibilidad" id="btnradio1" value="DISPONIBLE" autocomplete="off">
+                            <label class="btn btn-outline-warning" for="btnradio1">Disponible</label>
+
+                            <input type="radio" class="btn-check" name="disponibilidad" id="btnradio2" value="DE BAJA" autocomplete="off" checked> 
+                            <label class="btn btn-outline-danger" for="btnradio2">De Baja</label>
+                            </div>';
+                        }
+                        $rend.= '</div>
+                        <button type="submit" class="btn btn-success">Actualizar</button>
+                    </div>
+                </form>';
+        return $rend;
+    }
+
+    public static function imprimirDatosClub($club){
+        $rend=  '<form action="../CONTROLADOR/actualizarArbitro.php" method="GET">
+                    <div class="row w-75">
+                        <h1 class="text-center">Datos del Club</h1>
+                        <input type="text" name="id" class="form-control" value="'.$club->getId().'" hidden>
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" name="nombre" class="form-control" value="'.$club->getNombre().'" placeholder="'.$club->getNombre().'">
                         </div>
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Localización</label>
+                            <input type="text" name="localizacion" class="form-control" value="'.$club->getLocalizacion().'" placeholder="'.$club->getLocalizacion().'">
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Deporte</label>
+                            <input type="text" name="deporte" class="form-control" value="'.$club->getDeporte().'" placeholder="'.$club->getDeporte().'">
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Persona Contacto</label>
+                            <input type="text" name="persona" class="form-control" value="'.$club->getPersonaContacto().'" placeholder="'.$club->getPersonaContacto().'">
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Telefono Contacto</label>
+                            <input type="text" name="tel" class="form-control" value="'.$club->getTelefonoContacto().'" placeholder="'.$club->getTelefonoContacto().'">
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Correo Contacto</label>
+                            <input type="text" name="email" class="form-control" value="'.$club->getCorreoContacto().'" placeholder="'.$club->getCorreoContacto().'">
+                        </div>
+                        
                         <button type="submit" class="btn btn-success">Actualizar</button>
                     </div>
                 </form>';

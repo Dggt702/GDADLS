@@ -64,6 +64,14 @@ session_start();
                 form_nuevoArbitro.style.display = "none";
             }
         }
+
+        function cambiarColor(id){
+            if(document.getElementById(id).classList.contains("table-danger")){
+                document.getElementById(id).classList.remove("table-danger");
+            }else{
+                document.getElementById(id).classList.add("table-danger");
+            }
+        }
     </script>
 </body>
 </html>

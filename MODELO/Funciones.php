@@ -87,7 +87,7 @@ class Funciones{
         $stmt->bindParam(":id",$id);
         
         if($stmt->execute()){
-            $deportes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $deportes = $stmt->fetch(PDO::FETCH_ASSOC);
                 foreach($deportes as $elemento){
                     array_push($arrayDeportes,new Deporte($elemento["id"],$elemento["nombre"]));
                 }
@@ -97,7 +97,6 @@ class Funciones{
 
 
     public static function obtenerUsuario($nombreUsuario){
-
         $conn = BBDD::conectar();
         $admin = false;
         $sql = "SELECT * FROM administrador WHERE nombre_usuario =:nombreUsuario";
@@ -109,12 +108,27 @@ class Funciones{
             if($datosAdmin)
                 $admin = new Administrador($datosAdmin["id"],$datosAdmin["nombre_usuario"],$datosAdmin["contrasenia"]);
         }
-
         return $admin;
     }
 
-    public static function obtenerArbitro($dni){
+    public static function obtenerClub($id){
+        $conn = BBDD::conectar();
+        $club = false;
+        $sql = "SELECT * FROM club WHERE id = :id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":id",$id);
 
+        if($stmt->execute()){
+            $datos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                foreach($datos as $datosClub){
+                    $club = new Club($datosClub["id"],$datosClub["nombre"],$datosClub["localizacion"],$datosClub["deporte"],$datosClub["persona_contacto"],$datosClub["telefono_contacto"],$datosClub["correo_contacto"]);
+                }
+        }
+
+        return $club;
+    }
+
+    public static function obtenerArbitro($dni){
         $conn = BBDD::conectar();
         $arbitro = false;
         $sql = "SELECT * FROM arbitro WHERE dni =:dni";
@@ -313,4 +327,58 @@ class Funciones{
         }
     }
 
+    /*
+    =================================
+          ELIMINAR DE LA  BBDD
+    =================================
+    */
+
+    public static function eliminarArbitro($dni){
+        $conn = BBDD::conectar();
+        $sql = "DELETE FROM Arbitro WHERE dni = :dni";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":dni",$dni);
+        $eliminado = false;
+
+        if($stmt->execute()){
+            $eliminado = true;
+        }     
+    
+        return $eliminado;
+
+    }
+
+     /*
+    =================================
+          ACTUALIZAR DE LA  BBDD
+    =================================
+    */
+
+    public static function editarArbitro($arbitro){
+        $nombre = $arbitro->getNombre();
+        $dni = $arbitro->getDni();
+        $apellidos = $arbitro->getApellidos();
+        $tel = $arbitro->getTelefono();
+        $email = $arbitro->getEmail();
+        $disponibilidad = $arbitro->getDisponibilidad();
+
+        $conn = BBDD::conectar();
+        $sql = "UPDATE Arbitro SET nombre = :nombre, apellidos = :apellidos, telefono=:telefono, email=:email, disponibilidad=:disponibilidad WHERE dni=:dni";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":nombre",$nombre);
+        $stmt->bindParam(":dni",$dni);
+        $stmt->bindParam(":apellidos",$apellidos);
+        $stmt->bindParam(":telefono",$tel);
+        $stmt->bindParam(":email",$email);
+        $stmt->bindParam(":disponibilidad",$disponibilidad);
+        $ret = false; 
+
+        if(self::comprobarArbitro($dni) == true){
+            if($stmt->execute()){
+                $ret=true;
+            }     
+        }
+        return $ret;
+    }
 }

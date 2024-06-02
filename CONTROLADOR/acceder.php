@@ -31,9 +31,10 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         if(!$contraseniaEncontrada)
             header("Location: ../index.php");
         else {
-            if(password_verify($contraseniaArbitro, $contraseniaEncontrada))
-                header("Location: ../VISTA/vistaAdmin.php");
-            else header("Location: ../index.php");
+            if(password_verify($contraseniaArbitro, $contraseniaEncontrada)){
+                $_SESSION["id"] = $_POST["identificador"];
+                header("Location: ../VISTA/vistaArbitro.php"); 
+            }else header("Location: ../index.php");
         }
     }
 }else header("Location: ../index.php");

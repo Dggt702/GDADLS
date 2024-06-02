@@ -3,7 +3,7 @@
     require_once('FuncionesVista.php');
 
     session_start();
-    $arbitro = Funciones::obtenerArbitro($_GET["dni"]);
+    $club = Funciones::obtenerClub($_GET["id"]);
 ?>
 <!DOCTYPE html>
 <html lang="es" class="h-100">
@@ -14,7 +14,7 @@
     <link href="https://unpkg.com/cropperjs@1.5.12/dist/cropper.min.css" rel="stylesheet">
 
     <link rel="icon" href="../imagenes/Logos/logo1.png" type="image/x-icon">
-    <title>Perfil arbitro</title>
+    <title>Perfil Club</title>
     
 </head>
 <body class="bg-light d-flex flex-column h-100">
@@ -24,45 +24,9 @@
         <?php include("navAdmin.php") ?>
 
         <div class="container-fluid">
-            <div class="row my-5">
-                <div class="col-6 d-flex flex-wrap justify-content-center">
-                    <div class="d-flex align-items-center mb-2" id="marcoFoto" style="width: 378px; height: 508px">
-                        <?php echo FuncionesVista::mostraFotoArbitro($arbitro) ?>
-                    </div>
-                        
-                    <form id="formImagen" name="uploadForm" class="d-flex flex-wrap" action="../CONTROLADOR/guardarImagen.php" method="POST" enctype="multipart/form-data">
-                        <div class="col-12">
-                            <input type="file" name="imageFile" class="form-control" id="imageFile" accept="image/*">
-                            <input type="image" name="imageCropped" class="form-control" id="imageForm" hidden>
-                            <input type="text" name="dni" class="form-control" value="<?php echo $arbitro->getDni() ?>" hidden>
-                        </div>
-                        <div class="col-12 mt-2">
-                            <button class="btn btn-success" type="submit" class="mt-3">Guardar</button>
-                            <?php
-                                include_once("foto.php");
-                            ?>   
-                            <button id="openCropModal" class="btn btn-secondary">Recortar Foto</button>
-                        </div> 
-                        
-                    </form>
-                    
-                    <div id="confirmationModal" style="display: none;">
-                        <div>
-                            <h3>¿Deseas recortar la imagen?</h3>
-                            <button class="btn btn-success" id="confirmCrop">Confirmar</button>
-                            <button class="btn btn-danger" id="cancelCrop">Cancelar</button>
-                        </div>
-                    </div>
-
-                    <img id="previewImage" src="" class="img-fluid" alt="Vista previa" style="display: none;">
-                    <canvas id="cropperContainer" style="display: none;"></canvas>
-                    
-
-                    
-                </div>
-                
+            <div class="row my-5">   
                 <div class="col-6">
-                    <?php echo FuncionesVista::imprimirDatosArbitro($arbitro) ?>
+                    <?php echo FuncionesVista::imprimirDatosClub($club); ?>
                 </div>
             </div>
         </div>
