@@ -39,8 +39,10 @@ class FuncionesVista{
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
+                        <th scope="col"></th>
                         <th scope="col">Nombre Completo</th>
                         <th scope="col">Disponibilidad</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody class="align-middle">
@@ -48,6 +50,7 @@ class FuncionesVista{
                     foreach($arrayArbitros as $arbitro){
                         $rend .='<tr>';
                         $rend.='<td>'.$arbitro->getId().'</td>';
+                        $rend.='<td><div class="rounded-circle" style="width: 2cm; height:2cm; background-position:center; background-size:cover; background-image: url(\''.self::mostraRutaFotoArbitro($arbitro).'\')"></div></td>';
                         $rend.='<td>'.$arbitro->getNombre()." ".$arbitro->getApellidos().'</td>';
                         if($arbitro->getDisponibilidad()=="DISPONIBLE"){
                             $rend.='<td class="text-center text-white fw-bold bg-success">'.$arbitro->getDisponibilidad().'</td>';
@@ -125,6 +128,20 @@ class FuncionesVista{
         }
         return $rend;
     }
-    
+
+    public static function mostraRutaFotoArbitro($arbitro){
+        $ret = "../fotosArbitros/no-image-available.jpeg";
+        $rutaBase = "../fotosArbitros/{$arbitro->getDni()}-{$arbitro->getNombre()}{$arbitro->getApellidos()}";
+        $extensiones = ['jpg', 'jpeg', 'png','gif'];
+        foreach ($extensiones as $extension) {
+            $rutaImagen = "{$rutaBase}.{$extension}";
+            if (file_exists($rutaImagen)) {
+                $ret = $rutaImagen; // Si la imagen se encuentra, la mostramos y salimos del bucle
+            }
+        }
+        return $ret;
+    }
+
+
 }
 ?>
