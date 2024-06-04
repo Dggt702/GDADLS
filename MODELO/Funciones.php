@@ -25,14 +25,14 @@ class Funciones{
 
         $conn = BBDD::conectar();
         $ret = false;
-        $sql = "SELECT contrasena FROM arbitro WHERE dni =:dni";
+        $sql = "SELECT contrasenia FROM arbitro WHERE dni =:dni";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(":dni",$dni);
         
         if($stmt->execute()){
             $respuesta = $stmt->fetch(PDO::FETCH_ASSOC);
             if (!empty($respuesta)){
-                $ret = $respuesta["contrasena"];
+                $ret = $respuesta["contrasenia"];
             }
         }
         return $ret;
@@ -87,16 +87,15 @@ class Funciones{
         $stmt->bindParam(":id",$id);
         
         if($stmt->execute()){
-            $deportes = $stmt->fetch(PDO::FETCH_ASSOC);
-                foreach($deportes as $elemento){
-                    array_push($arrayDeportes,new Deporte($elemento["id"],$elemento["nombre"]));
-                }
+            $datosDeporte = $stmt->fetch(PDO::FETCH_ASSOC);
+            if($datosDeporte)
+                $deporte = new Deporte($datosDeporte["id"],$datosDeporte["nombre"]);
         }
-        return $arrayDeportes;
+        return $deporte;
     }
 
 
-    public static function obtenerUsuario($nombreUsuario){
+    public static function obtenerAdministrador($nombreUsuario){
         $conn = BBDD::conectar();
         $admin = false;
         $sql = "SELECT * FROM administrador WHERE nombre_usuario =:nombreUsuario";
@@ -143,6 +142,21 @@ class Funciones{
         return $arbitro;
     }
 
+    public static function obtenerPueblo($id){
+        $conn = BBDD::conectar();
+        $pueblo = false;
+        $sql = "SELECT * FROM pueblo WHERE id =:id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":id",$id);
+
+        if($stmt->execute()){
+            $datosPueblo = $stmt->fetch(PDO::FETCH_ASSOC);
+            if($datosPueblo)
+                $pueblo = new Pueblo($datosPueblo["id"],$datosPueblo["nombre"],$datosPueblo["codigo_postal"]);
+        }
+        return $pueblo;
+    }
+
     /*
     =================================
              OBTENCIÓN PLURAL
@@ -184,20 +198,20 @@ class Funciones{
         $arrayPartidos = array();
         $sql = "SELECT * FROM partido";
         $stmt = $conn->prepare($sql);
-        /*
+        
         if($stmt->execute()){
             $deportes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 foreach($deportes as $datosArbitro){
                     array_push($arrayPartidos,new Arbitro($datosArbitro["id"],$datosArbitro["nombre"],$datosArbitro["apellidos"],$datosArbitro["dni"],$datosArbitro["contrasenia"],$datosArbitro["telefono"],$datosArbitro["email"],$datosArbitro["disponibilidad"]));
                 }
         }
-        return $arrayPartidos;*/
+        return $arrayPartidos;
     }
 
     public static function obtenerClubes(){        
         $conn = BBDD::conectar();
         $arrayClubes = array();
-        $sql = "SELECT * FROM club";
+        $sql = "SELECT * FROM club ORDER BY nombre";
         $stmt = $conn->prepare($sql);
 
         if($stmt->execute()){
@@ -212,7 +226,7 @@ class Funciones{
     public static function obtenerPueblos(){        
         $conn = BBDD::conectar();
         $arrayPueblos = array();
-        $sql = "SELECT * FROM pueblo";
+        $sql = "SELECT * FROM pueblo ORDER BY nombre";
         $stmt = $conn->prepare($sql);
         if($stmt->execute()){
             $pueblos = $stmt->fetchAll(PDO::FETCH_ASSOC);

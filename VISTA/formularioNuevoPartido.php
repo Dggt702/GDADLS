@@ -26,56 +26,6 @@
             <p class="text-danger fs-3">El partido ya existe</p><?php
         }
         ?>
-        <div class="text-end">
-            <a class="btn btn-link" id="siguiente">
-                Siguiente
-            </a>
-        </div>
-    </div>
-
-    <div class="row g-3 w-50 justify-content-center text-start" style="display:none;" id="insertarFoto">
-        <h1 class="text-center">Foto de Perfil</h1>
-        <div class="col-12 align-items-center rounded-circle shadow" style="width:7cm; height:7cm; background-position:center; background-size:cover; background-color:gray;" id="imagen"></div>
-        <div class="col-12 text-start d-flex align-items-center">
-            <input type="file" name="imageFile" id="imageFile" accept=".png, .jpg, .jpeg">
-            <a class="btn btn-link" id="regresar">
-                Regresar
-            </a>
-        </div>
         <button type="submit" class="btn btn-success">Añadir</button>
     </div>
 </form>
-
-<script>
-        document.getElementById("regresar").addEventListener("click",cambiarPagina);
-        document.getElementById("siguiente").addEventListener("click",cambiarPagina);
-
-        function cambiarPagina(event){
-            cajaFoto = document.getElementById("insertarFoto");
-            cajaPersona = document.getElementById("insertarArbitro");
-
-            let idTarget = event.target.id;
-
-            if(idTarget == "siguiente"){
-                cajaPersona.style.display="none";
-                cajaFoto.style.display="flex";
-            
-            }else{
-                cajaFoto.style.display="none";
-                cajaPersona.style.display="flex";
-            }            
-        }
-
-        document.getElementById("imageFile").addEventListener("change",subirImagen);
-
-        function subirImagen(){
-            imagenCaja = document.getElementById("imagen");
-            imagen = document.getElementById("imageFile").files[0];
-            urlImagen = URL.createObjectURL(imagen);
-            imagenCaja.style.backgroundImage = "url("+urlImagen+")";
-            console.log(imagen);
-            
-        }
-
-
-    </script>

@@ -1,5 +1,5 @@
 <?php
-    if(isset($_SESSION)) $usuario = Funciones::obtenerUsuario($_SESSION["nombreUsuario"]);
+    if(isset($_SESSION)) $usuario = Funciones::obtenerAdministrador($_SESSION["nombreUsuario"]);
 ?>
 
 <div class="d-flex flex-column p-3 text-start" style="width: 270px;">

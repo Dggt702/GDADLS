@@ -19,8 +19,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
             if(password_verify($contraseniaAdmin, $contraseniaEncontrada)){
                 $_SESSION["nombreUsuario"] = $nombreUsuario;
                 header("Location: ../VISTA/vistaAdmin.php");
-            }
-            else header("Location: ../index.php");
+            }else header("Location: ../index.php");
         }
     }
     elseif(isset($_POST["identificador"]) && isset($_POST["contraseniaArbitro"])){

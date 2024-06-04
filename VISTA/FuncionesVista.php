@@ -34,9 +34,8 @@ class FuncionesVista{
     }
 
     public static function imprimirSelectDeportes($id,$nombre){
-        $rend = "<select class='form-select' name='".$nombre."' id='".$id."'>";
-        $rend.= "<option disabled hidden selected>Elige un deporte</option>";
-        $rend.= "<option>Ninguna</option>";
+        $rend = "<select class='form-select' name='".$nombre."' id='".$id."' required>";
+        $rend.= "<option value='' disabled hidden selected>Elige un deporte</option>";
         $arrayDeportes= Funciones::obtenerDeportes();
             
         foreach($arrayDeportes as $deporte){
@@ -47,9 +46,8 @@ class FuncionesVista{
     }
 
     public static function imprimirSelectLocalizaciones($id,$nombre){
-        $rend = "<select class='form-select' name='".$nombre."' id='".$id."'>";
-        $rend.= "<option disabled hidden selected>Elige una Localización</option>";
-        $rend.= "<option>Ninguna</option>";
+        $rend = "<select class='form-select' name='".$nombre."' id='".$id."' required>";
+        $rend.= "<option value='' disabled hidden selected>Elige una Localización</option>";
         $arrayPueblos= Funciones::obtenerPueblos();
             
         foreach($arrayPueblos as $pueblo){
@@ -108,16 +106,23 @@ class FuncionesVista{
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Nombre</th>
+                        <th scope="col">Localidad</th>
                         <th scope="col">Deporte</th>
+                        <th scope="col">Contacto</th>
                     </tr>
                 </thead>
                 <tbody class="align-middle">
                     ';
                     foreach($arrayClubes as $club){
+                        $deporte = Funciones::obtenerDeporte($club->getDeporte());
+                        $pueblo = Funciones::obtenerPueblo($club->getLocalizacion());
+
                         $rend .='<tr>';
                         $rend.='<td>'.$club->getId().'</td>';
                         $rend.='<td>'.$club->getNombre().'</td>';
-                        $rend.='<td>'.$club->getDeporte().'</td>';
+                        $rend.='<td>'.$pueblo->getNombre().'</td>';
+                        $rend.='<td>'.$deporte->getNombre().'</td>';
+                        $rend.='<td>'.$club->getPersonaContacto().' '.$club->getTelefonoContacto().' '.$club->getCorreoContacto().'</td>';
                         $rend.='<td><a class="btn btn-secondary" href="perfilClub.php?id='.$club->getId().'">Editar</td></a>'; 
                         $rend.='</tr>';
                     }
