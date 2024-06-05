@@ -30,13 +30,14 @@ try {
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com'; // Reemplaza con tu servidor SMTP
     $mail->SMTPAuth = true;
-    $mail->Username = 'caicedo4.2002@gmail.com'; // Reemplaza con tu email
-    $mail->Password = 'DAVID6210'; // Reemplaza con tu contraseña
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->Username = 'gestiondearbitros@gmail.com'; // Reemplaza con tu email
+    $mail->Password = 'vnfvmldlktmnzmgh'; // Reemplaza con tu contraseña
+    $mail->SMTPSecure = 'tls'; // Establecer la encriptación TLS
+    $mail->SMTPDebug = 2;
     $mail->Port = 587;
 
     // Configuración del correo
-    $mail->setFrom('caicedo4.2002@gmail.com', 'David');
+    $mail->setFrom('gestiondearbitros.2002@gmail.com', 'David');
     $mail->addAddress($email, $nombre.' '.$apellidos);
 
     // Contenido del correo
