@@ -51,7 +51,7 @@ CREATE TABLE `arbitro` (
   `nombre` varchar(20) NOT NULL,
   `apellidos` varchar(50) NOT NULL,
   `dni` varchar(10) NOT NULL,
-  `contrasenia` varchar(20) NOT NULL,
+  `contrasenia` varchar(255) NOT NULL,
   `telefono` int(12) NOT NULL,
   `email` varchar(50) NOT NULL,
   `disponibilidad` varchar(20) NOT NULL

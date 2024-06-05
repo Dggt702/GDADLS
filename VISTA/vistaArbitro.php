@@ -15,7 +15,7 @@ session_start();
     <?php include_once "header.php" ?>
     
     <main class="d-flex my-5">
-        <?php include_once "navAdmin.php" ?>
+        <?php include_once "navArbitro.php" ?>
         <div class="container p-3">
             <div class="row">
                 
