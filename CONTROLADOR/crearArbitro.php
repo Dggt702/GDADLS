@@ -5,6 +5,7 @@ error_reporting(E_ALL);
 
 require_once("../MODELO/Funciones.php");
 require_once("../MODELO/Arbitro.php");
+require_once '../VISTA/FuncionesVista.php';
 
 session_start();
 
@@ -18,9 +19,9 @@ if(isset($_SESSION["nombreUsuario"])){
         $contrasenia = Funciones::generadorContraseña();
         $hashed_password = password_hash($contrasenia,PASSWORD_DEFAULT);
         $telefono = $_POST["telefono"];
-        $mail = $_POST["mail"];
+        $email = $_POST["email"];
 
-        $arbitro = new Arbitro("",$nombre,$apellidos,$dni,$hashed_password,$telefono,$mail,"DISPONIBLE");
+        $arbitro = new Arbitro("",$nombre,$apellidos,$dni,$hashed_password,$telefono,$email,"DISPONIBLE");
         if(Funciones::insertarArbitro($arbitro)){
 
             $dni = $arbitro->getDni();
@@ -55,7 +56,7 @@ if(isset($_SESSION["nombreUsuario"])){
                     rename($target_path.$nombre, $target_path.$nombreImagen.".".$extension);
                 }
             }
-            header("Location: ../VISTA/gestionarArbitros.php");
+            include_once 'correoNuevoArbitro.php';
         }else{
             echo "error";
         } 

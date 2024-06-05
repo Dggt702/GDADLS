@@ -19,7 +19,7 @@
         </div>
         <div class="col-12 mb-3">
             <label class="form-label">Correo</label>
-            <input type="email" class="form-control" name="mail" placeholder="Ingrese el correo de contacto de la persona" autocomplete="off" required>
+            <input type="email" class="form-control" name="email" placeholder="Ingrese el correo de contacto de la persona" autocomplete="off" required>
         </div>
         <?php
         if(isset($_GET["insert"]) && ($_GET["insert"] == "error")){?>
