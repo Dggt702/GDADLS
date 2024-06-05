@@ -1,5 +1,7 @@
 <?php
 include_once "../MODELO/Funciones.php";
+include_once '../VISTA/FuncionesVista.php';
+
 
 session_start();
 ?>

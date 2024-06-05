@@ -8,4 +8,4 @@ require_once("Deporte.php");
 require_once("Partido.php");
 require_once("Club.php");
 require_once("Pueblo.php");
-?>
+require_once("Categoria.php");

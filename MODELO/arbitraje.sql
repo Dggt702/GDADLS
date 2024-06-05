@@ -150,6 +150,31 @@ INSERT INTO `pueblo` (`id`, `nombre`, `codigo_postal`) VALUES
 (17, 'Navacerrada', 28491),
 (18, 'Torrelodones', 28250);
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `categoria`
+--
+
+CREATE TABLE `categoria` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `descripcion` VARCHAR(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `categoria`
+--
+
+INSERT INTO `categoría` (`descripcion`) VALUES 
+  ('Alevín Mixto'),
+  ('Alevín Femenino'),
+  ('Infantil Mixto'),
+  ('Infantil Femenino'),
+  ('Cadete Mixto'),
+  ('Cadete Femenino'),
+  ('Juvenil Femenino'),
+  ('Senior Femenino');
+
 --
 -- Índices para tablas volcadas
 --

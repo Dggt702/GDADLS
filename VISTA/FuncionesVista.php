@@ -57,6 +57,42 @@ class FuncionesVista{
         return $rend;
     }
 
+    public static function imprimirSelectCategorias($id,$nombre){
+        $rend = "<select class='form-select' name='".$nombre."' id='".$id."' required>";
+        $rend.= "<option value='' disabled hidden selected>Elige una Categoría</option>";
+        $arrayCategoria= Funciones::obtenerCateorias();
+            
+        foreach($arrayCategoria as $categoria){
+            $rend.="<option value='".$categoria->getId()."'>".$categoria->getDescripcion()."</option>";
+        }
+        $rend.="</select>";
+        return $rend;
+    }
+    public static function imprimirSelectArbitrosDisponibles($id,$nombre){
+        $rend = "<select class='form-select' name='".$nombre."' id='".$id."' required>";
+        $rend.= "<option value='' disabled hidden selected>Elige el Árbitro</option>";
+        $arrayArbitros= Funciones::obtenerArbitrosDisponibles();
+            
+        foreach($arrayArbitros as $arbitros){
+            $rend.="<option value='".$arbitros->getId()."'>".$arbitros->getNombre().' '. $arbitros->getApellidos()."</option>";
+        }
+        $rend.="</select>";
+        return $rend;
+    }
+
+    public static function imprimirSelectClubesDeporte($idDeporte,$id,$nombre){
+        $rend = "<select class='form-select' name='".$nombre."' id='".$id."' required>";
+        $rend.= "<option value='' disabled hidden selected>Elige Equipo</option>";
+        $arrayClubes= Funciones::obtenerClubesDeporte($idDeporte);
+            
+        foreach($arrayClubes as $club){
+            $pueblo = Funciones::obtenerPueblo($club->getLocalizacion());
+            $rend.="<option value='".$club->getId()."'>".$club->getNombre().' '. $pueblo->getNombre()."</option>";
+        }
+        $rend.="</select>";
+        return $rend;
+    }
+
     public static function imprimirTablaArbitros(){
         $arrayArbitros = Funciones::obtenerArbitros();
 

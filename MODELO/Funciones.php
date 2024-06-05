@@ -163,6 +163,8 @@ class Funciones{
     =================================
     */
 
+    //*** SIN FILTRO ***//
+
     public static function obtenerDeportes(){        
         $conn = BBDD::conectar();
         $arrayDeportes = array();
@@ -181,7 +183,7 @@ class Funciones{
     public static function obtenerArbitros(){        
         $conn = BBDD::conectar();
         $arrayArbitros = array();
-        $sql = "SELECT * FROM arbitro";
+        $sql = "SELECT * FROM arbitro ORDER BY nombre,apellidos";
         $stmt = $conn->prepare($sql);
 
         if($stmt->execute()){
@@ -236,6 +238,63 @@ class Funciones{
         }
         return $arrayPueblos;
     }   
+
+    public static function obtenerCateorias(){        
+        $conn = BBDD::conectar();
+        $arrayCategoria = array();
+        $sql = "SELECT * FROM categoria ORDER BY id";
+        $stmt = $conn->prepare($sql);
+        if($stmt->execute()){
+            $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                foreach($categorias as $datosCategorias){
+                    array_push($arrayCategoria,new Categoria($datosCategorias["id"],$datosCategorias["descripcion"]));
+                }
+        }
+        return $arrayCategoria;
+    }   
+
+
+
+
+
+    //*** CON FILTRO ***//
+
+
+    public static function obtenerArbitrosDisponibles(){        
+        $conn = BBDD::conectar();
+        $arrayArbitros = array();
+        $sql = "SELECT * FROM arbitro WHERE disponibilidad = 'DISPONIBLE' ORDER BY nombre, apellidos";
+        $stmt = $conn->prepare($sql);
+
+        if($stmt->execute()){
+            $deportes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                foreach($deportes as $datosArbitro){
+                    array_push($arrayArbitros,new Arbitro($datosArbitro["id"],$datosArbitro["nombre"],$datosArbitro["apellidos"],$datosArbitro["dni"],$datosArbitro["contrasenia"],$datosArbitro["telefono"],$datosArbitro["email"],$datosArbitro["disponibilidad"]));
+                }
+        }
+        return $arrayArbitros;
+    }
+
+    public static function obtenerClubesDeporte($idDeporte){        
+        $conn = BBDD::conectar();
+        $arrayClubes = array();
+        $sql = "SELECT * FROM club WHERE deporte = :deporte ORDER BY nombre";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":deporte",$idDeporte);
+
+        if($stmt->execute()){
+            $clubes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                foreach($clubes as $datosClub){
+                    array_push($arrayClubes,new Club($datosClub["id"],$datosClub["nombre"],$datosClub["localizacion"],$datosClub["deporte"],$datosClub["persona_contacto"],$datosClub["telefono_contacto"],$datosClub["correo_contacto"]));
+                }
+        }
+        return $arrayClubes;
+    }
+
+
+
+
+
 
     /*
     =================================
