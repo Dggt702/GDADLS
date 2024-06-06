@@ -362,6 +362,41 @@ class Funciones{
         return $insertado;
     }
 
+    public static function insertarPartido($partido){
+
+        $insertado = false;
+        $conn = BBDD::conectar();
+        $sql = "INSERT INTO partido(jornada,temporada,fecha,estado,deporte,categoria,arbitro,local,visitante) VALUES(:jornada,:temporada,:fecha,:estado,:deporte,:categoria,:arbitro,:local,:visitante)";
+        $stmt = $conn->prepare($sql);
+
+        $jornada = $partido->getJornada();
+        $temporada = $partido->getTemporada();
+        $fecha = $partido->getFecha();
+        $estado = $partido->getEstado();
+        $deporte = $partido->getDeporte();
+        $categoria = $partido->getCategoria();
+        $arbitro = $partido->getArbitro();
+        $local = $partido->getLocal();
+        $visitante = $partido->getVisitante();
+        
+        $stmt->bindParam(":jornada",$jornada);
+        $stmt->bindParam(":temporada",$temporada);
+        $stmt->bindParam(":fecha",$fecha);
+        $stmt->bindParam(":estado",$estado);
+        $stmt->bindParam(":deporte",$deporte);
+        $stmt->bindParam(":categoria",$categoria);
+        $stmt->bindParam(":arbitro",$arbitro);
+        $stmt->bindParam(":local",$local);
+        $stmt->bindParam(":visitante",$visitante);
+
+        if(!self::comprobarPartido($partido)){
+            if($stmt->execute()){
+                $insertado = true;
+            }     
+        }
+        return $insertado;
+    }
+
     public static function generadorContraseña(){
         $cadena = "";
         $caracteres = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
