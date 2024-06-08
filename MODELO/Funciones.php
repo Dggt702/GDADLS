@@ -94,8 +94,22 @@ class Funciones{
         return $deporte;
     }
 
+    public static function obtenerAdministrador($id){
+        $conn = BBDD::conectar();
+        $admin = false;
+        $sql = "SELECT * FROM administrador WHERE id =:id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":id",$id);
 
-    public static function obtenerAdministrador($nombreUsuario){
+        if($stmt->execute()){
+            $datosAdmin = $stmt->fetch(PDO::FETCH_ASSOC);
+            if($datosAdmin)
+                $admin = new Administrador($datosAdmin["id"],$datosAdmin["nombre_usuario"],$datosAdmin["contrasenia"]);
+        }
+        return $admin;
+    }
+
+    public static function obtenerAdministradorPorNombreUsuario($nombreUsuario){
         $conn = BBDD::conectar();
         $admin = false;
         $sql = "SELECT * FROM administrador WHERE nombre_usuario =:nombreUsuario";
@@ -127,7 +141,22 @@ class Funciones{
         return $club;
     }
 
-    public static function obtenerArbitro($dni){
+    public static function obtenerArbitro($id){
+        $conn = BBDD::conectar();
+        $arbitro = false;
+        $sql = "SELECT * FROM arbitro WHERE id =:id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":id",$id);
+
+        if($stmt->execute()){
+            $datosArbitro = $stmt->fetch(PDO::FETCH_ASSOC);
+            if($datosArbitro)
+                $arbitro = new Arbitro($datosArbitro["id"],$datosArbitro["nombre"],$datosArbitro["apellidos"],$datosArbitro["dni"],$datosArbitro["contrasenia"],$datosArbitro["telefono"],$datosArbitro["email"],$datosArbitro["disponibilidad"]);
+        }
+        return $arbitro;
+    }
+
+    public static function obtenerArbitroPorDni($dni){
         $conn = BBDD::conectar();
         $arbitro = false;
         $sql = "SELECT * FROM arbitro WHERE dni =:dni";
@@ -435,6 +464,53 @@ class Funciones{
         }
     }
 
+    public static function crearToken($idArbitro){
+        $conn = BBDD::conectar();
+
+        $token = bin2hex(random_bytes(16));
+        $fechaExpiracion = date('Y-m-d H:i:s', strtotime('+30 minutes'));
+
+        $sql = "INSERT INTO password_token (id_arbitro,token,fecha_exp) VALUES (:id_arbitro,:token,:fecha_expiracion)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":id_arbitro",$idArbitro);
+        $stmt->bindParam(":token",$token);
+        $stmt->bindParam(":fecha_expiracion",$fechaExpiracion);
+        
+        $stmt->execute() ? $ret = $token : $ret = false;
+
+        return $ret;
+    }
+
+    public static function expirarToken($token){
+        $conn = BBDD::conectar();
+
+        $fechaExpiracion = date('Y-m-d H:i:s', strtotime('now'));
+
+        $sql = "UPDATE password_token fecha_expiracion=:fecha_expiracion WHERE token=:token";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":token",$token);
+        $stmt->bindParam(":fecha_expiracion",$fechaExpiracion);
+        
+        $stmt->execute() ? $ret = $token : $ret = false;
+
+        return $ret;
+    }
+
+    public static function buscarToken($token){
+        $conn = BBDD::conectar();
+
+        $sql = "SELECT * FROM password_token WHERE token = :token";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":token",$token);
+        
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if(empty($result))
+            $result = false;
+        
+        return $result;
+    }
+
     /*
     =================================
           ELIMINAR DE LA  BBDD
@@ -463,29 +539,109 @@ class Funciones{
     */
 
     public static function editarArbitro($arbitro){
+
+        $id = $arbitro->getId();
         $nombre = $arbitro->getNombre();
-        $dni = $arbitro->getDni();
         $apellidos = $arbitro->getApellidos();
         $tel = $arbitro->getTelefono();
         $email = $arbitro->getEmail();
         $disponibilidad = $arbitro->getDisponibilidad();
 
         $conn = BBDD::conectar();
-        $sql = "UPDATE Arbitro SET nombre = :nombre, apellidos = :apellidos, telefono=:telefono, email=:email, disponibilidad=:disponibilidad WHERE dni=:dni";
+        $sql = "UPDATE Arbitro SET nombre = :nombre, apellidos = :apellidos, telefono=:telefono, email=:email, disponibilidad=:disponibilidad WHERE id=:id";
 
         $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":id",$id);
         $stmt->bindParam(":nombre",$nombre);
-        $stmt->bindParam(":dni",$dni);
         $stmt->bindParam(":apellidos",$apellidos);
         $stmt->bindParam(":telefono",$tel);
         $stmt->bindParam(":email",$email);
         $stmt->bindParam(":disponibilidad",$disponibilidad);
         $ret = false; 
 
-        if(self::comprobarArbitro($dni) == true){
-            if($stmt->execute()){
-                $ret=true;
-            }     
+        if($stmt->execute()){
+            $ret=true;
+        }     
+        return $ret;
+    }
+
+    public static function comprobarContraseniaAdmin($admin){
+
+        $encontrado = false;
+        $id = $admin->getId();
+        $contrasenia = $admin->getContrasenia();
+
+        $conn = BBDD::conectar();
+
+        $sql = "SELECT * FROM Administrador WHERE id=:id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":id",$id);
+        
+        if($stmt->execute()){
+            $valoresAdmin = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if(empty($valoresAdmin)){
+                $encontrado = false;
+            }elseif(password_verify($contrasenia,$valoresAdmin["contrasenia"]))
+                $encontrado = true;
+        }
+        return $encontrado;
+    }
+
+    public static function comprobarContraseniaArbitro($arbitro){
+
+        $encontrado = false;
+        $id = $arbitro->getId();
+        $contrasenia = $arbitro->getContrasenia();
+
+        $conn = BBDD::conectar();
+
+        $sql = "SELECT * FROM Arbitro WHERE id=:id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":id",$id);
+        
+        if($stmt->execute()){
+            $valoresArbitro = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if(empty($valoresArbitro)){
+                $encontrado = false;
+            }elseif(password_verify($contrasenia,$valoresArbitro["contrasenia"])){
+                $encontrado = true;
+            }
+        }
+        return $encontrado;
+    }
+
+    public static function cambiarContraseniaAdmin($admin, $new_hashed_password){
+        $id = $admin->getId();
+
+        $conn = BBDD::conectar();
+        $sql = "UPDATE Administrador SET contrasenia = :newPassword WHERE id = :id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":id",$id);
+        $stmt->bindParam(":newPassword",$new_hashed_password);
+
+        $ret = false;
+
+        if($stmt->execute()){
+            $ret = true;
+        }
+        return $ret;
+    }
+
+    public static function cambiarContraseniaArbitro($arbitro, $new_hashed_password){
+        $id = $arbitro->getId();
+
+        $conn = BBDD::conectar();
+        $sql = "UPDATE Arbitro SET contrasenia = :newPassword WHERE id = :id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":id",$id);
+        $stmt->bindParam(":newPassword",$new_hashed_password);
+
+        $ret = false;
+
+        if($stmt->execute()){
+            $ret = true;
         }
         return $ret;
     }

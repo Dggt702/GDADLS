@@ -9,7 +9,7 @@ require_once '../VISTA/FuncionesVista.php';
 
 session_start();
 
-if(isset($_SESSION["nombreUsuario"])){
+if(isset($_SESSION["idAdmin"])){
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
 

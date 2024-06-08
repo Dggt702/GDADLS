@@ -45,7 +45,7 @@ require("../MODELO/Funciones.php");
 
 
 $dni = $_POST["dni"];
-$arbitro = Funciones::obtenerArbitro($dni);
+$arbitro = Funciones::obtenerArbitroPorDni($dni);
 $nombreApellidos = $arbitro->getNombre().$arbitro->getApellidos();
 
 $imagenNombre= $dni."-".$nombreApellidos;

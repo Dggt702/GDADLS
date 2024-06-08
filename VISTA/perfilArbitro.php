@@ -4,9 +4,9 @@
 
     session_start();
 
-    if(isset($_GET["dni"])){
-        $dniArbitro = $_GET["dni"];
-        $arbitro = Funciones::obtenerArbitro($dniArbitro);
+    if(isset($_GET["id"])){
+        $idArbitro = $_GET["id"];
+        $arbitro = Funciones::obtenerArbitro($idArbitro);
     }
     
 ?>
@@ -73,13 +73,24 @@
                 <div class="col-6">
                     <?php echo FuncionesVista::imprimirDatosArbitro($arbitro) ?>
                 </div>
+                <?php
+                if(isset($_GET["contrasenia"])){
+                    if($_GET["contrasenia"] == "false"){ ?>
+                        <p class="text-danger fs-3">La contraseña es incorrecta</p>
+                <?php }elseif($_GET["contrasenia"] == "true"){ ?>
+                        <p class="text-success fs-3">La contraseña ha sido modificada con éxito</p>
+                <?php }
+                } ?>
             </div>
         </div>
     </main>
 
     <?php include("footer.php"); ?>
-    
-     <script src="https://unpkg.com/cropperjs@1.5.12/dist/cropper.min.js"></script>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/cropperjs@1.5.12/dist/cropper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="../js/recortar.js"></script>
     <script>

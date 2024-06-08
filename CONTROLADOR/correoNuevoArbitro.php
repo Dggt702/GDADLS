@@ -13,8 +13,6 @@ $dni = $arbitro->getDni();
 $telefono = $arbitro->getTelefono();
 $email = $arbitro->getEmail();
 
-$mail = new PHPMailer(true);
-
 $asunto = "Bienvenido a Gestión de Árbitros de ADS";
 
 // Construir el mensaje HTML
@@ -72,6 +70,8 @@ Datos complementarios:\n
 
 Muchas gracias!
 ";
+
+$mail = new PHPMailer(true);
 
 try {
     // Configuración del servidor SMTP

@@ -204,7 +204,7 @@ class FuncionesVista{
         $rend=  '<form action="../CONTROLADOR/actualizarArbitro.php" method="GET">
                     <div class="row w-75">
                         <h1 class="text-center">Datos del Árbitro</h1>
-                        <input type="text" name="id" class="form-control" value="'.$arbitro->getId().'" hidden>
+                        <input type="text" name="id" value="'.$arbitro->getId().'" hidden>
                         <div class="col-12 mb-3">
                             <label class="form-label">Nombre</label>
                             <input type="text" name="nombre" class="form-control" value="'.$arbitro->getNombre().'" placeholder="'.$arbitro->getNombre().'">
@@ -214,11 +214,35 @@ class FuncionesVista{
                             <input type="text" name="apellidos" class="form-control" value="'.$arbitro->getApellidos().'" placeholder="'.$arbitro->getApellidos().'">
                         </div>
                         <div class="col-12 mb-3">
+                            <label class="form-label">DNI</label>
+                            <input type="text" name="dni" class="form-control" value="'.$arbitro->getDni().'" placeholder="'.$arbitro->getDni().'">
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Contraseña</label>
+                            <input type="password" name="dni" class="form-control" value="'.$arbitro->getContrasenia().'" placeholder="'.$arbitro->getContrasenia().'" readonly>
+                            <form class="dropdown-menu d-none">
+                            </form>
+                            <div class="dropdown mt-3">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                                    Cambiar Contraseña
+                                </button>
+                                <form action="../CONTROLADOR/cambiarContrasenia.php" method="POST" class="dropdown-menu p-4">
+                                    <input type="text" name="idArbitro" value="'.$arbitro->getId().'" hidden>
+                                    <div class="mb-3">
+                                        <label class="form-label">Contraseña antigua</label>
+                                        <input type="password" name="password" class="form-control">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Nueva contraseña</label>
+                                        <input type="password" name="newPassword" class="form-control">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Enviar</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-12 mb-3">
                             <label class="form-label">Número de teléfono</label>
                             <input type="text" name="tel" class="form-control" value="'.$arbitro->getTelefono().'" placeholder="'.$arbitro->getTelefono().'">
-                        </div>
-                        <div class="col-12 mb-3 d-none">
-                            <input type="text" name="dni" class="form-control" value="'.$arbitro->getDni().'" placeholder="'.$arbitro->getDni().'">
                         </div>
                         <div class="col-12 mb-3">
                             <label class="form-label">Correo Electrónico</label>

@@ -14,12 +14,14 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 
         $contraseniaEncontrada = Funciones::comprobarSesionAdministrador($nombreUsuario);
         if(!$contraseniaEncontrada)
-            header("Location: ../index.php");
+        header("Location: ../index.php?insert=error");
         else {
             if(password_verify($contraseniaAdmin, $contraseniaEncontrada)){
-                $_SESSION["nombreUsuario"] = $nombreUsuario;
+                $idAdmin = Funciones::obtenerAdministradorPorNombreUsuario($nombreUsuario)->getId();
+                $_SESSION["idAdmin"] = $idAdmin;
+
                 header("Location: ../VISTA/vistaAdmin.php");
-            }else header("Location: ../index.php");
+            }else header("Location: ../index.php?insert=error");
         }
     }
     elseif(isset($_POST["identificador"]) && isset($_POST["contraseniaArbitro"])){
@@ -28,12 +30,14 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         
         $contraseniaEncontrada = Funciones::comprobarSesionArbitro($identificador);
         if(!$contraseniaEncontrada)
-            header("Location: ../index.php");
+        header("Location: ../index.php?insert=error");
         else {
             if(password_verify($contraseniaArbitro, $contraseniaEncontrada)){
-                $_SESSION["id"] = $identificador;
+                $idArbitro = Funciones::obtenerArbitroPorDni($identificador)->getId();
+                $_SESSION["idArbitro"] = $idArbitro;
+                
                 header("Location: ../VISTA/vistaArbitro.php"); 
-            }else header("Location: ../index.php");
+            }else header("Location: ../index.php?insert=error");
         }
     }
 }else header("Location: ../index.php");
