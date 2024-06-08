@@ -1,5 +1,5 @@
 <?php
-    if(isset($_SESSION)) $id = Funciones::obtenerArbitro($_SESSION["id"]);
+    if(isset($_SESSION)) $arbitro = Funciones::obtenerArbitro($_SESSION["id"]);
 ?>
 
 <div class="d-flex flex-column p-3 text-start" style="width: 270px;">
@@ -7,7 +7,7 @@
     <hr>
     <ul class="nav nav-pills flex-column">
         <li>
-            <a href="gestionarPartidos.php" class="nav-link link-body-emphasis">
+            <a href="" class="nav-link link-body-emphasis">
                 Historial de Partidos
             </a>
         </li>
@@ -15,10 +15,10 @@
     <hr>
     <div class="dropdown">
         <a href="#" class="d-flex align-items-center justify-content-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            <strong><?php echo $id->getNombre()." ". $id->getApellidos()?></strong>
+            <strong><?php echo $arbitro->getNombre()." ". $arbitro->getApellidos()?></strong>
         </a>
         <ul class="dropdown-menu text-small shadow">
-            <li><a class="dropdown-item" href="perfilUsuario.php?id=<?php echo $usuario->getId() ?>">Perfil</a></li>
+            <li><a class="dropdown-item" href="perfilArbitro.php?id=<?php echo $arbitro->getId() ?>">Perfil</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="../CONTROLADOR/cerrarSesion.php">Cerrar sesión</a></li>
         </ul>

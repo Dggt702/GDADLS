@@ -3,7 +3,12 @@
     require_once('FuncionesVista.php');
 
     session_start();
-    $arbitro = Funciones::obtenerArbitro($_GET["dni"]);
+
+    if(isset($_GET["dni"])){
+        $dniArbitro = $_GET["dni"];
+        $arbitro = Funciones::obtenerArbitro($dniArbitro);
+    }
+    
 ?>
 <!DOCTYPE html>
 <html lang="es" class="h-100">
@@ -21,7 +26,11 @@
     <?php include("header.php"); ?>
 
     <main class="d-flex">
-        <?php include("navAdmin.php") ?>
+        <?php 
+        if(isset($_GET["dni"])){
+            include_once "navAdmin.php";
+        }else include_once "navArbitro.php"
+        ?>
 
         <div class="container-fluid">
             <div class="row my-5">
@@ -70,8 +79,7 @@
 
     <?php include("footer.php"); ?>
     
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/cropperjs@1.5.12/dist/cropper.min.js"></script>
+     <script src="https://unpkg.com/cropperjs@1.5.12/dist/cropper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="../js/recortar.js"></script>
     <script>

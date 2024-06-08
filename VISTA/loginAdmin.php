@@ -9,7 +9,7 @@
         <input type="password" class="form-control" id="contraseniaAdmin" name="contraseniaAdmin">
     </div>
     <div class="col-12">
-        <button type="submit" class="btn btn-warning">Acceder</button>
+        <button type="submit" class="btn btn-success">Acceder</button>
     </div>
     
 </form>
