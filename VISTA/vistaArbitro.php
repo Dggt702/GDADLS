@@ -35,8 +35,9 @@ $arbitro = Funciones::obtenerArbitro($_SESSION['idArbitro']);
         <div class="container p-3">
             <div class="row">
                 <div class="col-12 d-flex flex-wrap">
-                    <h2 class="col-12 text-center">Partidos asignados</h2>
+                    <h2 class="col-12 text-center mb-3">Partidos asignados</h2>
                     <?php echo FuncionesVista::imprimirCardsPartido($arbitro->getId()) ?>
+                    <input type="hidden" id="idArbitro" value=<?php echo $arbitro->getId() ?>>
                     <div class="col-12" id='calendar'></div>
                 </div>
             </div>
@@ -50,10 +51,34 @@ $arbitro = Funciones::obtenerArbitro($_SESSION['idArbitro']);
     
     <script>
     $(document).ready(function() {
+        var idArbitro = document.getElementById('idArbitro').value; // Obtener el valor del parámetro fijo
+
         $('#calendar').fullCalendar({
-            events: '../CONTROLADOR/eventosCalendario.php'
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek'
+            },
+            defaultView: 'month', // Vista por defecto: semana
+            locale: 'es', // Idioma: español
+            events: function(start, end, timezone, callback) {
+                $.ajax({
+                    url: '../CONTROLADOR/eventosCalendario.php',
+                    dataType: 'json',
+                    data: {
+                        idArbitro: idArbitro // Pasar el parámetro fijo
+                    },
+                    success: function(data) {
+                        callback(data);
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Error en la solicitud AJAX: ' + status + ', ' + error);
+                    }
+                });
+            }
         });
     });
+
     </script>
 </body>
 
