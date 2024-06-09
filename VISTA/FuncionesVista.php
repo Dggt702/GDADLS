@@ -355,7 +355,7 @@ class FuncionesVista{
 
     public static function imprimirCardsPartido($idArbitro){
         $arrayPartidos = Funciones::obtenerPartidosArbitro($idArbitro);
-        $rend = '<div class="col-6">';
+        $rend = '';
 
         if(!empty($arrayPartidos)){
             foreach($arrayPartidos as $partido){
@@ -379,7 +379,6 @@ class FuncionesVista{
                 ';
             }
         }else $rend .= '<p>No hay partidos</p>';
-        $rend .= '</div>';
         return $rend;
     }
 

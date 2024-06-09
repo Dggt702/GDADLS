@@ -34,8 +34,10 @@ $arbitro = Funciones::obtenerArbitro($_SESSION['idArbitro']);
         <?php include_once "navArbitro.php" ?>
         <div class="container p-3">
             <div class="row">
-                <h2>Partidos asignados</h2>
-                <?php echo FuncionesVista::imprimirCardsPartido($arbitro->getId()) ?>
+                <div class="col-6">
+                    <h2>Partidos asignados</h2>
+                    <?php echo FuncionesVista::imprimirCardsPartido($arbitro->getId()) ?>
+                </div>
                 <div class="col-6" id='calendar'></div>
             </div>
         </div>
