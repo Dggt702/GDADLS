@@ -257,7 +257,7 @@ class FuncionesVista{
         }else{
             $cambiarContraseña = '';
             $modificar = 'readonly';
-        }var_dump($arbitro->getDisponibilidad());
+        }
 
         $rend=  '<form action="../CONTROLADOR/actualizarArbitro.php" method="GET">
                     <div class="row w-75">
@@ -355,28 +355,31 @@ class FuncionesVista{
 
     public static function imprimirCardsPartido($idArbitro){
         $arrayPartidos = Funciones::obtenerPartidosArbitro($idArbitro);
-        $rend = '';
+        $rend = '<div class="col-6">';
 
-        foreach($arrayPartidos as $partido){
-            $deporte = Funciones::obtenerDeporte($partido->getDeporte());
-            $local = Funciones::obtenerClub($partido->getLocal());
-            $visitante = Funciones::obtenerClub($partido->getVisitante());
-            $polideportivo = Funciones::obtenerPolideportivo($local->getPolideportivo());
-            $pueblo = Funciones::obtenerPueblo($local->getLocalizacion());
+        if(!empty($arrayPartidos)){
+            foreach($arrayPartidos as $partido){
+                $deporte = Funciones::obtenerDeporte($partido->getDeporte());
+                $local = Funciones::obtenerClub($partido->getLocal());
+                $visitante = Funciones::obtenerClub($partido->getVisitante());
+                $polideportivo = Funciones::obtenerPolideportivo($local->getPolideportivo());
+                $pueblo = Funciones::obtenerPueblo($local->getLocalizacion());
 
-            $rend .= '
-            <div class="card w-75 mb-3">
-                <div class="card-header">'.$deporte->getNombre().'</div>
-                <div class="card-body">
-                    <h5 class="card-title">'.$local->getNombre().' vs '.$visitante->getNombre().'</h5>
-                    <h6 class="card-subtitle mb-2 text-body-secondary">'.$partido->getFecha().'</h6>
-                    <p class="card-text">Jornada '.$partido->getJornada().' - Temporada '.$partido->getTemporada().'</p>
-                    <p class="card-text">'.$polideportivo->getUbicacion().' - '.$pueblo->getNombre().'</p>
-                    <a href="https://www.google.com/maps/search/?api=1&query=${'.$polideportivo->getUbicacion().'}" class="btn btn-primary id="redirectButton"">Ubicación</a>
-                </div>
-            </div>
-            ';
-        }
+                $rend .= '
+                    <div class="card mb-3">
+                        <div class="card-header">'.$deporte->getNombre().'</div>
+                        <div class="card-body">
+                            <h5 class="card-title">'.$local->getNombre().' vs '.$visitante->getNombre().'</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">'.$partido->getFecha().'</h6>
+                            <p class="card-text">Jornada '.$partido->getJornada().' - Temporada '.$partido->getTemporada().'</p>
+                            <p class="card-text">'.$polideportivo->getUbicacion().' - '.$pueblo->getNombre().'</p>
+                            <a href="https://www.google.com/maps/search/?api=1&query='.$polideportivo->getUbicacion().'" class="btn btn-primary id="redirectButton"">Ubicación</a>
+                        </div>
+                    </div>
+                ';
+            }
+        }else $rend .= '<p>No hay partidos</p>';
+        $rend .= '</div>';
         return $rend;
     }
 

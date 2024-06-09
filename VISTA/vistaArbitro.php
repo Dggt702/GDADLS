@@ -13,8 +13,19 @@ $arbitro = Funciones::obtenerArbitro($_SESSION['idArbitro']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">    <title>Document</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css' rel='stylesheet' />
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/locale/es.js'></script>
+
+    <style>
+        .fc-unthemed td.fc-today {
+            background: #cfffaf;            
+        }
+    </style>
+</head>
 </head>
 <body class="d-flex flex-column h-100">
     <?php include_once "header.php" ?>
@@ -25,6 +36,7 @@ $arbitro = Funciones::obtenerArbitro($_SESSION['idArbitro']);
             <div class="row">
                 <h2>Partidos asignados</h2>
                 <?php echo FuncionesVista::imprimirCardsPartido($arbitro->getId()) ?>
+                <div class="col-6" id='calendar'></div>
             </div>
         </div>
     </main>
@@ -33,12 +45,13 @@ $arbitro = Funciones::obtenerArbitro($_SESSION['idArbitro']);
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
     <script>
-        document.getElementById('redirectButton').addEventListener('click', function() {
-            var address = "Polideportivo Municipal 'Marcelo Escudero'";
-            var url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
-            window.location.href = url;
+    $(document).ready(function() {
+        $('#calendar').fullCalendar({
+            events: '../CONTROLADOR/eventosCalendario.php'
         });
+    });
     </script>
 </body>
 

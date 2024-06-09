@@ -617,7 +617,7 @@ class Funciones{
         $stmt->bindParam(":telefono",$tel);
         $stmt->bindParam(":email",$email);
         $stmt->bindParam(":disponibilidad",$disponibilidad);
-        $ret = false; 
+        $ret = false;
 
         if($stmt->execute()){
             $ret=true;
