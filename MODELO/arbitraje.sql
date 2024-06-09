@@ -21,7 +21,7 @@ SET time_zone = "+00:00";
 -- Base de datos: `arbitraje`
 --
 
-DROP DATABASE IF EXISTS `arbitraje`
+DROP DATABASE IF EXISTS `arbitraje`;
 CREATE DATABASE IF NOT EXISTS `arbitraje`;
 USE `arbitraje`;
 
@@ -61,6 +61,18 @@ CREATE TABLE `arbitro` (
   `disponibilidad` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `arbitro`
+--
+
+INSERT INTO `arbitro` (`id`, `nombre`, `apellidos`, `dni`, `contrasenia`, `telefono`, `email`, `disponibilidad`) VALUES
+(1, 'Carlos', 'García', '1', '$2y$10$7ns7wkxKO8frXgPOj8HureQMmub5B/xpRp87V9E4bxq1qXKoUnuW2', 600111111, 'carlos.garcia@example.com', 'DISPONIBLE'),
+(2, 'Laura', 'Martínez', '2', '$2y$10$ubTM/SaTuyfcE3ScjutpGuQwO4aCgIcnWKfq5V1fw2GNV6ZaY0uUO', 600222222, 'laura.martinez@example.com', 'DISPONIBLE'),
+(3, 'David', 'Rodríguez', '3', '$2y$10$hngpNVL95i1jV35KzTYQO.o/1HtSnnpScAc2PMZvbus5AwijMMOve', 600333333, 'david.rodriguez@example.com', 'DISPONIBLE'),
+(4, 'Sara', 'López', '4', '$2y$10$ajnMivXifmnwhbLnxRM.weRuZsvtlbWZG9GFYyUHMXRNUu7Zfdm4y', 600444444, 'sara.lopez@example.com', 'DISPONIBLE'),
+(5, 'Jorge', 'Hernández', '5', '$2y$10$VfurMigYxit5C5O6yNpPMOny/ZdvPSeJ.xcTrS72bXJKjrrhJL0CC', 600555555, 'jorge.hernandez@example.com', 'DISPONIBLE');
+
+
 -- --------------------------------------------------------
 
 --
@@ -77,6 +89,31 @@ CREATE TABLE `club` (
   `correo_contacto` varchar(50) NOT NULL,
   `polideportivo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `club`
+--
+
+INSERT INTO `club` (`id`, `nombre`, `localizacion`, `deporte`, `persona_contacto`, `telefono_contacto`, `correo_contacto`, `polideportivo`) VALUES
+(1, 'Alpedrete', 1, 1, 'Juan Gómez', 123456789, 'juangomez@prueba.com', 1),
+(2, 'Collado Mediano', 2, 2, 'María Pérez', 987654321, 'mariaperez@prueba.com', 6),
+(3, 'Hoyo de Manzanares', 3, 3, 'Carlos Sánchez', 654321987, 'carlossanchez@prueba.com', 11),
+(4, 'Valdemorillo', 4, 4, 'Laura García', 321654987, 'lauragarcia@prueba.com', 10),
+(5, 'Becerril de la Sierra', 5, 5, 'Pedro Martínez', 789456123, 'pedromartinez@prueba.com', 2),
+(6, 'Collado Villalba', 6, 1, 'Ana López', 456789123, 'analopez@prueba.com', 7),
+(7, 'Los Molinos', 7, 2, 'David Fernández', 159753486, 'davidfernandez@prueba.com', 12),
+(8, 'El Boalo - Cerceda - Mataelpino', 8, 3, 'Marta Rodríguez', 753159486, 'martarodriguez@prueba.com', 3),
+(9, 'El Escorial', 9, 4, 'Jorge González', 258369147, 'jorgegonzalez@prueba.com', 8),
+(10, 'Manzanares El Real', 10, 5, 'Sara Hernández', 147258369, 'sarahernandez@prueba.com', 18),
+(11, 'Cercedilla', 11, 1, 'Luis Ramírez', 369258147, 'luisramirez@prueba.com', 4),
+(12, 'Galapagar', 12, 2, 'Raquel Muñoz', 951753486, 'raquelmunoz@prueba.com', 9),
+(13, 'Moralzarzal', 13, 3, 'Sergio Díaz', 486159753, 'sergiodiaz@prueba.com', 13),
+(14, 'San Lorenzo de El Escorial', 14, 4, 'Patricia Romero', 753486159, 'patriciaromero@prueba.com', 15),
+(15, 'Colmenarejo', 15, 5, 'Fernando Rubio', 159486753, 'fernandorubio@prueba.com', 5),
+(16, 'Guadarrama', 16, 1, 'Nuria Blanco', 486753159, 'nuriablanco@prueba.com', 10),
+(17, 'Navacerrada', 17, 2, 'Óscar Medina', 753951486, 'oscarmedina@prueba.com', 14),
+(18, 'Torrelodones', 18, 3, 'Lucía Ortiz', 951486753, 'luciaortiz@prueba.com', 16);
+
 
 -- --------------------------------------------------------
 
@@ -109,8 +146,8 @@ INSERT INTO `deporte` (`id`, `nombre`) VALUES
 CREATE TABLE `partido` (
   `id` int(11) NOT NULL,
   `jornada` int(11) NOT NULL,
-  `temporada` int(11) NOT NULL,
-  `fecha` int(11) NOT NULL,
+  `temporada` varchar(10) NOT NULL,
+  `fecha` date NOT NULL,
   `estado` varchar(20) NOT NULL,
   `deporte` int(11) NOT NULL,
   `categoria` varchar(20) NOT NULL,
@@ -118,6 +155,23 @@ CREATE TABLE `partido` (
   `local` int(11) NOT NULL,
   `visitante` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `partido`
+--
+
+INSERT INTO `partido` (`id`, `jornada`, `temporada`, `fecha`, `estado`, `deporte`, `categoria`, `arbitro`, `local`, `visitante`) VALUES
+(1, 1, '2023-2024', '2024-06-15', 'PENDIENTE', 1, 1, 1, 1, 2),
+(2, 2, '2023-2024', '2024-06-16', 'PENDIENTE', 2, 3, 2, 3, 4),
+(3, 3, '2023-2024', '2024-06-17', 'PENDIENTE', 3, 5, 3, 5, 6),
+(4, 4, '2023-2024', '2024-06-18', 'PENDIENTE', 4, 7, 4, 7, 8),
+(5, 5, '2023-2024', '2024-06-19', 'PENDIENTE', 5, 8, 5, 9, 10),
+(6, 6, '2023-2024', '2024-06-20', 'PENDIENTE', 1, 2, 1, 11, 12),
+(7, 7, '2023-2024', '2024-06-21', 'PENDIENTE', 2, 4, 2, 13, 14),
+(8, 8, '2023-2024', '2024-06-22', 'PENDIENTE', 3, 6, 3, 15, 16),
+(9, 9, '2023-2024', '2024-06-23', 'PENDIENTE', 4, 7, 4, 17, 18),
+(10, 10, '2023-2024', '2024-06-24', 'PENDIENTE', 5, 8, 5, 1, 3);
+
 
 -- --------------------------------------------------------
 
@@ -313,13 +367,13 @@ ALTER TABLE `administrador`
 -- AUTO_INCREMENT de la tabla `arbitro`
 --
 ALTER TABLE `arbitro`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `club`
 --
 ALTER TABLE `club`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `deporte`
@@ -331,7 +385,7 @@ ALTER TABLE `deporte`
 -- AUTO_INCREMENT de la tabla `partido`
 --
 ALTER TABLE `partido`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `pueblo`
