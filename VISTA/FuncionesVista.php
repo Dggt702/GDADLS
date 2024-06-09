@@ -355,7 +355,7 @@ class FuncionesVista{
 
     public static function imprimirCardsPartido($idArbitro){
         $arrayPartidos = Funciones::obtenerPartidosArbitro($idArbitro);
-        $rend = '<div class="col-6">';
+        $rend = '';
 
         if(!empty($arrayPartidos)){
             foreach($arrayPartidos as $partido){
@@ -366,6 +366,7 @@ class FuncionesVista{
                 $pueblo = Funciones::obtenerPueblo($local->getLocalizacion());
 
                 $rend .= '
+                <div class="col-6 px-2">
                     <div class="card mb-3">
                         <div class="card-header">'.$deporte->getNombre().'</div>
                         <div class="card-body">
@@ -376,10 +377,10 @@ class FuncionesVista{
                             <a href="https://www.google.com/maps/search/?api=1&query='.$polideportivo->getUbicacion().'" class="btn btn-primary id="redirectButton"">Ubicación</a>
                         </div>
                     </div>
+                </div>
                 ';
             }
         }else $rend .= '<p>No hay partidos</p>';
-        $rend .= '</div>';
         return $rend;
     }
 
