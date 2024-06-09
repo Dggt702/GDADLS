@@ -7,6 +7,9 @@
     if(isset($_GET["id"])){
         $idArbitro = $_GET["id"];
         $arbitro = Funciones::obtenerArbitro($idArbitro);
+    }elseif(isset($_GET["dni"])){
+        $dniArbitro = $_GET["dni"];
+        $arbitro = Funciones::obtenerArbitroPorDni($dniArbitro);
     }
     
 ?>

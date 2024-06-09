@@ -395,7 +395,7 @@ class Funciones{
 
         $insertado = false;
         $conn = BBDD::conectar();
-        $sql = "INSERT INTO Arbitro(nombre,apellidos,dni,contrasenia,telefono,email,disponibilidad) VALUES(:nombre,:apellidos,:dni,:contrasenia,:telefono,:email,:disponibilidad)";
+        $sql = "INSERT INTO arbitro(nombre,apellidos,dni,contrasenia,telefono,email,disponibilidad) VALUES(:nombre,:apellidos,:dni,:contrasenia,:telefono,:email,:disponibilidad)";
         $stmt = $conn->prepare($sql);
 
         $nombre = $arbitro->getNombre();
@@ -577,11 +577,11 @@ class Funciones{
     =================================
     */
 
-    public static function eliminarArbitro($dni){
+    public static function eliminarArbitro($id){
         $conn = BBDD::conectar();
-        $sql = "DELETE FROM Arbitro WHERE dni = :dni";
+        $sql = "DELETE FROM arbitro WHERE id = :id";
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(":dni",$dni);
+        $stmt->bindParam(":id",$id);
         $eliminado = false;
 
         if($stmt->execute()){
@@ -608,7 +608,7 @@ class Funciones{
         $disponibilidad = $arbitro->getDisponibilidad();
 
         $conn = BBDD::conectar();
-        $sql = "UPDATE Arbitro SET nombre = :nombre, apellidos = :apellidos, telefono=:telefono, email=:email, disponibilidad=:disponibilidad WHERE id=:id";
+        $sql = "UPDATE arbitro SET nombre = :nombre, apellidos = :apellidos, telefono=:telefono, email=:email, disponibilidad=:disponibilidad WHERE id=:id";
 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(":id",$id);
@@ -621,7 +621,7 @@ class Funciones{
 
         if($stmt->execute()){
             $ret=true;
-        }     
+        }
         return $ret;
     }
 
@@ -633,7 +633,7 @@ class Funciones{
 
         $conn = BBDD::conectar();
 
-        $sql = "SELECT * FROM Administrador WHERE id=:id";
+        $sql = "SELECT * FROM administrador WHERE id=:id";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(":id",$id);
         
@@ -656,7 +656,7 @@ class Funciones{
 
         $conn = BBDD::conectar();
 
-        $sql = "SELECT * FROM Arbitro WHERE id=:id";
+        $sql = "SELECT * FROM arbitro WHERE id=:id";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(":id",$id);
         
@@ -674,7 +674,7 @@ class Funciones{
         $id = $admin->getId();
 
         $conn = BBDD::conectar();
-        $sql = "UPDATE Administrador SET contrasenia = :newPassword WHERE id = :id";
+        $sql = "UPDATE administrador SET contrasenia = :newPassword WHERE id = :id";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(":id",$id);
         $stmt->bindParam(":newPassword",$new_hashed_password);
@@ -691,7 +691,7 @@ class Funciones{
         $id = $arbitro->getId();
 
         $conn = BBDD::conectar();
-        $sql = "UPDATE Arbitro SET contrasenia = :newPassword WHERE id = :id";
+        $sql = "UPDATE arbitro SET contrasenia = :newPassword WHERE id = :id";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(":id",$id);
         $stmt->bindParam(":newPassword",$new_hashed_password);

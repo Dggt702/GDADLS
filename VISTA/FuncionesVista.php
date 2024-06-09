@@ -196,6 +196,8 @@ class FuncionesVista{
                         <th scope="col">Arbitro</th>
                         <th scope="col">Equipo local</th>
                         <th scope="col">Equipo Visitante</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody class="align-middle">
@@ -216,7 +218,7 @@ class FuncionesVista{
                         $rend.='<td>'.$equipoLocal->getNombre().'</td>';
                         $rend.='<td>'.$equipoVisitante->getNombre().'</td>';
                         if($partido->getEstado() == 'PENDIENTE'){
-                            $rend.='<td class="text-center text-white fw-bold bg-primary w-25 p-3">'.$partido->getEstado().'</td>';
+                            $rend.='<td class="text-center text-white fw-bold bg-primary p-3">'.$partido->getEstado().'</td>';
                         }
                             
                         $rend.='<td><a class="btn btn-secondary" href="perfilPartido.php?id='.$partido->getId().'">Editar</td></a>'; 
@@ -230,52 +232,61 @@ class FuncionesVista{
     }
 
     public static function imprimirDatosArbitro($arbitro){
+        if(isset($_SESSION['idArbitro'])){
+            $cambiarContraseña = '
+            <form class="dropdown-menu d-none"></form>
+            <div class="dropdown mt-3">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                    Cambiar Contraseña
+                </button>
+                <form action="../CONTROLADOR/cambiarContrasenia.php" method="POST" class="dropdown-menu p-4">
+                    <input type="text" name="idArbitro" value="'.$arbitro->getId().'" hidden>
+                    <div class="mb-3">
+                        <label class="form-label">Contraseña antigua</label>
+                        <input type="password" name="password" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nueva contraseña</label>
+                        <input type="password" name="newPassword" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+            </div>
+            ';
+            $modificar = '';
+        }else{
+            $cambiarContraseña = '';
+            $modificar = 'readonly';
+        }var_dump($arbitro->getDisponibilidad());
+
         $rend=  '<form action="../CONTROLADOR/actualizarArbitro.php" method="GET">
                     <div class="row w-75">
                         <h1 class="text-center">Datos del Árbitro</h1>
                         <input type="text" name="id" value="'.$arbitro->getId().'" hidden>
                         <div class="col-12 mb-3">
                             <label class="form-label">Nombre</label>
-                            <input type="text" name="nombre" class="form-control" value="'.$arbitro->getNombre().'" placeholder="'.$arbitro->getNombre().'">
+                            <input type="text" name="nombre" class="form-control" value="'.$arbitro->getNombre().'" placeholder="'.$arbitro->getNombre().'" '.$modificar.'>
                         </div>
                         <div class="col-12 mb-3">
                             <label class="form-label">Apellidos</label>
-                            <input type="text" name="apellidos" class="form-control" value="'.$arbitro->getApellidos().'" placeholder="'.$arbitro->getApellidos().'">
+                            <input type="text" name="apellidos" class="form-control" value="'.$arbitro->getApellidos().'" placeholder="'.$arbitro->getApellidos().'" '.$modificar.'>
                         </div>
                         <div class="col-12 mb-3">
                             <label class="form-label">DNI</label>
-                            <input type="text" name="dni" class="form-control" value="'.$arbitro->getDni().'" placeholder="'.$arbitro->getDni().'">
+                            <input type="text" name="dni" class="form-control" value="'.$arbitro->getDni().'" placeholder="'.$arbitro->getDni().'" '.$modificar.'>
                         </div>
                         <div class="col-12 mb-3">
                             <label class="form-label">Contraseña</label>
                             <input type="password" name="dni" class="form-control" value="'.$arbitro->getContrasenia().'" placeholder="'.$arbitro->getContrasenia().'" readonly>
-                            <form class="dropdown-menu d-none">
-                            </form>
-                            <div class="dropdown mt-3">
-                                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
-                                    Cambiar Contraseña
-                                </button>
-                                <form action="../CONTROLADOR/cambiarContrasenia.php" method="POST" class="dropdown-menu p-4">
-                                    <input type="text" name="idArbitro" value="'.$arbitro->getId().'" hidden>
-                                    <div class="mb-3">
-                                        <label class="form-label">Contraseña antigua</label>
-                                        <input type="password" name="password" class="form-control">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Nueva contraseña</label>
-                                        <input type="password" name="newPassword" class="form-control">
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Enviar</button>
-                                </form>
-                            </div>
+                            '.$cambiarContraseña.'
                         </div>
                         <div class="col-12 mb-3">
                             <label class="form-label">Número de teléfono</label>
-                            <input type="text" name="tel" class="form-control" value="'.$arbitro->getTelefono().'" placeholder="'.$arbitro->getTelefono().'">
+                            <input type="text" name="tel" class="form-control" value="'.$arbitro->getTelefono().'" placeholder="'.$arbitro->getTelefono().'" '.$modificar.'>
                         </div>
                         <div class="col-12 mb-3">
                             <label class="form-label">Correo Electrónico</label>
-                            <input type="text" name="correo" class="form-control" value="'.$arbitro->getEmail().'" placeholder="'.$arbitro->getEmail().'">
+                            <input type="text" name="correo" class="form-control" value="'.$arbitro->getEmail().'" placeholder="'.$arbitro->getEmail().'" '.$modificar.'>
                         </div>
                         <div class="col-12 mb-3">
                             <label class="form-label">Disponibilidad</label>
