@@ -37,7 +37,7 @@ session_start();
             </div>
             <div id="tabla_arbitros" class="row" style="display: none">
                 <?php 
-                    echo FuncionesVista::imprimirTablaArbitros();
+                    include ("buscadorArbitros.php");
                 ?>
             </div>
         </div>

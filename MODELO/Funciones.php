@@ -326,10 +326,6 @@ class Funciones{
         return $arrayPolideportivos;
     }
 
-
-
-
-
     //*** CON FILTRO ***//
 
 
@@ -381,7 +377,34 @@ class Funciones{
     }
 
 
+    public static function obtenerArbitrosPorBusqueda($busqueda){
+        $columnas = ["nombre"];
 
+        $conn = BBDD::conectar();
+        $campo = "%".$busqueda."%";
+        $sql = "SELECT * FROM arbitro ";
+        $where = "WHERE (";
+        $numCol = count($columnas);
+        for($i = 0; $i < $numCol; $i++){
+            $where.= $columnas[$i]." LIKE :campo OR ";
+        }
+        $where = substr_replace($where,"",-3);
+        $where.=")";
+
+        $sql.=$where." ORDER BY nombre ASC";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":campo",$campo);
+        $arrayArbitros = array();
+
+        if($stmt->execute()){
+            $ret = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach($ret as $arbitro){
+                array_push($arrayArbitros, new Arbitro($arbitro["id"],$arbitro["nombre"],$arbitro["apellidos"],$arbitro["dni"],$arbitro["contrasenia"],$arbitro["telefono"],$arbitro["email"],$arbitro["disponibilidad"]));
+            }
+        }
+        return $arrayArbitros;
+    }
 
 
 
