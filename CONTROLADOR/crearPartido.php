@@ -20,8 +20,8 @@ if(isset($_SESSION["idAdmin"])){
         $deporte = $_POST["deporte"];
         $categoria = $_POST["categoria"];
         $arbitro = $_POST["arbitro"];
-        $local = $_POST["local"];
-        $visitante = $_POST["visitante"];
+        $local = $_POST["clubLocal"];
+        $visitante = $_POST["clubVisitante"];
 
         $partido = new Partido("",$jornada,$temporada,$fecha,$estado,$deporte,$categoria,$arbitro,$local,$visitante);
         if(Funciones::insertarPartido($partido)){

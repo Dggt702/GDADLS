@@ -12,6 +12,12 @@
             ?>
         </div>
         <div class="col-6 mb-3">
+            <label for="localizacion" class="form-label">Sede</label>
+            <?php
+                echo FuncionesVista::imprimirSelectPolideportivos("polideportivo","polideportivo");
+            ?>
+        </div>
+        <div class="col-6 mb-3">
             <label for="deporte" class="form-label">Deporte</label>
             <?php
                 echo FuncionesVista::imprimirSelectDeportes("deporte","deporte");

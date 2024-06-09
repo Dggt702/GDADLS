@@ -8,9 +8,10 @@ class Club {
     private $persona_contacto;
     private $telefono_contacto;
     private $correo_contacto;
+    private $polideportivo;
 
     // Constructor
-    public function __construct($id, $nombre, $localizacion, $deporte, $persona_contacto, $telefono_contacto, $correo_contacto) {
+    public function __construct($id, $nombre, $localizacion, $deporte, $persona_contacto, $telefono_contacto, $correo_contacto, $polideportivo) {
         $this->id = $id;
         $this->nombre = $nombre;
         $this->localizacion = $localizacion;
@@ -18,6 +19,7 @@ class Club {
         $this->persona_contacto = $persona_contacto;
         $this->telefono_contacto = $telefono_contacto;
         $this->correo_contacto = $correo_contacto;
+        $this->polideportivo = $polideportivo;
     }
 
     // Getters
@@ -49,6 +51,10 @@ class Club {
         return $this->correo_contacto;
     }
 
+    public function getPolideportivo() {
+        return $this->polideportivo;
+    }
+
     // Setters
     public function setId($id) {
         $this->id = $id;
@@ -77,5 +83,8 @@ class Club {
     public function setCorreoContacto($correo_contacto) {
         $this->correo_contacto = $correo_contacto;
     }
+
+    public function setPolideportivo($polideportivo) {
+        $this->polideportivo = $polideportivo;
+    }
 }
-?>

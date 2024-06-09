@@ -70,7 +70,8 @@ CREATE TABLE `club` (
   `deporte` int(11) NOT NULL,
   `persona_contacto` varchar(50) NOT NULL,
   `telefono_contacto` int(11) NOT NULL,
-  `correo_contacto` varchar(50) NOT NULL
+  `correo_contacto` varchar(50) NOT NULL,
+  `polideportivo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -157,23 +158,76 @@ INSERT INTO `pueblo` (`id`, `nombre`, `codigo_postal`) VALUES
 --
 
 CREATE TABLE `categoria` (
-  `id` INT AUTO_INCREMENT PRIMARY KEY,
-  `descripcion` VARCHAR(30) NOT NULL
+  `id` int(11) NOT NULL,
+  `descripcion` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `categoria`
 --
 
-INSERT INTO `categoría` (`descripcion`) VALUES 
-  ('Alevín Mixto'),
-  ('Alevín Femenino'),
-  ('Infantil Mixto'),
-  ('Infantil Femenino'),
-  ('Cadete Mixto'),
-  ('Cadete Femenino'),
-  ('Juvenil Femenino'),
-  ('Senior Femenino');
+INSERT INTO `categoria` (`id`, `descripcion`) VALUES 
+  (1, 'Alevín Mixto'),
+  (2, 'Alevín Femenino'),
+  (3, 'Infantil Mixto'),
+  (4, 'Infantil Femenino'),
+  (5, 'Cadete Mixto'),
+  (6, 'Cadete Femenino'),
+  (7, 'Juvenil Femenino'),
+  (8, 'Senior Femenino');
+
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `polideportivo`
+--
+
+CREATE TABLE `polideportivo` (
+  `id` int(11) NOT NULL,
+  `ubicacion` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `categoria`
+--
+
+INSERT INTO `polideportivo` (`id`, `ubicacion`) VALUES
+(1, 'Polideportivo Municipal de Alpedrete'),
+(2, 'Polideportivo Municipal de Becerril de la Sierra'),
+(3, 'Polideportivo Municipal de Mataelpino'),
+(4, 'Polideportivo Municipal de Cercedilla'),
+(5, 'Polideportivo Municipal de Colmenarejo'),
+(6, 'Polideportivo Municipal de Collado Mediano'),
+(7, 'Ciudad Deportiva de Collado Villalba'),
+(8, 'Polideportivo Municipal de El Escorial'),
+(9, 'Polideportivo Municipal \'Marcelo Escudero\''),
+(10, 'Polideportivo Municipal de Guadarrama'),
+(11, 'Polideportivo Municipal de Hoyo de Manzanares'),
+(12, 'Polideportivo Municipal de Los Molinos'),
+(13, 'Polideportivo Municipal de Moralzarzal'),
+(14, 'Polideportivo Municipal de Navacerrada'),
+(15, 'Polideportivo Municipal de San Lorenzo de El Escorial'),
+(16, 'Polideportivo Municipal de Torrelodones'),
+(17, 'Polideportivo Municipal \'Eras Cerradas\''),
+(18, 'Polideportivo Municipal de Manzanares El Real');
+
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `password_token`
+--
+
+CREATE TABLE `password_token` (
+  `id` int(11) NOT NULL,
+  `id_arbitro` int(11) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `fecha_exp` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+
 
 --
 -- Índices para tablas volcadas
@@ -197,7 +251,8 @@ ALTER TABLE `arbitro`
 ALTER TABLE `club`
   ADD PRIMARY KEY (`id`),
   ADD KEY `deporte` (`deporte`),
-  ADD KEY `localizacion` (`localizacion`);
+  ADD KEY `localizacion` (`localizacion`),
+  ADD KEY `polideportivo` (`polideportivo`);
 
 --
 -- Indices de la tabla `deporte`
@@ -220,6 +275,25 @@ ALTER TABLE `partido`
 --
 ALTER TABLE `pueblo`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `categoria`
+--
+ALTER TABLE `categoria`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `polideportivo`
+--
+ALTER TABLE `polideportivo`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `polideportivo`
+--
+ALTER TABLE `password_token`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `arbitro` (`id_arbitro`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -262,6 +336,24 @@ ALTER TABLE `pueblo`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
+-- AUTO_INCREMENT de la tabla `categoria`
+--
+ALTER TABLE `categoria`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT de la tabla `polideportivo`
+--
+ALTER TABLE `polideportivo`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT de la tabla `polideportivo`
+--
+ALTER TABLE `password_token`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- Restricciones para tablas volcadas
 --
 
@@ -270,7 +362,8 @@ ALTER TABLE `pueblo`
 --
 ALTER TABLE `club`
   ADD CONSTRAINT `club_ibfk_1` FOREIGN KEY (`deporte`) REFERENCES `deporte` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `club_ibfk_2` FOREIGN KEY (`localizacion`) REFERENCES `pueblo` (`id`);
+  ADD CONSTRAINT `club_ibfk_2` FOREIGN KEY (`localizacion`) REFERENCES `pueblo` (`id`),
+  ADD CONSTRAINT `club_ibfk_3` FOREIGN KEY (`polideportivo`) REFERENCES `polideportivo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `partido`
@@ -280,6 +373,12 @@ ALTER TABLE `partido`
   ADD CONSTRAINT `partido_ibfk_2` FOREIGN KEY (`deporte`) REFERENCES `deporte` (`id`),
   ADD CONSTRAINT `partido_ibfk_3` FOREIGN KEY (`local`) REFERENCES `club` (`id`),
   ADD CONSTRAINT `partido_ibfk_4` FOREIGN KEY (`visitante`) REFERENCES `club` (`id`);
+
+--
+-- Filtros para la tabla `password_token`
+--
+ALTER TABLE `password_token`
+  ADD CONSTRAINT `password_token_ibfk_1` FOREIGN KEY (`id_arbitro`) REFERENCES `arbitro` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

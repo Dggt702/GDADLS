@@ -4,6 +4,7 @@
         <div class="col-6 mb-3">
             <label for="temporada" class="form-label">Temporada</label>
             <select name="temporada" id="temporada" class="form-select" required>
+                <option value="" selected hidden disabled>Elige Temporada</option>
                 <option value="2020/21">2020/21</option>
                 <option value="2021/22">2021/22</option>
                 <option value="2022/23">2022/23</option>
@@ -14,11 +15,12 @@
         <div class="col-6 mb-3">
             <label for="jornada" class="form-label">Jornada</label>
             <select name="jornada" id="jornada" class="form-select" required>
-                <option value="Jornada 1">Jornada 1</option>
-                <option value="Jornada 2">Jornada 2</option>
-                <option value="Jornada 3">Jornada 3</option>
-                <option value="Jornada 4">Jornada 4</option>
-                <option value="Jornada 5">Jornada 5</option>
+                <option value="" selected hidden disabled>Elige Jornada</option>
+                <option value="1">Jornada 1</option>
+                <option value="2">Jornada 2</option>
+                <option value="3">Jornada 3</option>
+                <option value="4">Jornada 4</option>
+                <option value="5">Jornada 5</option>
             </select>
         </div>
         <div class="col-6 mb-3">
@@ -52,18 +54,20 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-
-        getClubes();
-        document.getElementById("deporte").addEventListener("change",getClubes);
-        function getClubes(){
+        document.getElementById("deporte").addEventListener("change", function() {
+            getClubesLocal();
+            getClubesVisitante();
+        });
+        
+        function getClubesLocal(){
             let inputDeporte = document.getElementById("deporte").value;
 
             let divLocal = document.getElementById("selectClubLocal");
-            let divVisitante = document.getElementById("selectClubVisitante");
             let url = "../CONTROLADOR/clubesDeporte.php";
             let formData = new FormData();
             
             formData.append('deporte',inputDeporte);
+            formData.append('local',1);
 
             fetch(url,{
                 method:"POST",
@@ -71,7 +75,25 @@
             }).then(response=>response.json())
             .then(data => {
                 divLocal.innerHTML = data;
-                divVisitante.innerHTML = data
+            }).catch(err=>console.log(err))
+        }
+
+        function getClubesVisitante(){
+            let inputDeporte = document.getElementById("deporte").value;
+
+            let divVisitante = document.getElementById("selectClubVisitante");
+            let url = "../CONTROLADOR/clubesDeporte.php";
+            let formData = new FormData();
+            
+            formData.append('deporte',inputDeporte);
+            formData.append('visitante',2);
+
+            fetch(url,{
+                method:"POST",
+                body:formData
+            }).then(response=>response.json())
+            .then(data => {
+                divVisitante.innerHTML = data;
             }).catch(err=>console.log(err))
         }
     });

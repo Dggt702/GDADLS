@@ -9,3 +9,4 @@ require_once("Partido.php");
 require_once("Club.php");
 require_once("Pueblo.php");
 require_once("Categoria.php");
+require_once("Polideportivo.php");

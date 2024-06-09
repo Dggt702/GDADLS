@@ -38,7 +38,7 @@ session_start();
             </div>
             <div id="tabla_partidos" class="row" style="display: none">
                 <?php 
-                    //include_once "tablaAcreditacionesVehiculos.php";
+                    echo FuncionesVista::imprimirTablaPartidos();
                 ?>
             </div>
         </div>

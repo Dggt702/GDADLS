@@ -1,7 +1,11 @@
 <?php
 include_once "../MODELO/Funciones.php";
+include_once "../VISTA/FuncionesVista.php";
 
 session_start();
+if(!isset($_SESSION['idArbitro'])) header('Location: ../index.php');
+
+$arbitro = Funciones::obtenerArbitro($_SESSION['idArbitro']);
 ?>
 <!DOCTYPE html>
 <html lang="es" class="h-100">
@@ -9,6 +13,8 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">    <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
 </head>
 <body class="d-flex flex-column h-100">
     <?php include_once "header.php" ?>
@@ -17,7 +23,8 @@ session_start();
         <?php include_once "navArbitro.php" ?>
         <div class="container p-3">
             <div class="row">
-                
+                <h2>Partidos asignados</h2>
+                <?php echo FuncionesVista::imprimirCardsPartido($arbitro->getId()) ?>
             </div>
         </div>
     </main>
@@ -26,7 +33,13 @@ session_start();
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
+    <script>
+        document.getElementById('redirectButton').addEventListener('click', function() {
+            var address = "Polideportivo Municipal 'Marcelo Escudero'";
+            var url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+            window.location.href = url;
+        });
+    </script>
 </body>
 
 </html>

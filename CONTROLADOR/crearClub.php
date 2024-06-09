@@ -19,8 +19,9 @@ if(isset($_SESSION["idAdmin"])){
         $personaContacto = $_POST["personaContacto"];
         $telefono = $_POST["telefono"];
         $correo = $_POST["correo"];
+        $polideportivo = $_POST["polideportivo"];
 
-        $club = new Club("",$nombre,$localizacion,$deporte,$personaContacto,$telefono,$correo);
+        $club = new Club("",$nombre,$localizacion,$deporte,$personaContacto,$telefono,$correo,$polideportivo);
         if(Funciones::insertarClub($club)){
             echo FuncionesVista::pantallaDeOperacion("El club ha sido insertado con éxito",true);
         }else{

@@ -93,6 +93,18 @@ class FuncionesVista{
         return $rend;
     }
 
+    public static function imprimirSelectPolideportivos($id,$nombre){
+        $rend = "<select class='form-select' name='".$nombre."' id='".$id."' required>";
+        $rend.= "<option value='' disabled hidden selected>Elige la sede del Club</option>";
+        $arrayPolideportivos = Funciones::obtenerPolideportivos();
+            
+        foreach($arrayPolideportivos as $poli){
+            $rend.="<option value='".$poli->getId()."'>".$poli->getUbicacion()."</option>";
+        }
+        $rend.="</select>";
+        return $rend;
+    }
+
     public static function imprimirTablaArbitros(){
         $arrayArbitros = Funciones::obtenerArbitros();
 
@@ -140,9 +152,8 @@ class FuncionesVista{
             $rend='<table class="table table-hover">
                 <thead>
                     <tr>
-                        <th scope="col">ID</th>
                         <th scope="col">Nombre</th>
-                        <th scope="col">Localidad</th>
+                        <th scope="col">Ubicación</th>
                         <th scope="col">Deporte</th>
                         <th scope="col">Contacto</th>
                     </tr>
@@ -152,11 +163,11 @@ class FuncionesVista{
                     foreach($arrayClubes as $club){
                         $deporte = Funciones::obtenerDeporte($club->getDeporte());
                         $pueblo = Funciones::obtenerPueblo($club->getLocalizacion());
+                        $polideportivo = Funciones::obtenerPolideportivo($club->getPolideportivo());
 
                         $rend .='<tr>';
-                        $rend.='<td>'.$club->getId().'</td>';
                         $rend.='<td>'.$club->getNombre().'</td>';
-                        $rend.='<td>'.$pueblo->getNombre().'</td>';
+                        $rend.='<td>'.$polideportivo->getUbicacion().' - '.$pueblo->getNombre().'</td>';
                         $rend.='<td>'.$deporte->getNombre().'</td>';
                         $rend.='<td>'.$club->getPersonaContacto().' '.$club->getTelefonoContacto().' '.$club->getCorreoContacto().'</td>';
                         $rend.='<td><a class="btn btn-secondary" href="perfilClub.php?id='.$club->getId().'">Editar</td></a>'; 
@@ -173,24 +184,42 @@ class FuncionesVista{
         $arrayPartidos = Funciones::obtenerPartidos();
 
         if(empty($arrayPartidos)){
-            $rend = "<h1 class='text-center'>No hay clubes registrados</h1>";
+            $rend = "<h1 class='text-center'>No hay partidos registrados</h1>";
         }else{
             $rend='<table class="table table-hover">
                 <thead>
                     <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Nombre</th>
+                        <th scope="col">Jornada</th>
+                        <th scope="col">Fecha</th>
                         <th scope="col">Deporte</th>
+                        <th scope="col">Categoría</th>
+                        <th scope="col">Arbitro</th>
+                        <th scope="col">Equipo local</th>
+                        <th scope="col">Equipo Visitante</th>
                     </tr>
                 </thead>
                 <tbody class="align-middle">
                     ';
-                    foreach($arrayPartidos as $club){
+                    foreach($arrayPartidos as $partido){
+                        $deporte = Funciones::obtenerDeporte($partido->getDeporte());
+                        $categoria = Funciones::obtenerCategoria($partido->getCategoria());
+                        $arbitro = Funciones::obtenerArbitro($partido->getArbitro());
+                        $equipoLocal = Funciones::obtenerClub($partido->getLocal());
+                        $equipoVisitante = Funciones::obtenerClub($partido->getVisitante());
+
                         $rend .='<tr>';
-                        $rend.='<td>'.$club->getId().'</td>';
-                        $rend.='<td>'.$club->getNombre().'</td>';
-                        $rend.='<td>'.$club->getDeporte().'</td>';
-                        $rend.='<td><a class="btn btn-secondary" href="perfilClub.php?id='.$club->getId().'">Editar</td></a>'; 
+                        $rend.='<td>'.$partido->getJornada().'-'.$partido->getTemporada().'</td>';
+                        $rend.='<td>'.$partido->getfecha().'</td>';
+                        $rend.='<td>'.$deporte->getNombre().'</td>';
+                        $rend.='<td>'.$categoria->getDescripcion().'</td>';
+                        $rend.='<td>'.$arbitro->getNombre().' '.$arbitro->getApellidos().'</td>';
+                        $rend.='<td>'.$equipoLocal->getNombre().'</td>';
+                        $rend.='<td>'.$equipoVisitante->getNombre().'</td>';
+                        if($partido->getEstado() == 'PENDIENTE'){
+                            $rend.='<td class="text-center text-white fw-bold bg-primary w-25 p-3">'.$partido->getEstado().'</td>';
+                        }
+                            
+                        $rend.='<td><a class="btn btn-secondary" href="perfilPartido.php?id='.$partido->getId().'">Editar</td></a>'; 
                         $rend.='</tr>';
                     }
                     $rend .='
@@ -310,6 +339,33 @@ class FuncionesVista{
                         <button type="submit" class="btn btn-success">Actualizar</button>
                     </div>
                 </form>';
+        return $rend;
+    }
+
+    public static function imprimirCardsPartido($idArbitro){
+        $arrayPartidos = Funciones::obtenerPartidosArbitro($idArbitro);
+        $rend = '';
+
+        foreach($arrayPartidos as $partido){
+            $deporte = Funciones::obtenerDeporte($partido->getDeporte());
+            $local = Funciones::obtenerClub($partido->getLocal());
+            $visitante = Funciones::obtenerClub($partido->getVisitante());
+            $polideportivo = Funciones::obtenerPolideportivo($local->getPolideportivo());
+            $pueblo = Funciones::obtenerPueblo($local->getLocalizacion());
+
+            $rend .= '
+            <div class="card w-75 mb-3">
+                <div class="card-header">'.$deporte->getNombre().'</div>
+                <div class="card-body">
+                    <h5 class="card-title">'.$local->getNombre().' vs '.$visitante->getNombre().'</h5>
+                    <h6 class="card-subtitle mb-2 text-body-secondary">'.$partido->getFecha().'</h6>
+                    <p class="card-text">Jornada '.$partido->getJornada().' - Temporada '.$partido->getTemporada().'</p>
+                    <p class="card-text">'.$polideportivo->getUbicacion().' - '.$pueblo->getNombre().'</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=${'.$polideportivo->getUbicacion().'}" class="btn btn-primary id="redirectButton"">Ubicación</a>
+                </div>
+            </div>
+            ';
+        }
         return $rend;
     }
 

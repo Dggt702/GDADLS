@@ -134,7 +134,7 @@ class Funciones{
         if($stmt->execute()){
             $datos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 foreach($datos as $datosClub){
-                    $club = new Club($datosClub["id"],$datosClub["nombre"],$datosClub["localizacion"],$datosClub["deporte"],$datosClub["persona_contacto"],$datosClub["telefono_contacto"],$datosClub["correo_contacto"]);
+                    $club = new Club($datosClub["id"],$datosClub["nombre"],$datosClub["localizacion"],$datosClub["deporte"],$datosClub["persona_contacto"],$datosClub["telefono_contacto"],$datosClub["correo_contacto"],$datosClub["polideportivo"]);
                 }
         }
 
@@ -186,6 +186,36 @@ class Funciones{
         return $pueblo;
     }
 
+    public static function obtenerCategoria($id){
+        $conn = BBDD::conectar();
+        $categoria = false;
+        $sql = "SELECT * FROM categoria WHERE id =:id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":id",$id);
+
+        if($stmt->execute()){
+            $datosCategoria = $stmt->fetch(PDO::FETCH_ASSOC);
+            if($datosCategoria)
+                $categoria = new Categoria($datosCategoria["id"],$datosCategoria["descripcion"]);
+        }
+        return $categoria;
+    }
+
+    public static function obtenerPolideportivo($id){
+        $conn = BBDD::conectar();
+        $polideportivo = false;
+        $sql = "SELECT * FROM polideportivo WHERE id =:id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":id",$id);
+
+        if($stmt->execute()){
+            $datosPolideportivo = $stmt->fetch(PDO::FETCH_ASSOC);
+            if($datosPolideportivo)
+                $polideportivo = new Polideportivo($datosPolideportivo["id"],$datosPolideportivo["ubicacion"]);
+        }
+        return $polideportivo;
+    }
+
     /*
     =================================
              OBTENCIÓN PLURAL
@@ -231,9 +261,9 @@ class Funciones{
         $stmt = $conn->prepare($sql);
         
         if($stmt->execute()){
-            $deportes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                foreach($deportes as $datosArbitro){
-                    array_push($arrayPartidos,new Arbitro($datosArbitro["id"],$datosArbitro["nombre"],$datosArbitro["apellidos"],$datosArbitro["dni"],$datosArbitro["contrasenia"],$datosArbitro["telefono"],$datosArbitro["email"],$datosArbitro["disponibilidad"]));
+            $partidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                foreach($partidos as $datosArbitro){
+                    array_push($arrayPartidos,new Partido($datosArbitro["id"],$datosArbitro["jornada"],$datosArbitro["temporada"],$datosArbitro["fecha"],$datosArbitro["estado"],$datosArbitro["deporte"],$datosArbitro["categoria"],$datosArbitro["arbitro"],$datosArbitro["local"],$datosArbitro["visitante"]));
                 }
         }
         return $arrayPartidos;
@@ -248,7 +278,7 @@ class Funciones{
         if($stmt->execute()){
             $clubes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 foreach($clubes as $datosClub){
-                    array_push($arrayClubes,new Club($datosClub["id"],$datosClub["nombre"],$datosClub["localizacion"],$datosClub["deporte"],$datosClub["persona_contacto"],$datosClub["telefono_contacto"],$datosClub["correo_contacto"]));
+                    array_push($arrayClubes,new Club($datosClub["id"],$datosClub["nombre"],$datosClub["localizacion"],$datosClub["deporte"],$datosClub["persona_contacto"],$datosClub["telefono_contacto"],$datosClub["correo_contacto"],$datosClub["polideportivo"]));
                 }
         }
         return $arrayClubes;
@@ -280,7 +310,21 @@ class Funciones{
                 }
         }
         return $arrayCategoria;
-    }   
+    }
+    
+    public static function obtenerPolideportivos(){        
+        $conn = BBDD::conectar();
+        $arrayPolideportivos = array();
+        $sql = "SELECT * FROM polideportivo ORDER BY id";
+        $stmt = $conn->prepare($sql);
+        if($stmt->execute()){
+            $polideportivos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                foreach($polideportivos as $datosPolideportivos){
+                    array_push($arrayPolideportivos,new Polideportivo($datosPolideportivos["id"],$datosPolideportivos["ubicacion"]));
+                }
+        }
+        return $arrayPolideportivos;
+    }
 
 
 
@@ -314,10 +358,26 @@ class Funciones{
         if($stmt->execute()){
             $clubes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 foreach($clubes as $datosClub){
-                    array_push($arrayClubes,new Club($datosClub["id"],$datosClub["nombre"],$datosClub["localizacion"],$datosClub["deporte"],$datosClub["persona_contacto"],$datosClub["telefono_contacto"],$datosClub["correo_contacto"]));
+                    array_push($arrayClubes,new Club($datosClub["id"],$datosClub["nombre"],$datosClub["localizacion"],$datosClub["deporte"],$datosClub["persona_contacto"],$datosClub["telefono_contacto"],$datosClub["correo_contacto"],$datosClub["polideportivo"]));
                 }
         }
         return $arrayClubes;
+    }
+
+    public static function obtenerPartidosArbitro($idArbitro){        
+        $conn = BBDD::conectar();
+        $arrayPartidos = array();
+        $sql = "SELECT * FROM partido WHERE arbitro = :arbitro ORDER BY fecha";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":arbitro",$idArbitro);
+
+        if($stmt->execute()){
+            $partidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                foreach($partidos as $datosArbitro){
+                    array_push($arrayPartidos,new Partido($datosArbitro["id"],$datosArbitro["jornada"],$datosArbitro["temporada"],$datosArbitro["fecha"],$datosArbitro["estado"],$datosArbitro["deporte"],$datosArbitro["categoria"],$datosArbitro["arbitro"],$datosArbitro["local"],$datosArbitro["visitante"]));
+                }
+        }
+        return $arrayPartidos;
     }
 
 
@@ -366,7 +426,7 @@ class Funciones{
 
         $insertado = false;
         $conn = BBDD::conectar();
-        $sql = "INSERT INTO club(nombre,localizacion,deporte,persona_contacto,telefono_contacto,correo_contacto) VALUES(:nombre,:localizacion,:deporte,:persona_contacto,:telefono_contacto,:correo_contacto)";
+        $sql = "INSERT INTO club(nombre,localizacion,deporte,persona_contacto,telefono_contacto,correo_contacto,polideportivo) VALUES(:nombre,:localizacion,:deporte,:persona_contacto,:telefono_contacto,:correo_contacto,:polideportivo)";
         $stmt = $conn->prepare($sql);
 
         $nombre = $club->getNombre();
@@ -375,13 +435,15 @@ class Funciones{
         $personaContacto = $club->getPersonaContacto();
         $telefono = $club->getTelefonoContacto();
         $correo = $club->getCorreoContacto();
+        $polideportivo = $club->getPolideportivo();
         
         $stmt->bindParam(":nombre", $nombre);
         $stmt->bindParam(":localizacion",$localizacion);
+        $stmt->bindParam(":deporte",$deporte);
         $stmt->bindParam(":persona_contacto",$personaContacto);
         $stmt->bindParam(":telefono_contacto",$telefono);
         $stmt->bindParam(":correo_contacto",$correo);
-        $stmt->bindParam(":deporte",$deporte);
+        $stmt->bindParam(":polideportivo",$polideportivo);
 
         if(!self::comprobarClub($nombre,$deporte)){
             if($stmt->execute()){
@@ -418,10 +480,8 @@ class Funciones{
         $stmt->bindParam(":local",$local);
         $stmt->bindParam(":visitante",$visitante);
 
-        if(!self::comprobarPartido($partido)){
-            if($stmt->execute()){
-                $insertado = true;
-            }     
+        if($stmt->execute()){
+            $insertado = true;
         }
         return $insertado;
     }
@@ -603,9 +663,7 @@ class Funciones{
         if($stmt->execute()){
             $valoresArbitro = $stmt->fetch(PDO::FETCH_ASSOC);
             
-            if(empty($valoresArbitro)){
-                $encontrado = false;
-            }elseif(password_verify($contrasenia,$valoresArbitro["contrasenia"])){
+            if(password_verify($contrasenia,$valoresArbitro["contrasenia"])){
                 $encontrado = true;
             }
         }

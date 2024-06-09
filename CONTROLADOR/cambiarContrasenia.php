@@ -39,11 +39,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $newPassword = $_POST["newPassword"];
         $newHashed_password = password_hash($newPassword,PASSWORD_DEFAULT);
 
-        $arbitro = new Arbitro($idArbitro,'',$password,'','','','','');
-
+        $arbitro = new Arbitro($idArbitro,'','','',$password,'','','');
         if(Funciones::comprobarContraseniaArbitro($arbitro)){
             if(Funciones::cambiarContraseniaArbitro($arbitro, $newHashed_password)){
-                header("Location: ../index.php?cambio=true");
+                header("Location: ../VISTA/perfilArbitro.php?id=".$idArbitro."&contrasenia=true");
             }else FuncionesVista::pantallaDeOperacion("Ha ocurrido un error",false);
         }else header("Location: ../VISTA/perfilArbitro.php?id=".$idArbitro."&contrasenia=false");
     }
