@@ -29,16 +29,14 @@ if(isset($_SESSION['idArbitro'])){
     
 </head>
 <body class="bg-light d-flex flex-column h-100">
-    <?php include("header.php"); ?>
+    <?php include("header.php"); 
+    if($_SESSION['idArbitro']) include_once "navArbitro.php"; ?>
+    
 
     <main class="d-flex">
-        <?php 
-        if(isset($_GET["dni"])){
-            include_once "navAdmin.php";
-        }else include_once "navArbitro.php"
-        ?>
+        <?php if(isset($_GET["dni"])) include_once "navAdmin.php"; ?>
 
-        <div class="container-fluid">
+        <div class="container">
             <div class="row my-5">
                 <div class="col-6 d-flex flex-wrap justify-content-center">
                     <div class="d-flex align-items-center mb-2" id="marcoFoto" style="width: 378px; height: 508px">
@@ -78,7 +76,7 @@ if(isset($_SESSION['idArbitro'])){
                 
                 <div class="col-6">
                 <form action="../CONTROLADOR/actualizarArbitro.php" method="GET">
-                    <div class="row w-75">
+                    <div class="row">
                         <h1 class="text-center">Datos del Árbitro</h1>
                         <input type="text" name="id" value="<?php echo $arbitro->getId() ?>" hidden>
                         <div class="col-12 mb-3">
