@@ -3,7 +3,13 @@
     require_once('FuncionesVista.php');
 
     session_start();
-    $club = Funciones::obtenerClub($_GET["id"]);
+    $partido = Funciones::obtenerPartido($_GET["id"]);
+
+    $deporte = Funciones::obtenerDeporte($partido->getDeporte());
+    $local = Funciones::obtenerClub($partido->getLocal());
+    $visitante = Funciones::obtenerClub($partido->getVisitante());
+    $polideportivo = Funciones::obtenerPolideportivo($local->getPolideportivo());
+    $pueblo = Funciones::obtenerPueblo($local->getLocalizacion());
 ?>
 <!DOCTYPE html>
 <html lang="es" class="h-100">
@@ -26,7 +32,7 @@
         <div class="container-fluid">
             <div class="row my-5">   
                 <div class="col-6">
-                    <?php echo FuncionesVista::imprimirDatosClub($club); ?>
+                    
                 </div>
             </div>
         </div>
