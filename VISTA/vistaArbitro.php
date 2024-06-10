@@ -29,17 +29,17 @@ $arbitro = Funciones::obtenerArbitro($_SESSION['idArbitro']);
 </head>
 <body class="d-flex flex-column h-100">
     <?php include_once "header.php" ?>
-    
+    <?php include_once "navArbitro.php" ?>
+
     <main class="d-flex my-5">
-        <?php include_once "navArbitro.php" ?>
         <div class="container p-3">
             <div class="row">
                 <div class="col-12 d-flex flex-wrap">
                     <h2 class="col-12 text-center mb-3">Partidos asignados</h2>
                     <?php echo FuncionesVista::imprimirCardsPartido($arbitro->getId()) ?>
                     <input type="hidden" id="idArbitro" value=<?php echo $arbitro->getId() ?>>
-                    <div class="col-12" id='calendar'></div>
                 </div>
+                <div class="col-12" id='calendar'></div>
             </div>
         </div>
     </main>
