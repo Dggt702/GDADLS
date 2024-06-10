@@ -30,11 +30,42 @@
         <?php include("navAdmin.php") ?>
 
         <div class="container-fluid">
-            <div class="row my-5">   
-                <div class="col-6">
+            <form action="../CONTROLADOR/actualizarPartido.php" method="GET" class="row justify-content-center my-5">
+                <div class="row w-75">
+                    <h1 class="text-center">Datos del Club</h1>
+                    <input type="text" name="id" class="form-control" value="<?php echo $club->getId() ?>" hidden>
+                    <div class="col-12 mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" name="nombre" class="form-control" value="<?php echo $club->getNombre() ?>" placeholder="<?php echo $club->getNombre() ?>">
+                    </div>
+                    <div class="col-6 mb-3">
+                        <label class="form-label">Localización</label>
+                        <input type="text" name="localizacion" class="form-control" value="<?php echo $pueblo->getNombre() ?>" placeholder="<?php echo $pueblo->getNombre() ?>">
+                    </div>
+                    <div class="col-6 mb-3">
+                        <label class="form-label">Sede</label>
+                        <input type="text" name="sede" class="form-control" value="<?php echo $polideportivo->getUbicacion() ?>" placeholder="<?php echo $polideportivo->getUbicacion() ?>">
+                    </div>
+                    <div class="col-6 mb-3">
+                        <label class="form-label">Deporte</label>
+                        <input type="text" name="deporte" class="form-control" value="<?php echo $deporte->getNombre() ?>" placeholder="<?php echo $deporte->getNombre() ?>">
+                    </div>
+                    <div class="col-6 mb-3">
+                        <label class="form-label">Persona Contacto</label>
+                        <input type="text" name="persona" class="form-control" value="<?php echo $club->getPersonaContacto() ?>" placeholder="<?php echo $club->getPersonaContacto() ?>">
+                    </div>
+                    <div class="col-6 mb-3">
+                        <label class="form-label">Telefono Contacto</label>
+                        <input type="text" name="telefono" class="form-control" value="<?php echo $club->getTelefonoContacto() ?>" placeholder="<?php echo $club->getTelefonoContacto() ?>">
+                    </div>
+                    <div class="col-6 mb-3">
+                        <label class="form-label">Correo Contacto</label>
+                        <input type="text" name="email" class="form-control" value="<?php echo $club->getCorreoContacto() ?>" placeholder="<?php echo $club->getCorreoContacto() ?>">
+                    </div>
                     
+                    <button type="submit" class="btn btn-success">Actualizar</button>
                 </div>
-            </div>
+            </form>
         </div>
     </main>
 

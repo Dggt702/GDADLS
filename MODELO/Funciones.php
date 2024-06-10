@@ -185,6 +185,21 @@ class Funciones{
         }
         return $pueblo;
     }
+    
+    public static function obtenerPartido($id){
+        $conn = BBDD::conectar();
+        $partido = false;
+        $sql = "SELECT * FROM partido WHERE id =:id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":id",$id);
+
+        if($stmt->execute()){
+            $datosPartido = $stmt->fetch(PDO::FETCH_ASSOC);
+            if($datosPartido)
+                $partido = new Partido($datosPartido["id"],$datosPartido["jornada"],$datosPartido["temporada"],$datosPartido["fecha"],$datosPartido["estado"],$datosPartido["deporte"],$datosPartido["categoria"],$datosPartido["arbitro"],$datosPartido["local"],$datosPartido["visitante"]);
+        }
+        return $partido;
+    }
 
     public static function obtenerCategoria($id){
         $conn = BBDD::conectar();
@@ -262,8 +277,8 @@ class Funciones{
         
         if($stmt->execute()){
             $partidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                foreach($partidos as $datosArbitro){
-                    array_push($arrayPartidos,new Partido($datosArbitro["id"],$datosArbitro["jornada"],$datosArbitro["temporada"],$datosArbitro["fecha"],$datosArbitro["estado"],$datosArbitro["deporte"],$datosArbitro["categoria"],$datosArbitro["arbitro"],$datosArbitro["local"],$datosArbitro["visitante"]));
+                foreach($partidos as $datosPartido){
+                    array_push($arrayPartidos,new Partido($datosPartido["id"],$datosPartido["jornada"],$datosPartido["temporada"],$datosPartido["fecha"],$datosPartido["estado"],$datosPartido["deporte"],$datosPartido["categoria"],$datosPartido["arbitro"],$datosPartido["local"],$datosPartido["visitante"]));
                 }
         }
         return $arrayPartidos;
