@@ -30,7 +30,7 @@ if(isset($_SESSION['idArbitro'])){
 </head>
 <body class="bg-light d-flex flex-column h-100">
     <?php include("header.php"); 
-    if($_SESSION['idArbitro']) include_once "navArbitro.php"; ?>
+        if(isset($_SESSION['idArbitro'])) include_once "navArbitro.php"; ?>
     
 
     <main class="d-flex">
@@ -79,19 +79,19 @@ if(isset($_SESSION['idArbitro'])){
                     <div class="row">
                         <h1 class="text-center">Datos del Árbitro</h1>
                         <input type="text" name="id" value="<?php echo $arbitro->getId() ?>" hidden>
-                        <div class="col-12 mb-3">
+                        <div class="col-6 mb-3">
                             <label class="form-label">Nombre</label>
                             <input type="text" name="nombre" class="form-control" value="<?php echo $arbitro->getNombre() ?>" placeholder="<?php echo $arbitro->getNombre() ?>" <?php echo $modificar ?>>
                         </div>
-                        <div class="col-12 mb-3">
+                        <div class="col-6 mb-3">
                             <label class="form-label">Apellidos</label>
                             <input type="text" name="apellidos" class="form-control" value="<?php echo $arbitro->getApellidos() ?>" placeholder="<?php echo $arbitro->getApellidos() ?>" <?php echo $modificar ?>>
                         </div>
-                        <div class="col-12 mb-3">
+                        <div class="col-6 mb-3">
                             <label class="form-label">DNI</label>
                             <input type="text" name="dni" class="form-control" value="<?php echo $arbitro->getDni() ?>" placeholder="<?php echo $arbitro->getDni() ?>" <?php echo $modificar ?>>
                         </div>
-                        <div class="col-12 mb-3">
+                        <div class="col-6 mb-3">
                             <label class="form-label">Contraseña</label>
                             <input type="password" name="dni" class="form-control" value="<?php echo $arbitro->getContrasenia() ?>" placeholder="<?php echo $arbitro->getContrasenia() ?>" readonly>
                         <?php
@@ -116,11 +116,11 @@ if(isset($_SESSION['idArbitro'])){
                             </div>
                         <?php } ?>
                         </div>
-                        <div class="col-12 mb-3">
+                        <div class="col-6 mb-3">
                             <label class="form-label">Número de teléfono</label>
                             <input type="text" name="tel" class="form-control" value="<?php echo $arbitro->getTelefono() ?>" placeholder="<?php echo $arbitro->getTelefono() ?>" <?php echo $modificar ?>>
                         </div>
-                        <div class="col-12 mb-3">
+                        <div class="col-6 mb-3">
                             <label class="form-label">Correo Electrónico</label>
                             <input type="text" name="correo" class="form-control" value="<?php echo $arbitro->getEmail() ?>" placeholder="<?php echo $arbitro->getEmail() ?>" <?php echo $modificar ?>>
                         </div>
