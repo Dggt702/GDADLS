@@ -37,7 +37,7 @@ require_once("../VISTA/FuncionesVista.php");
             </div>
             <div id="tabla_clubes" class="row" style="display: none">
                 <?php 
-                    echo FuncionesVista::imprimirTablaClubes();
+                    include ("buscadorClub.php");
                 ?>
             </div>
         </div>

@@ -377,8 +377,9 @@ class Funciones{
     }
 
 
+
     public static function obtenerArbitrosPorBusqueda($busqueda){
-        $columnas = ["nombre"];
+        $columnas = ["nombre","apellidos","dni","telefono"];
 
         $conn = BBDD::conectar();
         $campo = "%".$busqueda."%";
@@ -406,7 +407,40 @@ class Funciones{
         return $arrayArbitros;
     }
 
+    public static function obtenerClubesPorBusquedaPorDeporte($busqueda,$deporte){
+        $columnas = ["nombre"];
+        $conn = BBDD::conectar();
+        $campo = "%".$busqueda."%";
+        $sql = "SELECT * FROM club ";
+        if(!empty($deporte)){
+            $where = "WHERE deporte = :deporte AND (";
+        }else{
+            $where = "WHERE(";
+        }
+        
+        $numCol = count($columnas);
+        for($i = 0; $i < $numCol; $i++){
+            $where.= $columnas[$i]." LIKE :campo OR ";
+        }
+        $where = substr_replace($where,"",-3);
+        $where.=")";
 
+        $sql.=$where." ORDER BY nombre ASC";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":campo",$campo);
+        if(!empty($deporte))$stmt->bindParam(":deporte",$deporte);
+
+        $arrayClubs = array();
+
+        if($stmt->execute()){
+            $ret = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach($ret as $club){
+                array_push($arrayClubs, new Club($club["id"],$club["nombre"],$club["localizacion"],$club["deporte"],$club["persona_contacto"],$club["telefono_contacto"],$club["correo_contacto"],$club["polideportivo"]));
+            }
+        }
+        return $arrayClubs;
+    }
 
     /*
     =================================
