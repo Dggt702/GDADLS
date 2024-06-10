@@ -20,7 +20,7 @@
     <link href="https://unpkg.com/cropperjs@1.5.12/dist/cropper.min.css" rel="stylesheet">
 
     <link rel="icon" href="https://www.adsierra.es/wp-content/uploads/2020/08/cropped-faviconADS-32x32.png" sizes="32x32">
-    <title>Perfil Club</title>
+    <title>Perfil Partido</title>
     
 </head>
 <body class="bg-light d-flex flex-column h-100">
@@ -32,11 +32,21 @@
         <div class="container-fluid">
             <form action="../CONTROLADOR/actualizarPartido.php" method="GET" class="row justify-content-center my-5">
                 <div class="row w-75">
-                    <h1 class="text-center">Datos del Club</h1>
-                    <input type="text" name="id" class="form-control" value="<?php echo $club->getId() ?>" hidden>
-                    <div class="col-12 mb-3">
-                        <label class="form-label">Nombre</label>
-                        <input type="text" name="nombre" class="form-control" value="<?php echo $club->getNombre() ?>" placeholder="<?php echo $club->getNombre() ?>">
+                    <h1 class="text-center"><?php echo $local->getNombre() .' vs '. $visitante->getNombre() ?></h1>
+                    <input type="text" name="id" value="<?php echo $partido->getId() ?>" hidden>
+                    <input type="text" name="local" value="<?php echo $partido->getLocal() ?>" hidden>
+                    <input type="text" name="visitante" value="<?php echo $partido->getVisitante() ?>" hidden>
+                    <div class="col-6 mb-3">
+                        <label class="form-label">Jornada</label>
+                        <input type="text" name="jornada" class="form-control" value="<?php echo $partido->getJornada() ?>" placeholder="<?php echo $partido->getJornada() ?>">
+                    </div>
+                    <div class="col-6 mb-3">
+                        <label class="form-label">Temporada</label>
+                        <input type="text" name="Temporada" class="form-control" value="<?php echo $partido->getTemporada() ?>" placeholder="<?php echo $partido->getTemporada() ?>">
+                    </div>
+                    <div class="col-6 mb-3">
+                        <label class="form-label">Fecha</label>
+                        <input type="text" name="date" class="form-control" value="<?php echo $partido->getFecha() ?>" placeholder="<?php echo $partido->getFecha() ?>">
                     </div>
                     <div class="col-6 mb-3">
                         <label class="form-label">Localización</label>
@@ -49,20 +59,7 @@
                     <div class="col-6 mb-3">
                         <label class="form-label">Deporte</label>
                         <input type="text" name="deporte" class="form-control" value="<?php echo $deporte->getNombre() ?>" placeholder="<?php echo $deporte->getNombre() ?>">
-                    </div>
-                    <div class="col-6 mb-3">
-                        <label class="form-label">Persona Contacto</label>
-                        <input type="text" name="persona" class="form-control" value="<?php echo $club->getPersonaContacto() ?>" placeholder="<?php echo $club->getPersonaContacto() ?>">
-                    </div>
-                    <div class="col-6 mb-3">
-                        <label class="form-label">Telefono Contacto</label>
-                        <input type="text" name="telefono" class="form-control" value="<?php echo $club->getTelefonoContacto() ?>" placeholder="<?php echo $club->getTelefonoContacto() ?>">
-                    </div>
-                    <div class="col-6 mb-3">
-                        <label class="form-label">Correo Contacto</label>
-                        <input type="text" name="email" class="form-control" value="<?php echo $club->getCorreoContacto() ?>" placeholder="<?php echo $club->getCorreoContacto() ?>">
-                    </div>
-                    
+                    </div>                    
                     <button type="submit" class="btn btn-success">Actualizar</button>
                 </div>
             </form>
