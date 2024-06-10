@@ -457,6 +457,27 @@ class Funciones{
         return $arrayClubs;
     }
 
+    public static function obtenerPartidosPorDeporte($deporte){
+        $conn = BBDD::conectar();
+        
+        if(!empty($deporte)){
+            $sql = "SELECT * FROM partido WHERE deporte = :deporte";   
+        }else{
+            $sql = "SELECT * FROM partido";
+        } 
+        $stmt = $conn->prepare($sql);
+        if(!empty($deporte))$stmt->bindParam(":deporte",$deporte);
+        $arrayPartidos = array();
+
+        if($stmt->execute()){
+            $ret = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach($ret as $partido){
+                array_push($arrayPartidos, new Partido($partido["id"],$partido["jornada"],$partido["temporada"],$partido["fecha"],$partido["estado"],$partido["deporte"],$partido["categoria"],$partido["arbitro"],$partido["local"],$partido["visitante"]));
+            }
+        }
+        return $arrayPartidos;
+    }
+
     /*
     =================================
             INSERCIONES EN BBDD

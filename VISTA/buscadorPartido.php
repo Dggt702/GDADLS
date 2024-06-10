@@ -1,9 +1,6 @@
 <form action="" method="POST" id="formularioBusqueda">
     <div class="row">
         <div class="col-6">
-            <input class="form-control" type="text" name="busquedaClub" id="busquedaClub" placeholder="Buscar">       
-        </div>
-        <div class="col-6">
             <?php
                 echo FuncionesVista::imprimirSelectDeportes("filtradoDeporte","filtradoDeporte"); 
              ?>
@@ -22,18 +19,15 @@
     });
 
     getData();
-    document.getElementById("busquedaClub").addEventListener("keyup",getData);
     document.getElementById("filtradoDeporte").addEventListener("change",getData);
 
     function getData(){
-        let input = document.getElementById("busquedaClub").value;
         let inputDeporte = document.getElementById("filtradoDeporte").value;
 
         let content = document.getElementById("content");
-        let url = "../CONTROLADOR/buscadorClub.php";
+        let url = "../CONTROLADOR/buscadorPartido.php";
         let formData = new FormData();
         
-        formData.append('busquedaClub',input);
         formData.append('filtradoDeporte',inputDeporte);
 
         fetch(url,{
