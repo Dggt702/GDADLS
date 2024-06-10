@@ -294,6 +294,32 @@ INSERT INTO `polideportivo` (`id`, `ubicacion`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `incidencia`
+--
+
+CREATE TABLE `incidencia` (
+  `id` int(11) NOT NULL,
+  `id_arbitro` int(11) NOT NULL,
+  `comentario` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `incidencia`
+--
+
+INSERT INTO `incidencia` (`id`, `id_arbitro`, `comentario`) VALUES 
+  (1, 1, 'Incidencia 1'),
+  (2, 2, 'Incidencia 2'),
+  (3, 3, 'Incidencia 3'),
+  (4, 4, 'Incidencia 4'),
+  (5, 5, 'Incidencia 5'),
+  (6, 1, 'Incidencia 6'),
+  (7, 3, 'Incidencia 7'),
+  (8, 5, 'Incidencia 8');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `password_token`
 --
 
@@ -369,6 +395,13 @@ ALTER TABLE `polideportivo`
 --
 -- Indices de la tabla `polideportivo`
 --
+ALTER TABLE `incidencia`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `arbitro` (`id_arbitro`);
+
+--
+-- Indices de la tabla `polideportivo`
+--
 ALTER TABLE `password_token`
   ADD PRIMARY KEY (`id`),
   ADD KEY `arbitro` (`id_arbitro`);
@@ -426,7 +459,13 @@ ALTER TABLE `polideportivo`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
--- AUTO_INCREMENT de la tabla `polideportivo`
+-- AUTO_INCREMENT de la tabla `incidencia`
+--
+ALTER TABLE `incidencia`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT de la tabla `password_token`
 --
 ALTER TABLE `password_token`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
@@ -453,10 +492,17 @@ ALTER TABLE `partido`
   ADD CONSTRAINT `partido_ibfk_4` FOREIGN KEY (`visitante`) REFERENCES `club` (`id`);
 
 --
+-- Filtros para la tabla `incidencia`
+--
+ALTER TABLE `incidencia`
+  ADD CONSTRAINT `incidencia_ibfk_1` FOREIGN KEY (`id_arbitro`) REFERENCES `arbitro` (`id`) ON UPDATE CASCADE;
+
+--
 -- Filtros para la tabla `password_token`
 --
 ALTER TABLE `password_token`
   ADD CONSTRAINT `password_token_ibfk_1` FOREIGN KEY (`id_arbitro`) REFERENCES `arbitro` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
