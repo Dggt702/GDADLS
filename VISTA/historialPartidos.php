@@ -93,14 +93,14 @@ $arrayPartidos = Funciones::obtenerPartidosPasadosArbitro($arbitro->getId());
                                 <div class="d-none" id="divSubirActa">
                                     <div class="col-12 d-flex flex-wrap justify-content-center mt-3">
                                         <div class="d-flex align-items-center mb-2" id="marcoFoto">
-                                            <?php echo FuncionesVista::mostraFotoArbitro($arbitro) ?>
+                                            <?php echo FuncionesVista::mostraFotoActa($partido->getId()) ?>
                                         </div>
                                             
-                                        <form id="formImagen" name="uploadForm" class="d-flex flex-wrap" action="../CONTROLADOR/guardarImagen.php" method="POST" enctype="multipart/form-data">
+                                        <form id="formImagen" name="uploadForm" class="d-flex flex-wrap" action="../CONTROLADOR/guardarImagenActa.php" method="POST" enctype="multipart/form-data">
                                             <div class="col-12">
                                                 <input type="file" name="imageFile" class="form-control" id="imageFile" accept=".png, .jpg, .jpeg">
                                                 <input type="image" name="imageCropped" class="form-control" id="imageForm" hidden>
-                                                <input type="text" name="dni" class="form-control" value="<?php echo $arbitro->getDni() ?>" hidden>
+                                                <input type="text" name="idPartido" class="form-control" value="<?php echo $partido->getId() ?>" hidden>
                                             </div>
                                             <div class="col-12 d-flex justify-content-around mt-2">
                                                 <button class="btn btn-success" type="submit" class="mt-3">Guardar</button>
@@ -137,7 +137,8 @@ $arrayPartidos = Funciones::obtenerPartidosPasadosArbitro($arbitro->getId());
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    
+    <script src="../js/recortar.js"></script>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const btnActa = document.getElementById("btnActa");
