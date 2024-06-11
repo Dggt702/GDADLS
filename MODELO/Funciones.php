@@ -258,7 +258,7 @@ class Funciones{
         $conn = BBDD::conectar();
         $arrayIncidencias = array();
         if(!empty($idArbitro)){
-            $sql = "SELECT * FROM incidencia WHERE id_arbitro = :idArbitro";
+            $sql = "SELECT i.* FROM incidencia i, partido p WHERE i.id_partido = p.id AND p.arbitro = :idArbitro";
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(":idArbitro",$idArbitro);
         }else{
@@ -269,7 +269,7 @@ class Funciones{
         if($stmt->execute()){
             $incidencias = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 foreach($incidencias as $elemento){
-                    array_push($arrayIncidencias,new Incidencia($elemento["id"],$elemento["id_arbitro"],$elemento["comentario"]));
+                    array_push($arrayIncidencias,new Incidencia($elemento["id"],$elemento["id_partido"],$elemento["comentario"]));
                 }
         }
         return $arrayIncidencias;
@@ -412,6 +412,102 @@ class Funciones{
         return $arrayPartidos;
     }
 
+    public static function obtenerPartidosFuturosArbitro($idArbitro){        
+        $conn = BBDD::conectar();
+        $arrayPartidos = array();
+        $sql = "SELECT * FROM partido WHERE arbitro = :arbitro AND fecha > NOW() ORDER BY fecha ASC";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":arbitro",$idArbitro);
+
+        if($stmt->execute()){
+            $partidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                foreach($partidos as $datosArbitro){
+                    array_push($arrayPartidos,new Partido($datosArbitro["id"],$datosArbitro["jornada"],$datosArbitro["temporada"],$datosArbitro["fecha"],$datosArbitro["estado"],$datosArbitro["deporte"],$datosArbitro["categoria"],$datosArbitro["arbitro"],$datosArbitro["local"],$datosArbitro["visitante"]));
+                }
+        }
+        return $arrayPartidos;
+    }
+
+    public static function obtenerPartidosPasadosArbitro($idArbitro){        
+        $conn = BBDD::conectar();
+        $arrayPartidos = array();
+        $sql = "SELECT * FROM partido WHERE arbitro = :arbitro AND fecha < NOW() ORDER BY fecha DESC";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":arbitro",$idArbitro);
+
+        if($stmt->execute()){
+            $partidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                foreach($partidos as $datosArbitro){
+                    array_push($arrayPartidos,new Partido($datosArbitro["id"],$datosArbitro["jornada"],$datosArbitro["temporada"],$datosArbitro["fecha"],$datosArbitro["estado"],$datosArbitro["deporte"],$datosArbitro["categoria"],$datosArbitro["arbitro"],$datosArbitro["local"],$datosArbitro["visitante"]));
+                }
+        }
+        return $arrayPartidos;
+    }
+
+    public static function obtenerPartidosPorDeporte($deporte){
+        $conn = BBDD::conectar();
+        
+        if(!empty($deporte)){
+            $sql = "SELECT * FROM partido WHERE deporte = :deporte";   
+        }else{
+            $sql = "SELECT * FROM partido";
+        } 
+        $stmt = $conn->prepare($sql);
+        if(!empty($deporte))$stmt->bindParam(":deporte",$deporte);
+        $arrayPartidos = array();
+
+        if($stmt->execute()){
+            $ret = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach($ret as $partido){
+                array_push($arrayPartidos, new Partido($partido["id"],$partido["jornada"],$partido["temporada"],$partido["fecha"],$partido["estado"],$partido["deporte"],$partido["categoria"],$partido["arbitro"],$partido["local"],$partido["visitante"]));
+            }
+        }
+        return $arrayPartidos;
+    }
+
+    public static function obtenerPartidosFuturosPorDeporte($deporte){
+        $conn = BBDD::conectar();
+        
+        if(!empty($deporte)){
+            $sql = "SELECT * FROM partido WHERE deporte = :deporte AND fecha > NOW()";   
+        }else{
+            $sql = "SELECT * FROM partido WHERE fecha > NOW()";
+        } 
+        $stmt = $conn->prepare($sql);
+        if(!empty($deporte))$stmt->bindParam(":deporte",$deporte);
+        $arrayPartidos = array();
+
+        if($stmt->execute()){
+            $ret = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach($ret as $partido){
+                array_push($arrayPartidos, new Partido($partido["id"],$partido["jornada"],$partido["temporada"],$partido["fecha"],$partido["estado"],$partido["deporte"],$partido["categoria"],$partido["arbitro"],$partido["local"],$partido["visitante"]));
+            }
+        }
+        return $arrayPartidos;
+    }
+
+    public static function obtenerPartidosPasadosPorDeporte($deporte){
+        $conn = BBDD::conectar();
+        
+        if(!empty($deporte)){
+            $sql = "SELECT * FROM partido WHERE deporte = :deporte AND fecha < NOW()";   
+        }else{
+            $sql = "SELECT * FROM partido WHERE fecha < NOW()";
+        } 
+        $stmt = $conn->prepare($sql);
+        if(!empty($deporte))$stmt->bindParam(":deporte",$deporte);
+        $arrayPartidos = array();
+
+        if($stmt->execute()){
+            $ret = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach($ret as $partido){
+                array_push($arrayPartidos, new Partido($partido["id"],$partido["jornada"],$partido["temporada"],$partido["fecha"],$partido["estado"],$partido["deporte"],$partido["categoria"],$partido["arbitro"],$partido["local"],$partido["visitante"]));
+            }
+        }
+        return $arrayPartidos;
+    }
+
+
 
 
     public static function obtenerArbitrosPorBusqueda($busqueda){
@@ -478,26 +574,6 @@ class Funciones{
         return $arrayClubs;
     }
 
-    public static function obtenerPartidosPorDeporte($deporte){
-        $conn = BBDD::conectar();
-        
-        if(!empty($deporte)){
-            $sql = "SELECT * FROM partido WHERE deporte = :deporte";   
-        }else{
-            $sql = "SELECT * FROM partido";
-        } 
-        $stmt = $conn->prepare($sql);
-        if(!empty($deporte))$stmt->bindParam(":deporte",$deporte);
-        $arrayPartidos = array();
-
-        if($stmt->execute()){
-            $ret = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            foreach($ret as $partido){
-                array_push($arrayPartidos, new Partido($partido["id"],$partido["jornada"],$partido["temporada"],$partido["fecha"],$partido["estado"],$partido["deporte"],$partido["categoria"],$partido["arbitro"],$partido["local"],$partido["visitante"]));
-            }
-        }
-        return $arrayPartidos;
-    }
 
     /*
     =================================
@@ -538,14 +614,14 @@ class Funciones{
 
     public static function enviarIncidencia($incidencia){
         $conn = BBDD::conectar();
-        $sql = "INSERT INTO incidencia(id_arbitro,comentario) VALUES(:id_arbitro,:comentario)";
+        $sql = "INSERT INTO incidencia(id_partido,comentario) VALUES(:id_partido,:comentario)";
         $ret = false;
         $stmt = $conn->prepare($sql);
 
-        $idArbitro = $incidencia->getIdArbitro();
+        $idPartido = $incidencia->getIdArbitro();
         $comentario = $incidencia->getComentario();
 
-        $stmt->bindParam(":id_arbitro",$idArbitro);
+        $stmt->bindParam(":id_partido",$idPartido);
         $stmt->bindParam(":comentario",$comentario);
 
         if($stmt->execute()){

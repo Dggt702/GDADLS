@@ -303,7 +303,7 @@ INSERT INTO `polideportivo` (`id`, `ubicacion`) VALUES
 
 CREATE TABLE `incidencia` (
   `id` int(11) NOT NULL,
-  `id_arbitro` int(11) NOT NULL,
+  `id_partido` int(11) NOT NULL,
   `comentario` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -311,15 +311,17 @@ CREATE TABLE `incidencia` (
 -- Volcado de datos para la tabla `incidencia`
 --
 
-INSERT INTO `incidencia` (`id`, `id_arbitro`, `comentario`) VALUES 
+INSERT INTO `incidencia` (`id`, `id_partido`, `comentario`) VALUES 
   (1, 1, 'Incidencia 1'),
-  (2, 2, 'Incidencia 2'),
-  (3, 3, 'Incidencia 3'),
-  (4, 4, 'Incidencia 4'),
-  (5, 5, 'Incidencia 5'),
-  (6, 1, 'Incidencia 6'),
-  (7, 3, 'Incidencia 7'),
-  (8, 5, 'Incidencia 8');
+  (2, 7, 'Incidencia 2'),
+  (3, 13, 'Incidencia 3'),
+  (4, 19, 'Incidencia 4'),
+  (5, 25, 'Incidencia 5'),
+  (6, 2, 'Incidencia 6'),
+  (7, 8, 'Incidencia 7'),
+  (8, 14, 'Incidencia 8'),
+  (9, 20, 'Incidencia 9'),
+  (10, 26, 'Incidencia 10');
 
 -- --------------------------------------------------------
 
@@ -401,7 +403,7 @@ ALTER TABLE `polideportivo`
 --
 ALTER TABLE `incidencia`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `arbitro` (`id_arbitro`);
+  ADD KEY `partido` (`id_partido`);
 
 --
 -- Indices de la tabla `polideportivo`
@@ -466,7 +468,7 @@ ALTER TABLE `polideportivo`
 -- AUTO_INCREMENT de la tabla `incidencia`
 --
 ALTER TABLE `incidencia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `password_token`
@@ -499,7 +501,7 @@ ALTER TABLE `partido`
 -- Filtros para la tabla `incidencia`
 --
 ALTER TABLE `incidencia`
-  ADD CONSTRAINT `incidencia_ibfk_1` FOREIGN KEY (`id_arbitro`) REFERENCES `arbitro` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `incidencia_ibfk_1` FOREIGN KEY (`id_partido`) REFERENCES `partido` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `password_token`
