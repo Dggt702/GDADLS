@@ -228,7 +228,29 @@ class FuncionesVista{
         return $rend;
     }
 
+    public static function imprimirIncidencias($arrayIncidencias){
+        $rend = "";
+        if(!empty($arrayIncidencias)){
+            foreach($arrayIncidencias as $incidencia){
+                $rend .= '
+                <div class="col-6 px-2">
+                    <div class="card mb-3">
+                        <div class="card-header">Incidencia</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Incidencia N° '.$incidencia->getId().'</h5>
+                            <p class="card-text">Jornada '.$incidencia->getComentario().'</p>
+                        </div>
+                    </div>
+                </div>';
+            }
+        }else{
+            $rend = "<h1>No hay incidencias</h2>";
+        }
+
+    }
+
     public static function imprimirCardsPartido($idArbitro){
+        $arb = Funciones::obtenerArbitro($idArbitro);
         $arrayPartidos = Funciones::obtenerPartidosArbitro($idArbitro);
         $rend = '';
 
@@ -250,14 +272,46 @@ class FuncionesVista{
                             <p class="card-text">Jornada '.$partido->getJornada().' - Temporada '.$partido->getTemporada().'</p>
                             <p class="card-text">'.$polideportivo->getUbicacion().' - '.$pueblo->getNombre().'</p>
                             <a href="https://www.google.com/maps/search/?api=1&query='.$polideportivo->getUbicacion().'" class="btn btn-primary id="redirectButton"">Ubicación</a>
+                            <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Incidencia</button>
+                        
                         </div>
                     </div>
                 </div>
                 ';
             }
         }else $rend .= '<p>No hay partidos</p>';
+        $rend.=' <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Incidencia</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                
+                    <form action="../CONTROLADOR/enviarIncidencia.php" method="POST">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="exampleFormControlInput1" class="form-label">Árbitro:</label>
+                                <input type="text" class="form-control fw-bold" value="'.$arb->getNombre()." ".$arb->getApellidos().'" readonly>
+                                <input type="text" class="form-control fw-bold" name="id" value="'.$idArbitro.'" hidden>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleFormControlTextarea1" class="form-label">Comentario</label>
+                                <textarea name="comentario" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Enviar Incidencia</button>
+                        </div>                                      
+                    </form>
+                </div>
+            </div>
+        </div>
+        ';
         return $rend;
     }
+
 
     public static function mostraFotoArbitro($arbitro){
 

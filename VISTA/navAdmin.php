@@ -21,6 +21,11 @@
                 Gestionar Clubs
             </a>
         </li>
+        <li>
+            <a href="gestionarIncidencias.php" class="nav-link link-body-emphasis">
+                Gestionar Incidencias
+            </a>
+        </li>
     </ul>
     <hr>
     <a class="btn" href="../CONTROLADOR/cerrarSesion.php">Cerrar sesión</a>

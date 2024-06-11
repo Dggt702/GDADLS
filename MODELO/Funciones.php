@@ -254,6 +254,22 @@ class Funciones{
         return $arrayDeportes;
     }
 
+    public static function obtenerIncidenciaPorArbitros($idArbitro){
+        $conn = BBDD::conectar();
+        $arrayDeportes = array();
+        $sql = "SELECT * FROM incidencia WHERE id_arbitro = :idArbitro";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":idArbitro",$idArbitro);
+
+        if($stmt->execute()){
+            $incidencias = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                foreach($incidencias as $elemento){
+                    array_push($arrayDeportes,new Deporte($elemento["id"],$elemento["nombre"]));
+                }
+        }
+        return $arrayDeportes;
+    }
+
     public static function obtenerArbitros(){        
         $conn = BBDD::conectar();
         $arrayArbitros = array();
@@ -513,6 +529,25 @@ class Funciones{
             }     
         }
         return $insertado;
+    }
+
+    public static function enviarIncidencia($incidencia){
+        $conn = BBDD::conectar();
+        $sql = "INSERT INTO incidencia(id_arbitro,comentario) VALUES(:id_arbitro,:comentario)";
+        $ret = false;
+        $stmt = $conn->prepare($sql);
+
+        $idArbitro = $incidencia->getIdArbitro();
+        $comentario = $incidencia->getComentario();
+
+        $stmt->bindParam(":id_arbitro",$idArbitro);
+        $stmt->bindParam(":comentario",$comentario);
+
+        if($stmt->execute()){
+            $ret = true;
+        }
+
+        return $ret;     
     }
 
     public static function insertarClub($club){
