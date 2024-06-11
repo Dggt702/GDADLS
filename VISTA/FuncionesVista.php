@@ -338,7 +338,7 @@ class FuncionesVista{
                 $rend = '<img src="'.$rutaImagen.'" class="img-fluid border" id="fotoCarnet" alt="No hay foto">';
             }
         }
-        if($rend == "") $rend = '<img id="fotoCarnet" src="../fotosArbitros/no-image-available.jpeg" class="img-fluid rounded-circle border" id="fotoCarnet" alt="No hay foto">';
+        if($rend == "") $rend = '<img id="fotoCarnet" src="../fotosArbitros/no-image-available.jpeg" class="img-fluid" id="fotoCarnet" alt="No hay foto">';
         return $rend;
     }
 
@@ -353,6 +353,23 @@ class FuncionesVista{
             }
         }
         return $ret;
+    }
+
+    public static function mostraFotoActa($idPartido){
+        $partido = Funciones::obtenerPartido($idPartido);
+
+        $nombreArchivo = $partido->getid();
+        $rutaBase = "../fotosActas/".$nombreArchivo."";
+        $rend = "";
+        $extensiones = ['jpg', 'jpeg', 'png'];
+        foreach ($extensiones as $extension) {
+            $rutaImagen = "{$rutaBase}.{$extension}";
+            if (file_exists($rutaImagen)) {
+                $rend = '<img src="'.$rutaImagen.'" class="img-fluid border" id="fotoCarnet" alt="No hay foto">';
+            }
+        }
+        if($rend == "") $rend = '<img id="fotoCarnet" src="../fotosArbitros/no-image-available.jpeg" class="img-fluid" id="fotoCarnet" alt="No hay foto">';
+        return $rend;
     }
 
 
