@@ -412,6 +412,38 @@ class Funciones{
         return $arrayPartidos;
     }
 
+    public static function obtenerPartidosFuturosArbitro($idArbitro){        
+        $conn = BBDD::conectar();
+        $arrayPartidos = array();
+        $sql = "SELECT * FROM partido WHERE arbitro = :arbitro AND fecha > NOW() ORDER BY fecha ASC";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":arbitro",$idArbitro);
+
+        if($stmt->execute()){
+            $partidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                foreach($partidos as $datosArbitro){
+                    array_push($arrayPartidos,new Partido($datosArbitro["id"],$datosArbitro["jornada"],$datosArbitro["temporada"],$datosArbitro["fecha"],$datosArbitro["estado"],$datosArbitro["deporte"],$datosArbitro["categoria"],$datosArbitro["arbitro"],$datosArbitro["local"],$datosArbitro["visitante"]));
+                }
+        }
+        return $arrayPartidos;
+    }
+
+    public static function obtenerPartidosPasadosArbitro($idArbitro){        
+        $conn = BBDD::conectar();
+        $arrayPartidos = array();
+        $sql = "SELECT * FROM partido WHERE arbitro = :arbitro AND fecha < NOW() ORDER BY fecha DESC";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":arbitro",$idArbitro);
+
+        if($stmt->execute()){
+            $partidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                foreach($partidos as $datosArbitro){
+                    array_push($arrayPartidos,new Partido($datosArbitro["id"],$datosArbitro["jornada"],$datosArbitro["temporada"],$datosArbitro["fecha"],$datosArbitro["estado"],$datosArbitro["deporte"],$datosArbitro["categoria"],$datosArbitro["arbitro"],$datosArbitro["local"],$datosArbitro["visitante"]));
+                }
+        }
+        return $arrayPartidos;
+    }
+
     public static function obtenerPartidosPorDeporte($deporte){
         $conn = BBDD::conectar();
         

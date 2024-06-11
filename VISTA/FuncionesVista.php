@@ -263,7 +263,7 @@ class FuncionesVista{
 
     public static function imprimirCardsPartido($idArbitro){
         $arbitro = Funciones::obtenerArbitro($idArbitro);
-        $arrayPartidos = Funciones::obtenerPartidosArbitro($idArbitro);
+        $arrayPartidos = Funciones::obtenerPartidosFuturosArbitro($idArbitro);
         $rend = '';
 
         if(!empty($arrayPartidos)){

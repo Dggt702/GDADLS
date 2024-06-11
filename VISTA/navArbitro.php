@@ -10,7 +10,7 @@
 
             <ul class="nav col col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="vistaArbitro.php" class="nav-link px-2 fw-bold link-body-emphasis">Inicio</a></li>
-                <li><a href="#" class="nav-link px-2">Historial de partidos</a></li>
+                <li><a href="historialPartidos.php" class="nav-link px-2">Historial de partidos</a></li>
             </ul>
 
             <div class="col-auto col-lg-auto dropdown text-end">
