@@ -45,7 +45,7 @@ if(isset($_SESSION['idArbitro'])){
                         
                     <form id="formImagen" name="uploadForm" class="d-flex flex-wrap" action="../CONTROLADOR/guardarImagen.php" method="POST" enctype="multipart/form-data">
                         <div class="col-12">
-                            <input type="file" name="imageFile" class="form-control" id="imageFile" accept="image/*">
+                            <input type="file" name="imageFile" class="form-control" id="imageFile" accept=".png, .jpg, .jpeg">
                             <input type="image" name="imageCropped" class="form-control" id="imageForm" hidden>
                             <input type="text" name="dni" class="form-control" value="<?php echo $arbitro->getDni() ?>" hidden>
                         </div>
