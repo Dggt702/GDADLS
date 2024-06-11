@@ -69,9 +69,6 @@ if(isset($_GET["id"])){
 
                     <img id="previewImage" src="" class="img-fluid" alt="Vista previa" style="display: none;">
                     <canvas id="cropperContainer" style="display: none;"></canvas>
-                    
-
-                    
                 </div>
                 
                 <div class="col-6">

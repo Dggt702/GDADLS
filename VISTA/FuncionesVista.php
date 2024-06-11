@@ -275,7 +275,7 @@ class FuncionesVista{
                 $pueblo = Funciones::obtenerPueblo($local->getLocalizacion());
 
                 $rend .= '
-                <div class="col-6 px-2">
+                <div class="col-md-6 col-sm-12 px-2">
                     <div class="card mb-3">
                         <div class="card-header">'.$deporte->getNombre().'</div>
                         <div class="card-body">
