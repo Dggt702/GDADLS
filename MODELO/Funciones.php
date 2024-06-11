@@ -258,7 +258,7 @@ class Funciones{
         $conn = BBDD::conectar();
         $arrayIncidencias = array();
         if(!empty($idArbitro)){
-            $sql = "SELECT * FROM incidencia WHERE id_arbitro = :idArbitro";
+            $sql = "SELECT i.* FROM incidencia i, partido p WHERE i.id_partido = p.id AND p.arbitro = :idArbitro";
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(":idArbitro",$idArbitro);
         }else{
@@ -269,7 +269,7 @@ class Funciones{
         if($stmt->execute()){
             $incidencias = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 foreach($incidencias as $elemento){
-                    array_push($arrayIncidencias,new Incidencia($elemento["id"],$elemento["id_arbitro"],$elemento["comentario"]));
+                    array_push($arrayIncidencias,new Incidencia($elemento["id"],$elemento["id_partido"],$elemento["comentario"]));
                 }
         }
         return $arrayIncidencias;
@@ -582,14 +582,14 @@ class Funciones{
 
     public static function enviarIncidencia($incidencia){
         $conn = BBDD::conectar();
-        $sql = "INSERT INTO incidencia(id_arbitro,comentario) VALUES(:id_arbitro,:comentario)";
+        $sql = "INSERT INTO incidencia(id_partido,comentario) VALUES(:id_partido,:comentario)";
         $ret = false;
         $stmt = $conn->prepare($sql);
 
-        $idArbitro = $incidencia->getIdArbitro();
+        $idPartido = $incidencia->getIdArbitro();
         $comentario = $incidencia->getComentario();
 
-        $stmt->bindParam(":id_arbitro",$idArbitro);
+        $stmt->bindParam(":id_partido",$idPartido);
         $stmt->bindParam(":comentario",$comentario);
 
         if($stmt->execute()){

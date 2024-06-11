@@ -313,15 +313,15 @@ CREATE TABLE `incidencia` (
 
 INSERT INTO `incidencia` (`id`, `id_partido`, `comentario`) VALUES 
   (1, 1, 'Incidencia 1'),
-  (2, 2, 'Incidencia 2'),
-  (3, 3, 'Incidencia 3'),
-  (4, 4, 'Incidencia 4'),
-  (5, 5, 'Incidencia 5'),
-  (6, 6, 'Incidencia 6'),
-  (7, 7, 'Incidencia 7'),
-  (8, 8, 'Incidencia 8'),
-  (9, 9, 'Incidencia 9'),
-  (10, 10, 'Incidencia 10');
+  (2, 7, 'Incidencia 2'),
+  (3, 13, 'Incidencia 3'),
+  (4, 19, 'Incidencia 4'),
+  (5, 25, 'Incidencia 5'),
+  (6, 2, 'Incidencia 6'),
+  (7, 8, 'Incidencia 7'),
+  (8, 14, 'Incidencia 8'),
+  (9, 20, 'Incidencia 9'),
+  (10, 26, 'Incidencia 10');
 
 -- --------------------------------------------------------
 
