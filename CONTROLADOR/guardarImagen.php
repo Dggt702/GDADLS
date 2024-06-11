@@ -43,12 +43,16 @@ header("Location: ../VISTA/perfil.php?id=".$id."");
 */
 require("../MODELO/Funciones.php");
 
+session_start();var_dump($_SESSION);
+if(isset($_SESSION['idArbitro']))
+    $idArbitro = $_SESSION['idArbitro'];
+else header('Location ../index.php');
 
 $dni = $_POST["dni"];
 $arbitro = Funciones::obtenerArbitroPorDni($dni);
 $nombreApellidos = $arbitro->getNombre().$arbitro->getApellidos();
 
-$imagenNombre= $dni."-".$nombreApellidos;
+$imagenNombre = ($dni."-".$nombreApellidos);
 
 $target_path = "../fotosArbitros/";
 
@@ -81,7 +85,7 @@ if(isset($_FILES["imageFile"])){
             unlink($target_path.$imagenNombre.".gif");
         rename($target_path.$nombre, $target_path.$imagenNombre.".".$extension);
     }
-    header("Location: ../VISTA/perfilArbitro.php?dni=".$dni."");
+    header("Location: ../VISTA/perfilArbitro.php?id=".$idArbitro."");
 }else{
-    header("Location: ../VISTA/perfilArbitro.php?dni=".$dni."&error=error");
+    header("Location: ../VISTA/perfilArbitro.php?id=".$idArbitro."&error=error");
 }

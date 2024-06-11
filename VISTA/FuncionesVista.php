@@ -260,19 +260,19 @@ class FuncionesVista{
     }
 
     public static function mostraFotoArbitro($arbitro){
-        $rutaBase = "../fotosArbitros/{$arbitro->getDni()}-{$arbitro->getNombre()}{$arbitro->getApellidos()}";
-        $rend = "";
 
-        $extensiones = ['jpg', 'jpeg', 'png','gif'];
+        $nombreArchivo = ($arbitro->getDni().'-'.$arbitro->getNombre().$arbitro->getApellidos());
+        $rutaBase = "../fotosArbitros/".$nombreArchivo."";
+        $rend = "";
+        $extensiones = ['jpg', 'jpeg', 'png'];
         foreach ($extensiones as $extension) {
             $rutaImagen = "{$rutaBase}.{$extension}";
             if (file_exists($rutaImagen)) {
-                $rend = '<img style="width:10cm; height:10cm;" src="'.$rutaImagen.'" class="img-fluid rounded-circle border" id="fotoCarnet" alt="No hay foto">';
-                return $rend; // Si la imagen se encuentra, la mostramos y salimos del bucle
+                $rend = '<img src="'.$rutaImagen.'" class="img-fluid border" id="fotoCarnet" alt="No hay foto">';
             }
-        }   
-        if ($rend == "")
-            return '<img id="fotoCarnet" style="width:10cm; height:10cm;" src="../fotosArbitros/no-image-available.jpeg" class="img-fluid rounded-circle border" id="fotoCarnet" alt="No hay foto">';
+        }
+        if($rend == "") $rend = '<img id="fotoCarnet" src="../fotosArbitros/no-image-available.jpeg" class="img-fluid rounded-circle border" id="fotoCarnet" alt="No hay foto">';
+        return $rend;
     }
 
     public static function mostraRutaFotoArbitro($arbitro){

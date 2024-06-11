@@ -4,11 +4,11 @@ require_once('FuncionesVista.php');
 
 session_start();
 
-if(isset($_SESSION['idArbitro'])){
+if(isset($_GET["id"])){
     $idArbitro = $_GET["id"];
     $arbitro = Funciones::obtenerArbitro($idArbitro);
     $modificar = '';
-}elseif(isset($_SESSION['idAdmin'])){
+}elseif(isset($_GET["dni"])){
     $dniArbitro = $_GET["dni"];
     $arbitro = Funciones::obtenerArbitroPorDni($dniArbitro);
     $modificar = 'readonly';
@@ -39,7 +39,7 @@ if(isset($_SESSION['idArbitro'])){
         <div class="container">
             <div class="row my-5">
                 <div class="col-6 d-flex flex-wrap justify-content-center">
-                    <div class="d-flex align-items-center mb-2" id="marcoFoto" style="width: 378px; height: 508px">
+                    <div class="d-flex align-items-center mb-2" id="marcoFoto">
                         <?php echo FuncionesVista::mostraFotoArbitro($arbitro) ?>
                     </div>
                         
