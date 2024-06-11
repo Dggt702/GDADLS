@@ -256,18 +256,23 @@ class Funciones{
 
     public static function obtenerIncidenciaPorArbitros($idArbitro){
         $conn = BBDD::conectar();
-        $arrayDeportes = array();
-        $sql = "SELECT * FROM incidencia WHERE id_arbitro = :idArbitro";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(":idArbitro",$idArbitro);
-
+        $arrayIncidencias = array();
+        if(!empty($idArbitro)){
+            $sql = "SELECT * FROM incidencia WHERE id_arbitro = :idArbitro";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(":idArbitro",$idArbitro);
+        }else{
+            $sql = "SELECT * FROM incidencia";
+            $stmt = $conn->prepare($sql);
+        }
+        
         if($stmt->execute()){
             $incidencias = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 foreach($incidencias as $elemento){
-                    array_push($arrayDeportes,new Deporte($elemento["id"],$elemento["nombre"]));
+                    array_push($arrayIncidencias,new Incidencia($elemento["id"],$elemento["id_arbitro"],$elemento["comentario"]));
                 }
         }
-        return $arrayDeportes;
+        return $arrayIncidencias;
     }
 
     public static function obtenerArbitros(){        

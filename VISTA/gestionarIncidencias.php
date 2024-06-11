@@ -20,43 +20,13 @@ require_once("../VISTA/FuncionesVista.php");
         <div class="container p-3">
             <h1 class="text-center">Gestion de Incidencias</h1>
             <hr>
-            <div class="row d-flex justify-content-center mb-5">
-                
-            </div>
-            <div id="form_nuevoClub" class="row" style="display: none">
+            <div id="incidencias" class="row">
                 <?php 
-                    include_once "formularioNuevoClub.php";
-                ?>
-            </div>
-            <div id="tabla_clubes" class="row" style="display: none">
-                <?php 
-                    include ("buscadorClub.php");
+                    include_once("buscadorIncidencias.php");
                 ?>
             </div>
         </div>
     </main>
     <?php include_once "footer.php" ?>
-
-    <script>
-        function toggleBox(event){
-            form_nuevoClub = document.getElementById("form_nuevoClub");
-            tabla_clubes = document.getElementById("tabla_clubes");
-
-            btn_nuevoClub = document.getElementById("btn_nuevoClub");
-            btn_verClubes = document.getElementById("btn_verClubes");
-
-            var idElemento = event.target.id;
-
-            if (idElemento == btn_nuevoClub.getAttribute("id")) {
-                form_nuevoClub.style.display = "block";
-                tabla_clubes.style.display = "none";
-                btn_nuevoClub.style.display = "none";
-            }
-            if (idElemento == btn_verClubes.getAttribute("id")) {
-                tabla_clubes.style.display = "block";
-                form_nuevoClub.style.display = "none";
-            }
-        }
-    </script>
 </body>
 </html>

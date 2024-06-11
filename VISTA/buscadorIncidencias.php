@@ -1,18 +1,16 @@
 <form action="" method="POST" id="formularioBusqueda">
     <div class="row">
         <div class="col-6">
-            <input class="form-control" type="text" name="busquedaClub" id="busquedaClub" placeholder="Buscar">       
-        </div>
-        <div class="col-6">
             <?php
-                echo FuncionesVista::imprimirSelectDeportes("filtradoDeporte","filtradoDeporte"); 
+                echo FuncionesVista::imprimirSelectArbitros("filtradoArbitro","filtradoArbitro"); 
              ?>
         </div>
     </div>    
 </form>
 
 
-<div class="mt-3" id="content">
+<div class="mt-3 row" id="content">
+
 </div>
 
 <script>
@@ -22,19 +20,16 @@
     });
 
     getData();
-    document.getElementById("busquedaClub").addEventListener("keyup",getData);
-    document.getElementById("filtradoDeporte").addEventListener("change",getData);
+    document.getElementById("filtradoArbitro").addEventListener("change",getData);
 
     function getData(){
-        let input = document.getElementById("busquedaClub").value;
-        let inputDeporte = document.getElementById("filtradoDeporte").value;
-
+        let inputDeporte = document.getElementById("filtradoArbitro").value;
         let content = document.getElementById("content");
-        let url = "../CONTROLADOR/buscadorClub.php";
+        
+        let url = "../CONTROLADOR/buscadorIncidencias.php";
         let formData = new FormData();
         
-        formData.append('busquedaClub',input);
-        formData.append('filtradoDeporte',inputDeporte);
+        formData.append('filtradoArbitro',inputDeporte);
 
         fetch(url,{
             method:"POST",

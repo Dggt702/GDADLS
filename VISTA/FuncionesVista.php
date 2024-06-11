@@ -80,6 +80,18 @@ class FuncionesVista{
         return $rend;
     }
 
+    public static function imprimirSelectArbitros($id,$nombre){
+        $rend = "<select class='form-select' name='".$nombre."' id='".$id."' required>";
+        $rend.= "<option value='' disabled hidden selected>Elige el Árbitro</option>";
+        $arrayArbitros= Funciones::obtenerArbitros();
+            
+        foreach($arrayArbitros as $arbitros){
+            $rend.="<option value='".$arbitros->getId()."'>".$arbitros->getNombre().' '. $arbitros->getApellidos()."</option>";
+        }
+        $rend.="</select>";
+        return $rend;
+    }
+
     public static function imprimirSelectClubesDeporte($idDeporte,$id,$nombre){
         $rend = "<select class='form-select' name='".$nombre."' id='".$id."' required>";
         $rend.= "<option value='' disabled hidden selected>Elige Equipo</option>";
@@ -244,9 +256,9 @@ class FuncionesVista{
                 </div>';
             }
         }else{
-            $rend = "<h1>No hay incidencias</h2>";
+            $rend .= "<h2>No hay incidencias</h2>";
         }
-
+        return $rend;
     }
 
     public static function imprimirCardsPartido($idArbitro){
