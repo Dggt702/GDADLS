@@ -66,9 +66,9 @@ CREATE TABLE `arbitro` (
 --
 
 INSERT INTO `arbitro` (`id`, `nombre`, `apellidos`, `dni`, `contrasenia`, `telefono`, `email`, `disponibilidad`) VALUES
-(1, 'Antonio', 'Ortiz', '1', '$2y$10$7ns7wkxKO8frXgPOj8HureQMmub5B/xpRp87V9E4bxq1qXKoUnuW2', 600111111, 'aortizmoreno@educa.madrid.org', 'DISPONIBLE'),
+(1, 'David', 'Caicedo', '1', '$2y$10$hngpNVL95i1jV35KzTYQO.o/1HtSnnpScAc2PMZvbus5AwijMMOve', 600333333, 'caicedo4.2002@gmail.com', 'DISPONIBLE'),
 (2, 'Laura', 'Martínez', '2', '$2y$10$ubTM/SaTuyfcE3ScjutpGuQwO4aCgIcnWKfq5V1fw2GNV6ZaY0uUO', 600222222, 'laura.martinez@example.com', 'DISPONIBLE'),
-(3, 'David', 'Rodríguez', '3', '$2y$10$hngpNVL95i1jV35KzTYQO.o/1HtSnnpScAc2PMZvbus5AwijMMOve', 600333333, 'david.rodriguez@example.com', 'DISPONIBLE'),
+(3, 'Antonio', 'Ortiz', '3', '$2y$10$7ns7wkxKO8frXgPOj8HureQMmub5B/xpRp87V9E4bxq1qXKoUnuW2', 600111111, 'aortizmoreno@educa.madrid.org', 'DISPONIBLE'),
 (4, 'Sara', 'López', '4', '$2y$10$ajnMivXifmnwhbLnxRM.weRuZsvtlbWZG9GFYyUHMXRNUu7Zfdm4y', 600444444, 'sara.lopez@example.com', 'DISPONIBLE'),
 (5, 'Jorge', 'Hernández', '5', '$2y$10$VfurMigYxit5C5O6yNpPMOny/ZdvPSeJ.xcTrS72bXJKjrrhJL0CC', 600555555, 'jorge.hernandez@example.com', 'DISPONIBLE');
 

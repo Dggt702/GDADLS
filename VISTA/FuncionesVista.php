@@ -261,7 +261,7 @@ class FuncionesVista{
                         <div class="card-header">'.$categoria->getDescripcion().' - '.$local->getNombre().' vs '.$visitante->getNombre().'</div>
                         <div class="card-body">
                             <h6 class="card-title">'.$fecha.' | '.$temporada.'</h6>
-                            <a href="perfilArbitro.php?id='.$partido->getArbitro().'" class="text-decoration-none card-text fst-italic fw-normal">Arbitro:  '.$arbitro->getNombre()." ".$arbitro->getNombre().'</a>
+                            <a href="perfilArbitro.php?id='.$partido->getArbitro().'" class="text-decoration-none card-text fst-italic fw-normal">Arbitro:  '.$arbitro->getNombre()." ".$arbitro->getApellidos().'</a>
                             <p class="card-text fw-light">'.$incidencia->getComentario().'</p>
                         </div>
                     </div>
