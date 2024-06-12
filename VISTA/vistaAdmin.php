@@ -1,5 +1,6 @@
 <?php
 include_once "../MODELO/Funciones.php";
+include_once "FuncionesVista.php";
 
 session_start();
 ?>
@@ -16,8 +17,19 @@ session_start();
     
     <main class="d-flex my-5">
         <?php include_once "navAdmin.php" ?>
+        
+        
         <div class="container p-3">
-            <div class="row">
+                <div class="">
+                    <h1 class="text-center">Partidos Próximos</h1>
+                    <hr>
+                </div>
+                <div class="d-flex justify-content-center" id="radioDeporte">
+                    <?php
+                        echo FuncionesVista::imprimirRadioDeDeportes();
+                    ?>
+                </div>
+            <div class="mt-5 row" id="content">
                 
             </div>
         </div>
@@ -27,7 +39,37 @@ session_start();
     
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script>
+    
+    const deportes = document.getElementsByName("deporte");
+        for (let i = 0; i < deportes.length; i++) {
+            deportes[i].addEventListener("change",getData);    
+        }
 
+    getData();
+    function getData(){
+        var inputDeporte;
+        for (let i = 0; i < deportes.length; i++) {
+            if(deportes[i].checked==true){
+                inputDeporte = deportes[i].value;
+                break;
+            }
+        }
+
+        let url = "../CONTROLADOR/partidosProximos.php";
+        let content = document.getElementById("content");
+        let formData = new FormData();
+        formData.append('filtradoDeporte',inputDeporte);
+        fetch(url,{
+            method:"POST",
+            body:formData
+        }).then(response=>response.json())
+        .then(data => {
+            content.innerHTML = data
+        }).catch(err=>console.log(err))
+    }
+
+</script>
 </body>
 
 </html>

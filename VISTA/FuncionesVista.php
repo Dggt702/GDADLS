@@ -261,6 +261,52 @@ class FuncionesVista{
         return $rend;
     }
 
+    public static function imprimirRadioDeDeportes(){
+        $arrayDeportes = Funciones::obtenerDeportes();
+        $rend = '<div class="btn-group" role="group" aria-label="Basic radio toggle button group">';
+        foreach($arrayDeportes as $deporte){
+            $rend.='
+                <input type="radio" class="btn-check" name="deporte" id="'.$deporte->getNombre().'" autocomplete="off" value="'.$deporte->getId().'">
+                <label class="btn btn-primary" for="'.$deporte->getNombre().'">'.$deporte->getNombre().'</label>
+            ';
+        }
+        $rend.="</div>";
+        return $rend;
+    }
+
+    public static function imprimirCardsPartidosProximosPorFiltradoDeportes($arrayPartidos){
+        $rend="";
+
+        if(!empty($arrayPartidos)){
+            foreach($arrayPartidos as $partido){
+                $deporte = Funciones::obtenerDeporte($partido->getDeporte());
+                $local = Funciones::obtenerClub($partido->getLocal());
+                $visitante = Funciones::obtenerClub($partido->getVisitante());
+                $polideportivo = Funciones::obtenerPolideportivo($local->getPolideportivo());
+                $pueblo = Funciones::obtenerPueblo($local->getLocalizacion());
+                $arbitro = Funciones::obtenerArbitro($partido->getArbitro());
+
+                $rend .= '
+                <div class="col-md-6 col-sm-12 px-2">
+                    <div class="card mb-3">
+                        <div class="card-header">'.$deporte->getNombre().'</div>
+                        <div class="card-body">
+                            <h5 class="card-title">'.$local->getNombre().' vs '.$visitante->getNombre().'</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">'.$partido->getFecha().'</h6>
+                            <p class="card-text">Jornada '.$partido->getJornada().' - Temporada '.$partido->getTemporada().'</p>
+                            <p class="card-text">'.$polideportivo->getUbicacion().' - '.$pueblo->getNombre().'</p>
+                            <a href="https://www.google.com/maps/search/?api=1&query='.$polideportivo->getUbicacion().'" class="btn btn-primary id="redirectButton"">Ubicación</a>
+                            <a href="perfilPartido.php?id='.$partido->getId().'" class="btn btn-primary">Editar Partido</a>
+                           
+                        </div>
+                    </div>
+                </div>
+                ';
+            }
+        }else $rend .= '<p>No hay partidos</p>';
+        return $rend;
+    }
+
     public static function imprimirCardsPartido($idArbitro){
         $arbitro = Funciones::obtenerArbitro($idArbitro);
         $arrayPartidos = Funciones::obtenerPartidosFuturosArbitro($idArbitro);
