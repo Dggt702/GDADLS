@@ -126,8 +126,10 @@ class FuncionesVista{
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
-                        <th scope="col"></th>
+                        <th scope="col">Foto</th>
                         <th scope="col">Nombre Completo</th>
+                        <th scope="col">Teléfono</th>
+                        <th scope="col">Email</th>
                         <th scope="col">Disponibilidad</th>
                         <th scope="col"></th>
                     </tr>
@@ -139,6 +141,8 @@ class FuncionesVista{
                         $rend.='<td>'.$arbitro->getId().'</td>';
                         $rend.='<td><div class="rounded-circle" style="width: 2cm; height:2cm; background-position:center; background-size:cover; background-image: url(\''.self::mostraRutaFotoArbitro($arbitro).'\')"></div></td>';
                         $rend.='<td>'.$arbitro->getNombre()." ".$arbitro->getApellidos().'</td>';
+                        $rend.='<td>'.$arbitro->getTelefono().'</td>';
+                        $rend.='<td>'.$arbitro->getEmail().'</td>';
                         if($arbitro->getDisponibilidad()=="DISPONIBLE"){
                             $rend.='<td class="text-center text-white fw-bold bg-success">'.$arbitro->getDisponibilidad().'</td>';
                         }else{
