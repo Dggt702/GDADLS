@@ -23,6 +23,9 @@ $arrayPartidos = Funciones::obtenerPartidosPasadosArbitro($arbitro->getId());
     <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/locale/es.js'></script>
 
+    <link rel="icon" href="https://www.adsierra.es/wp-content/uploads/2020/08/cropped-faviconADS-32x32.png" sizes="32x32">
+    <title>Historial | Gestión de Árbitros</title>
+
     <style>
         .fc-unthemed td.fc-today {
             background: #cfffaf;            
@@ -89,8 +92,9 @@ $arrayPartidos = Funciones::obtenerPartidosPasadosArbitro($arbitro->getId());
                                             </div>
                                         </div>
                                     </div>
-                                <button class="btn btn-primary" id="btnActa">Acta</button>
-                                <div class="d-none" id="divSubirActa">
+                                <button class="btn btn-primary" id="btnActa<?php echo $partido->getId(); ?>">Acta</button>
+                                <input type="hidden" id="idPartido" value="<?php echo $partido->getId(); ?>">
+                                <div class="d-none" id="divSubirActa<?php echo $partido->getId() ?>">
                                     <div class="col-12 d-flex flex-wrap justify-content-center mt-3">
                                         <div class="d-flex align-items-center mb-2" id="marcoFoto">
                                             <?php echo FuncionesVista::mostraFotoActa($partido->getId()) ?>
@@ -141,12 +145,17 @@ $arrayPartidos = Funciones::obtenerPartidosPasadosArbitro($arbitro->getId());
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const btnActa = document.getElementById("btnActa");
-            const divSubirActa = document.getElementById("divSubirActa");
+            mostrarActa();
+            function mostrarActa(){
+                var idPartido = document.getElementById("idPartido").value;
+                const btnActa = document.getElementById("btnActa"+idPartido);
+                const divSubirActa = document.getElementById("divSubirActa"+idPartido);
 
-            btnActa.addEventListener("click", function() {
-                divSubirActa.classList.toggle("d-none");
-            });
+                btnActa.addEventListener("click", function() {
+                    divSubirActa.classList.toggle("d-none");
+                });
+            }
+            
         });
     </script>
 </body>
