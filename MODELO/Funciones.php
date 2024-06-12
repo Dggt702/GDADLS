@@ -834,6 +834,50 @@ class Funciones{
         return $ret;
     }
 
+    public static function editarClub($club){
+
+        $id = $club->getId();
+        $nombre = $club->getNombre();
+        $personaContacto = $club->getPersonaContacto();
+        $telContacto = $club->getTelefonoContacto();
+        $correoContacto = $club->getCorreoContacto();
+
+        $conn = BBDD::conectar();
+        $sql = "UPDATE club SET nombre = :nombre, persona_contacto = :personaContacto, telefono_contacto=:telContacto, correo_contacto=:correoContacto WHERE id=:id";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":id",$id);
+        $stmt->bindParam(":nombre",$nombre);
+        $stmt->bindParam(":personaContacto",$personaContacto);
+        $stmt->bindParam(":telContacto",$telContacto);
+        $stmt->bindParam(":correoContacto",$correoContacto);
+        $ret = false;
+
+        if($stmt->execute()){
+            $ret=true;
+        }
+        return $ret;
+    }
+
+    public static function editarPartido($partido){
+
+        $id = $partido->getId();
+        $fecha = $partido->getFecha();
+
+        $conn = BBDD::conectar();
+        $sql = "UPDATE partido SET fecha = :fecha WHERE id=:id";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":id",$id);
+        $stmt->bindParam(":fecha",$fecha);
+        $ret = false;
+
+        if($stmt->execute()){
+            $ret=true;
+        }
+        return $ret;
+    }
+
     public static function comprobarContraseniaAdmin($admin){
 
         $encontrado = false;

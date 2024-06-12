@@ -7,17 +7,14 @@ if($_SERVER["REQUEST_METHOD"] === "GET"){
 
     $id = $_GET["id"];
     $nombre = $_GET["nombre"];
-    $localizacion = $_GET["localizacion"];
-    $polideportivo = $_GET["sede"];
-    $deporte = $_GET["deporte"];
     $persona = $_GET["persona"];
     $telefono = $_GET["telefono"];
     $email = $_GET["email"];
     
-    $arbitro = new Club($id,$nombre,$localizacion,$polideportivo,$deporte,$persona,$telefono,$email);
+    $club = new Club($id,$nombre,"","",$persona,$telefono,$email,"");
     
-    if(Funciones::editarClub($arbitro)){
+    if(Funciones::editarClub($club)){
         echo FuncionesVista::pantallaDeOperacion("Se ha actualizado el club correctamente",true);
-    }else header("Location: ../VISTA/perfilClub.php?id=".$id."&error=true");
+    }else echo FuncionesVista::pantallaDeOperacion("No se ha podido actualizar el club",false);
     
 }

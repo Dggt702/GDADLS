@@ -75,29 +75,29 @@
                             <input type="text" name="visitante" value="<?php echo $partido->getVisitante() ?>" hidden>
                             <div class="col-6 mb-3">
                                 <label class="form-label">Jornada</label>
-                                <input type="text" name="jornada" class="form-control" value="<?php echo $partido->getJornada() ?>" placeholder="<?php echo $partido->getJornada() ?>">
+                                <input type="text" name="jornada" class="form-control" value="<?php echo $partido->getJornada() ?>" placeholder="<?php echo $partido->getJornada() ?>" readonly>
                             </div>
                             <div class="col-6 mb-3">
                                 <label class="form-label">Temporada</label>
-                                <input type="text" name="Temporada" class="form-control" value="<?php echo $partido->getTemporada() ?>" placeholder="<?php echo $partido->getTemporada() ?>">
+                                <input type="text" name="temporada" class="form-control" value="<?php echo $partido->getTemporada() ?>" placeholder="<?php echo $partido->getTemporada() ?>" readonly>
                             </div>
                             <div class="col-6 mb-3">
                                 <label class="form-label">Fecha</label>
-                                <input type="text" name="date" class="form-control" value="<?php echo $partido->getFecha() ?>" placeholder="<?php echo $partido->getFecha() ?>">
+                                <input type="text" class="form-control" value="<?php echo $partido->getFecha() ?>" placeholder="<?php echo $partido->getFecha() ?>" readonly>
                             </div>
                             <div class="col-6 mb-3">
                                 <label class="form-label">Localización</label>
-                                <input type="text" name="localizacion" class="form-control" value="<?php echo $pueblo->getNombre() ?>" placeholder="<?php echo $pueblo->getNombre() ?>">
+                                <input type="text" name="localizacion" class="form-control" value="<?php echo $pueblo->getNombre() ?>" placeholder="<?php echo $pueblo->getNombre() ?>" readonly>
                             </div>
                             <div class="col-6 mb-3">
                                 <label class="form-label">Sede</label>
-                                <input type="text" name="sede" class="form-control" value="<?php echo $polideportivo->getUbicacion() ?>" placeholder="<?php echo $polideportivo->getUbicacion() ?>">
+                                <input type="text" name="sede" class="form-control" value="<?php echo $polideportivo->getUbicacion() ?>" placeholder="<?php echo $polideportivo->getUbicacion() ?>" readonly>
                             </div>
                             <div class="col-6 mb-3">
                                 <label class="form-label">Deporte</label>
-                                <input type="text" name="deporte" class="form-control" value="<?php echo $deporte->getNombre() ?>" placeholder="<?php echo $deporte->getNombre() ?>">
+                                <input type="text" name="deporte" class="form-control" value="<?php echo $deporte->getNombre() ?>" placeholder="<?php echo $deporte->getNombre() ?>" readonly>
                             </div>                    
-                            <button type="submit" class="btn btn-success w-100">Actualizar</button>
+                            <button type="submit" class="btn btn-success w-100 d-none">Actualizar</button>
                         </div>
                     </form>
                 </div>
