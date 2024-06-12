@@ -20,6 +20,9 @@ $arbitro = Funciones::obtenerArbitro($_SESSION['idArbitro']);
     <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/locale/es.js'></script>
 
+    <link rel="icon" href="https://www.adsierra.es/wp-content/uploads/2020/08/cropped-faviconADS-32x32.png" sizes="32x32">
+    <title>Inicio | Gestión de Árbitros</title>
+
     <style>
         .fc-unthemed td.fc-today {
             background: #cfffaf;            
