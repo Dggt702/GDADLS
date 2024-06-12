@@ -150,7 +150,7 @@ CREATE TABLE `partido` (
   `fecha` timestamp NOT NULL,
   `estado` varchar(20) NOT NULL,
   `deporte` int(11) NOT NULL,
-  `categoria` varchar(20) NOT NULL,
+  `categoria` int(11) NOT NULL,
   `arbitro` int(11) NOT NULL,
   `local` int(11) NOT NULL,
   `visitante` int(11) NOT NULL
@@ -377,6 +377,7 @@ ALTER TABLE `partido`
   ADD PRIMARY KEY (`id`),
   ADD KEY `arbitro` (`arbitro`),
   ADD KEY `deporte` (`deporte`),
+  ADD KEY `categoria` (`categoria`),
   ADD KEY `local` (`local`),
   ADD KEY `visitante` (`visitante`);
 
@@ -492,10 +493,11 @@ ALTER TABLE `club`
 -- Filtros para la tabla `partido`
 --
 ALTER TABLE `partido`
-  ADD CONSTRAINT `partido_ibfk_1` FOREIGN KEY (`arbitro`) REFERENCES `arbitro` (`id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `partido_ibfk_2` FOREIGN KEY (`deporte`) REFERENCES `deporte` (`id`),
-  ADD CONSTRAINT `partido_ibfk_3` FOREIGN KEY (`local`) REFERENCES `club` (`id`),
-  ADD CONSTRAINT `partido_ibfk_4` FOREIGN KEY (`visitante`) REFERENCES `club` (`id`);
+  ADD CONSTRAINT `partido_ibfk_1` FOREIGN KEY (`arbitro`) REFERENCES `arbitro` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  ADD CONSTRAINT `partido_ibfk_2` FOREIGN KEY (`deporte`) REFERENCES `deporte` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `partido_ibfk_3` FOREIGN KEY (`categoria`) REFERENCES `categoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `partido_ibfk_4` FOREIGN KEY (`local`) REFERENCES `club` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `partido_ibfk_5` FOREIGN KEY (`visitante`) REFERENCES `club` (`id`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `incidencia`
