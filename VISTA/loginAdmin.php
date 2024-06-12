@@ -11,5 +11,7 @@
     <div class="col-12">
         <button type="submit" class="btn btn-success">Acceder</button>
     </div>
-    
+    <?php if (isset($_GET["admin"]) && isset($_GET["admin"]) == "error") { ?>
+        <div class="col-12 d-flex justify-content-center"><span class="fs-2 fs-sm-5 text-danger">El identificador o la contraseña no son correctos</span></div>
+    <?php } ?>
 </form>
