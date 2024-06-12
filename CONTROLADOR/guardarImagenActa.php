@@ -6,10 +6,7 @@ error_reporting(E_ALL);
 
 require("../MODELO/Funciones.php");
 
-session_start();var_dump($_SESSION);
-if(isset($_SESSION['idArbitro']))
-    $idArbitro = $_SESSION['idArbitro'];
-else header('Location ../index.php');
+session_start();
 
 $idPartido = $_POST["idPartido"];
 
@@ -39,7 +36,8 @@ if(isset($_FILES["imageFile"])){
             unlink($target_path.$idPartido.".jpeg");
         rename($target_path.$nombre, $target_path.$idPartido.".".$extension);
     }
-    header("Location: ../VISTA/historialPartidos.php");
+    if(isset($_SESSION["idAdmin"])) header("Location: ../VISTA/perfilPartido.php?id=".$idPartido."");
+    elseif(isset($_SESSION["idArbitro"])) header("Location: ../VISTA/historialPartidos.php");
 }else{
-    header("Location: ../VISTA/historialPartidos.php");
+    header("Location: ../index.php");
 }
