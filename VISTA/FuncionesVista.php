@@ -99,7 +99,7 @@ class FuncionesVista{
             
         foreach($arrayClubes as $club){
             $pueblo = Funciones::obtenerPueblo($club->getLocalizacion());
-            $rend.="<option value='".$club->getId()."'>".$club->getNombre().' '. $pueblo->getNombre()."</option>";
+            $rend.="<option value='".$club->getId()."'>".$club->getNombre().' - '. $pueblo->getNombre()."</option>";
         }
         $rend.="</select>";
         return $rend;
