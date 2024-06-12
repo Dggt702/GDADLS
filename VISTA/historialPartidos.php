@@ -24,7 +24,7 @@ $arrayPartidos = Funciones::obtenerPartidosPasadosArbitro($arbitro->getId());
     <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/locale/es.js'></script>
 
     <link rel="icon" href="https://www.adsierra.es/wp-content/uploads/2020/08/cropped-faviconADS-32x32.png" sizes="32x32">
-    <title>Historial | Gestión de Árbitros</title>
+    <title>Historial</title>
 
     <style>
         .fc-unthemed td.fc-today {
