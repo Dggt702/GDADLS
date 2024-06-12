@@ -15,7 +15,6 @@
                 <canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
             </div>
             <div class="modal-footer">
-                <!-- input type="file" name="imageFile" id="imageFile" accept="image/*"--->
                 <p id="mensaje"></p>
                 <button id="captura" class="btn btn-warning" onclick="tomarFoto()" style="display:none;">Capturar Foto</button>
                 <button id="gFoto" class="btn btn-success" onclick="guardarFoto()" style="display:none;">Guardar Foto</button>

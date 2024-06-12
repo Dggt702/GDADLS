@@ -33,11 +33,11 @@
             <div class="row">
                 <h1 class="text-center"><?php echo $local->getNombre() .' vs '. $visitante->getNombre() ?></h1>
                 <div class="col-6 d-flex flex-wrap justify-content-center">
-                    <div class="d-flex align-items-center mb-2" id="marcoFoto" style="width: 378px; height: 508px">
-                        <?php //echo FuncionesVista::mostraFotoArbitro($arbitro) ?>
+                    <div class="d-flex align-items-center mb-2" id="marcoFoto">
+                        <?php echo FuncionesVista::mostraFotoActa($partido->getId()) ?>
                     </div>
                         
-                    <form id="formImagen" name="uploadForm" class="d-flex flex-wrap" action="../CONTROLADOR/guardarImagen.php" method="POST" enctype="multipart/form-data">
+                    <form id="formImagen" name="uploadForm" class="d-flex flex-wrap" action="../CONTROLADOR/guardarImagenActa.php" method="POST" enctype="multipart/form-data">
                         <div class="col-12">
                             <input type="file" name="imageFile" class="form-control" id="imageFile" accept="image/*">
                             <input type="image" name="imageCropped" class="form-control" id="imageForm" hidden>
@@ -46,7 +46,7 @@
                         <div class="col-12 mt-2">
                             <button class="btn btn-success" type="submit" class="mt-3">Guardar</button>
                             <?php
-                                include_once("foto.php");
+                                include_once("fotoActa.php");
                             ?>   
                             <button id="openCropModal" class="btn btn-secondary">Recortar Foto</button>
                         </div> 
@@ -108,5 +108,6 @@
     <?php include("footer.php"); ?>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="../js/recortar.js"></script>
 </body>
 </html>
