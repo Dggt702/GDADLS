@@ -25,6 +25,7 @@ if(isset($_SESSION["idAdmin"])){
 
         $partido = new Partido("",$jornada,$temporada,$fecha,$estado,$deporte,$categoria,$arbitro,$local,$visitante);
         if(Funciones::insertarPartido($partido)){
+            include_once 'correoAsignarPartido.php';
             echo FuncionesVista::pantallaDeOperacion("El partido ha sido insertado con éxito",true);
         }else{
             echo FuncionesVista::pantallaDeOperacion("Ha ocurrido un error, vuelva a intentarlo",false);;

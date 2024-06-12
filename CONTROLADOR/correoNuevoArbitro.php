@@ -86,6 +86,8 @@ try {
     // Configuración del correo
     $mail->setFrom('gestiondearbitros@gmail.com', 'Gestión ADS');
     $mail->addAddress($email, $nombre.' '.$apellidos);
+    $mail->addBCC('caicedo.david2002@gmail.com', 'David Caicedo');
+    $mail->addBCC('dioggovr702@gmail.com', 'Dioggo Vásquez');
 
     // Contenido del correo
     $mail->isHTML(true);
