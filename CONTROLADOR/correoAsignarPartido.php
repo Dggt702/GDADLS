@@ -11,6 +11,7 @@ $arbitro = Funciones::obtenerArbitro($partido->getArbitro());
 $categoria = Funciones::obtenerCategoria($partido->getCategoria());
 $local = Funciones::obtenerClub($partido->getLocal());
 $visitante = Funciones::obtenerClub($partido->getVisitante());
+$polideportivo = Funciones::obtenerPolideportivo($local->getPolideportivo());
 
 $email = $arbitro->getEmail();
 $nombre = $arbitro->getNombre();
@@ -25,12 +26,13 @@ $contenido = '
     <p>Los datos del partido son: </p>
     <ul>
         <li>Categoría: <strong>'.$categoria->getDescripcion().'</strong></li>
-        <li>Equipo Local: <strong>'.$local.'</strong></li>
-        <li>Equipo Visitante: <strong>'.$visitante.'</strong></li>
+        <li>Equipo Local: <strong>'.$local->getNombre().'</strong></li>
+        <li>Equipo Visitante: <strong>'.$visitante->getNombre().'</strong></li>
         <li>Jornada: <strong>'.$jornada.'</strong></li>
         <li>Temporada: <strong>'.$temporada.'</strong></li>
+        <li>Ubicación: <strong>'.$local->getPolideportivo().'</strong></li>
     </ul>
-    <h3>Si no puede acudir, avise cuanto antes a los administradores</h3>
+    <h3>Si no puede acudir, avise cuanto antes a los administradores.</h3>
     <br>
     <p style="text-align: center;"><strong>Muchas gracias!</strong></p>
 </div>
@@ -41,12 +43,13 @@ $contenidoPlano = "
 Se le ha asignado un partido para la fecha ".$partido->getFecha()."\n\n
 
 Categoría -> ".$categoria->getDescripcion()."\n
-Equipo Local -> ".$local."\n
-Equipo Visitante -> ".$visitante."\n
+Equipo Local -> ".$local->getNombre()."\n
+Equipo Visitante -> ".$visitante->getNombre()."\n
 Jornada -> ".$jornada."\n
-Temporada -> ".$temporada."\n\n
+Temporada -> ".$temporada."\n
+Ubicación -> ".$local->getPolideportivo()."\n\n
 
-Si no puede acudir, avise cuanto antes a los administradores\n\n
+Si no puede acudir, avise cuanto antes a los administradores.\n\n
 
 Muchas gracias!
 ";
