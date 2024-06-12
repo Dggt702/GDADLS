@@ -4,12 +4,12 @@
 class Incidencia{
 
     private $id;
-    private $id_arbitro;
+    private $id_partido;
     private $comentario;
 
-    public function __construct($id, $id_arbitro,$comentario) {
+    public function __construct($id, $id_partido,$comentario) {
         $this->id = $id;
-        $this->id_arbitro = $id_arbitro;
+        $this->id_partido = $id_partido;
         $this->comentario = $comentario;
     }
 
@@ -24,13 +24,13 @@ class Incidencia{
     }
 
      // Getter para $idArbitro
-     public function getIdArbitro() {
-        return $this->id_arbitro;
+     public function getIdPartido() {
+        return $this->id_partido;
     }
 
     // Setter para $idArbitro
-    public function setIdArbitro($id_arbitro) {
-        $this->id_arbitro = $id_arbitro;
+    public function setIdPartido($id_partido) {
+        $this->id_partido = $id_partido;
     }
 
      // Getter para $idComentario

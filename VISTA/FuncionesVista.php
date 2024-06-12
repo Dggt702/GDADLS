@@ -244,13 +244,25 @@ class FuncionesVista{
         $rend = "";
         if(!empty($arrayIncidencias)){
             foreach($arrayIncidencias as $incidencia){
+                $partido = Funciones::obtenerPartido($incidencia->getIdPartido());
+                $categoria = Funciones::obtenerCategoria($partido->getCategoria());
+                $arbitro = Funciones::obtenerArbitro($partido->getArbitro());
+                $deporte = Funciones::obtenerDeporte($partido->getDeporte());
+                $local = Funciones::obtenerClub($partido->getLocal());
+                $visitante = Funciones::obtenerClub($partido->getVisitante());
+                $polideportivo = Funciones::obtenerPolideportivo($local->getPolideportivo());
+                $pueblo = Funciones::obtenerPueblo($local->getLocalizacion());
+                $temporada = $partido->getTemporada();
+                $fecha = $partido->getFecha();
+
                 $rend .= '
                 <div class="col-6 px-2">
                     <div class="card mb-3">
-                        <div class="card-header">Incidencia</div>
+                        <div class="card-header">'.$categoria->getDescripcion().' - '.$local->getNombre().' vs '.$visitante->getNombre().'</div>
                         <div class="card-body">
-                            <h5 class="card-title">Incidencia N° '.$incidencia->getId().'</h5>
-                            <p class="card-text">Jornada '.$incidencia->getComentario().'</p>
+                            <h6 class="card-title">'.$fecha.' | '.$temporada.'</h6>
+                            <a href="perfilArbitro.php?id='.$partido->getArbitro().'" class="text-decoration-none card-text fst-italic fw-normal">Arbitro:  '.$arbitro->getNombre()." ".$arbitro->getNombre().'</a>
+                            <p class="card-text fw-light">'.$incidencia->getComentario().'</p>
                         </div>
                     </div>
                 </div>';
@@ -284,7 +296,6 @@ class FuncionesVista{
                 $visitante = Funciones::obtenerClub($partido->getVisitante());
                 $polideportivo = Funciones::obtenerPolideportivo($local->getPolideportivo());
                 $pueblo = Funciones::obtenerPueblo($local->getLocalizacion());
-                $arbitro = Funciones::obtenerArbitro($partido->getArbitro());
 
                 $rend .= '
                 <div class="col-md-6 col-sm-12 px-2">
