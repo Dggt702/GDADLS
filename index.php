@@ -18,7 +18,7 @@
                 <div class="col-12 m-4 d-flex justify-content-center">
                     <?php include_once "VISTA/loginAdmin.php" ?>
                     <?php include_once "VISTA/loginArbitro.php" ?>
-
+                    
                     <div id="inf" class="col-6 text-center">
                         <h2>Bienvenido</h2>
                         <p>En respuesta a los desafíos de organización y coordinación dentro de la Agrupación Deportiva de la Sierra, se ha planteado un proyecto para desarrollar un sistema de gestión integral. Este sistema tiene como objetivo mejorar la eficiencia en la gestión de árbitros, eventos deportivos y comunicación interna dentro de la agrupación.</p>

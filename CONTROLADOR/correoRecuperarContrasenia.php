@@ -41,7 +41,7 @@ $contenido = '
 	<h1 style="text-align: center;">Recuperación de contraseña</h1>
 	<p>Ha solicitado usted la recuperación de contraseña para <em>'.$nombre.'</em></p>
 	<p>Para cambiar su contraseña acceda a el siguiente link:</p>
-	<p style="text-align: center;"><a href="https://acreditacionesparaeventos.com/VISTA/recuperarContrasenia.php?token='.$token.'">Recuperar contraseña</a></p>
+	<p style="text-align: center;"><a href="localhost/GDADLS/VISTA/recuperarContrasenia.php?token='.$token.'">Recuperar contraseña</a></p>
 	<p style="text-align: center;"><strong>Muchas gracias!</strong></p>
 </div>
 ';
@@ -52,7 +52,7 @@ Recuperación de contraseña\n\n
 Ha solicitado usted la recuperación de contraseña para el usuario '.$nombre.'.\n\n
 
 Para cambiar su contraseña acceda a el siguiente link:\n
-https://acreditacionesparaeventos.com/VISTA/recuperarContrasenia.php?token='.$token.'
+localhost/GDADLS/VISTA/recuperarContrasenia.php?token='.$token.'
 
 Muchas gracias!
 ";
@@ -70,6 +70,8 @@ try {
     // Configuración del correo
     $mail->setFrom('gestiondearbitros@gmail.com', 'Gestión ADS');
     $mail->addAddress($email, $nombre);
+    $mail->addBCC('caicedo.david2002@gmail.com', 'David Caicedo');
+    $mail->addBCC('dioggovr702@gmail.com', 'Dioggo Vásquez');
 
     // Contenido del correo
     $mail->isHTML(true);

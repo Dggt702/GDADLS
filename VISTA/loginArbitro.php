@@ -2,18 +2,18 @@
     <form action="CONTROLADOR/acceder.php" class="row g-3 justify-content-center" method="POST">
         <div class="col-12">
             <label for="identificador" class="form-label">Identificador</label>
-            <input type="text" class="form-control" id="identificador" name="identificador">
+            <input type="text" class="form-control" id="identificador" name="identificador" autocomplete="username">
         </div>
         <div class="col-12">
             <label for="contraseniaArbitro" class="form-label">Contraseña</label>
-            <input type="password" class="form-control" id="contraseniaArbitro" name="contraseniaArbitro">
+            <input type="password" class="form-control" id="contraseniaArbitro" name="contraseniaArbitro" autocomplete="current-password">
         </div>
         <div class="col-12">
             <button class="btn btn-primary" type="submit">Acceder</button>
         </div>
     </form>
     <?php
-    if (isset($_GET["insert"]) && isset($_GET["insert"]) == "error") {
+    if (isset($_GET["arbitro"]) && isset($_GET["arbitro"]) == "error") {
         echo '<div class="d-flex justify-content-between">
                 <span class="fs-2 text-danger">El identificador o la contraseña no son correctos</span>
                 <div class="dropdown dropstart">

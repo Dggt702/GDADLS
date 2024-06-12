@@ -5,7 +5,7 @@ isset($_GET["token"]) ? $token = $_GET["token"] : header('Location: ../index.php
 
 $result = Funciones::buscarToken($token);
 
-if ($result && strtotime($result['fecha_expiracion']) > time()) {
+if ($result && strtotime($result['fecha_exp']) > time()) {
     // El token es válido y no ha expirado
 } else
     exit('El enlace de restablecimiento ha expirado o es inválido.');
